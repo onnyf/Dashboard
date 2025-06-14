@@ -1,3 +1,4 @@
+// Header.jsx
 import React from "react";
 import { GoBell } from "react-icons/go";
 import { RiSearch2Line } from "react-icons/ri";
@@ -5,8 +6,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Header = () => {
   return (
-    <div className="fixed top-0 left-[282px] right-0 z-50 flex items-center justify-between px-6 py-4 bg-white shadow-sm border-b border-gray-200 h-[72px]">
-      {/* Search Bar */}
+    <div className="fixed top-0 left-[268px] right-0 z-50 flex items-center justify-between px-6 py-4 bg-white shadow-sm border-b border-gray-200 h-[72px]">
       <div className="flex-1 max-w-md">
         <div className="relative">
           <span className="absolute inset-y-0 left-3 flex items-center text-gray-400 text-lg">
