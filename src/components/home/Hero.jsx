@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import RevenueChart from "../revenue/RevenueChart";
 import InvestmentChart from "../revenue/InvestmentChart";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Card = ({ children, className = "" }) => (
   <div className={`rounded-2xl bg-white p-4 shadow-sm hover:shadow-md transition ${className}`}>
@@ -12,8 +13,15 @@ const Card = ({ children, className = "" }) => (
 const CardContent = ({ children }) => <div>{children}</div>;
 
 const Hero = () => {
+  const [selectedDateRange, setSelectedDateRange] = useState("Jan-Feb 2025");
+
   const statTitles = ["Total Investment", "Total Property Sold", "All Users", "All Orders"];
   const statValues = ["₦6.05B", "₦100.05M", "100", "200"];
+
+  const handleDateChange = (e) => {
+    setSelectedDateRange(e.target.value);
+    // Optional: Trigger data fetch or filtering here
+  };
 
   return (
     <div className="w-full pl-[268px] pr-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen overflow-x-hidden">
@@ -23,8 +31,21 @@ const Hero = () => {
           <h1 className="text-xl font-semibold text-gray-800">Welcome Admin</h1>
           <p className="text-sm text-gray-500">Here's a quick update for you</p>
         </div>
-        <div className="text-sm text-gray-600 rounded-full px-6 py-2 bg-white shadow">
-          January 2025 - February 2025
+        <div className="flex items-center gap-2 text-sm text-gray-600 rounded-full px-4 py-2 bg-white shadow">
+          <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
+          <select
+            value={selectedDateRange}
+            onChange={handleDateChange}
+            className="bg-transparent focus:outline-none appearance-none pr-4"
+          >
+            <option>Jan-Feb 2025</option>
+            <option>Mar-Apr 2025</option>
+            <option>May-Jun 2025</option>
+            <option>Jul-Aug 2025</option>
+            <option>Sep-Oct 2025</option>
+            <option>Nov-Dec 2025</option>
+          </select>
+          <MdOutlineKeyboardArrowDown className="text-lg text-gray-500 -ml-4 pointer-events-none" />
         </div>
       </div>
 
@@ -48,21 +69,36 @@ const Hero = () => {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        <Card className="lg:col-span-3">
+        <Card className="lg:col-span-3 h-[430px]">
           <CardContent>
             <div className="flex items-center justify-between flex-wrap mb-4">
-              <h3 className="text-lg font-semibold text-gray-600  rounded-full px-6 py-1 bg-gray-50">Revenue Flow</h3>
-              <span className="text-sm text-gray-600 rounded-full px-6 py-1 bg-gray-50">
-                January 2025 - February 2025
-              </span>
+              <h3 className="text-lg font-semibold text-gray-600 rounded-full px-6 py-1 bg-gray-50">
+                Revenue Flow
+              </h3>
+              <div className="flex items-center gap-2 text-sm text-gray-600 rounded-full px-4 py-1 bg-gray-50 shadow">
+                <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
+                <select
+                  value={selectedDateRange}
+                  onChange={handleDateChange}
+                  className="bg-transparent focus:outline-none appearance-none pr-4"
+                >
+                  <option>Jan-Feb 2025</option>
+                  <option>Mar-Apr 2025</option>
+                  <option>May-Jun 2025</option>
+                  <option>Jul-Aug 2025</option>
+                  <option>Sep-Oct 2025</option>
+                  <option>Nov-Dec 2025</option>
+                </select>
+                <MdOutlineKeyboardArrowDown className="text-lg text-gray-500 -ml-4 pointer-events-none" />
+              </div>
             </div>
             <RevenueChart />
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 h-[430px]">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">Investment Breakdown</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">All Investments</h3>
             <InvestmentChart />
           </CardContent>
         </Card>
@@ -90,13 +126,19 @@ const Hero = () => {
               </thead>
               <tbody>
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <tr key={i} className=" text-gray-700">
+                  <tr key={i} className="text-gray-700">
                     <td className="py-8">0{i}</td>
                     <td>Kingsley Alhaji</td>
                     <td>Kingsley@gmail.com</td>
                     <td>08/01/25</td>
                     <td>
-                      <span className={`text-xs px-2 py-1 rounded-full ${i % 2 === 0 ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"}`}>
+                      <span
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          i % 2 === 0
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
                         {i % 2 === 0 ? "Pending" : "Verified"}
                       </span>
                     </td>
@@ -108,7 +150,7 @@ const Hero = () => {
         </Card>
 
         {/* Top Investments */}
-        <Card className="overflow-y-auto">
+        <Card className="overflow-y-auto h-[300px]">
           <CardContent>
             <h3 className="text-lg font-semibold mb-3 text-gray-800">Top Performing Investments</h3>
             <div className="flex justify-between items-center bg-gray-100 rounded px-4 py-2 text-sm text-gray-600 mb-2">
@@ -117,12 +159,21 @@ const Hero = () => {
             </div>
             <ul className="space-y-2">
               {[1200, 800, 640].map((unit, index) => (
-                <li key={index} className="flex justify-between items-center px-4 py-2 bg-white rounded shadow-sm">
+                <li
+                  key={index}
+                  className="flex justify-between items-center px-4 py-2 bg-white rounded shadow-sm"
+                >
                   <div className="flex items-center gap-3">
-                    <img src="/Rectangle 36.png" alt="land" className="w-8 h-8 rounded object-cover" />
+                    <img
+                      src="/Rectangle 36.png"
+                      alt="land"
+                      className="w-8 h-8 rounded object-cover"
+                    />
                     <span className="text-sm font-medium text-gray-700">Cocoa Land</span>
                   </div>
-                  <span className="font-semibold text-sm text-gray-800">{unit.toLocaleString()}</span>
+                  <span className="font-semibold text-sm text-gray-800">
+                    {unit.toLocaleString()}
+                  </span>
                 </li>
               ))}
             </ul>

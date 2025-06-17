@@ -1,17 +1,55 @@
-import React from 'react'
-import Header from './components/common/Header'
-import Sidebar from './components/common/Sidebar'
-import Hero from './components/home/Hero'
+// src/App.jsx
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+// Layout (with Header and Sidebar)
+import Layouts from "./layout/Layouts";
+
+// Pages
+import Login from "./authentication/Login";
+import Hero from "./components/home/Hero";
+import User from "./pages/User";
+import Investment from "./pages/Investment";
+import Properties from "./pages/Properties";
+import Transactions from "./pages/Transactions";
+
+// Modals / Standalone
+import InviteAdminModal from "./components/modals/InviteAdminModal";
+
+// 404 fallback (optional)
+const NotFound = () => (
+  <div className="flex items-center justify-center h-screen text-gray-700 text-xl">
+    404 - Page Not Found
+  </div>
+);
 
 const App = () => {
   return (
-    <div>
-      {/* <Header/> */}
-      {/* <Sidebar/> */}
-{/* 
-      <Hero/> */}
-    </div>
-  )
-}
+    <Router>
+      <Routes>
+        {/* ❌ Login page: No Layout */}
+        <Route path="/login" element={<Login />} />
 
-export default App
+        {/* ✅ Layout with nested pages */}
+        <Route path="/" element={<Layouts />}>
+          <Route index element={<Hero />} />
+          <Route path="user" element={<User />} />
+          <Route path="investment" element={<Investment />} />
+          <Route path="properties" element={<Properties />} />
+          <Route path="transactions" element={<Transactions />} />
+          <Route path="invite-admin" element={<InviteAdminModal />} />
+        </Route>
+
+        {/* Fallback route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;

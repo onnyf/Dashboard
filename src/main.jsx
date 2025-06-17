@@ -1,13 +1,11 @@
 // src/main.jsx
-
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import { router } from "../Router"; // ✅ matches the file path
-import "./index.css";
+import App from "./App"; // Import your refactored App.jsx
+import "./index.css"; // Tailwind or general styles
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );
