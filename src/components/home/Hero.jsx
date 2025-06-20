@@ -20,13 +20,12 @@ const Hero = () => {
 
   const handleDateChange = (e) => {
     setSelectedDateRange(e.target.value);
-    // Optional: Trigger data fetch or filtering here
   };
 
   return (
-    <div className="w-full pl-[268px] pr-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen overflow-x-hidden">
+    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
       {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold text-gray-800">Welcome Admin</h1>
           <p className="text-sm text-gray-500">Here's a quick update for you</p>
@@ -50,7 +49,7 @@ const Hero = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {statTitles.map((title, index) => (
           <Card key={index}>
             <CardContent>
@@ -68,11 +67,11 @@ const Hero = () => {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        <Card className="lg:col-span-3 h-[430px]">
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-4">
+        <Card className="xl:col-span-3 h-[430px]">
           <CardContent>
-            <div className="flex items-center justify-between flex-wrap mb-4">
-              <h3 className="text-lg font-semibold text-gray-600 rounded-full px-6 py-1 bg-gray-50">
+            <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
+              <h3 className="text-lg font-semibold text-gray-600 rounded-full px-6 py-1 bg-gray-50 w-fit">
                 Revenue Flow
               </h3>
               <div className="flex items-center gap-2 text-sm text-gray-600 rounded-full px-4 py-1 bg-gray-50 shadow">
@@ -96,7 +95,7 @@ const Hero = () => {
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2 h-[430px]">
+        <Card className="xl:col-span-2 h-[430px]">
           <CardContent>
             <h3 className="text-lg font-semibold mb-4 text-gray-800">All Investments</h3>
             <InvestmentChart />
@@ -105,7 +104,7 @@ const Hero = () => {
       </div>
 
       {/* Tables Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         {/* Signups Table */}
         <Card className="overflow-x-auto">
           <CardContent>
@@ -114,43 +113,45 @@ const Hero = () => {
                 <option>Latest Sign ups</option>
               </select>
             </div>
-            <table className="min-w-full mt-2 text-sm">
-              <thead className="text-left text-gray-500">
-                <tr>
-                  <th>S/N</th>
-                  <th>Name</th>
-                  <th>Email address</th>
-                  <th>Date Reg.</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <tr key={i} className="text-gray-700">
-                    <td className="py-8">0{i}</td>
-                    <td>Kingsley Alhaji</td>
-                    <td>Kingsley@gmail.com</td>
-                    <td>08/01/25</td>
-                    <td>
-                      <span
-                        className={`text-xs px-2 py-1 rounded-full ${
-                          i % 2 === 0
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-green-100 text-green-700"
-                        }`}
-                      >
-                        {i % 2 === 0 ? "Pending" : "Verified"}
-                      </span>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="min-w-full mt-2 text-sm">
+                <thead className="text-left text-gray-500">
+                  <tr>
+                    <th>S/N</th>
+                    <th>Name</th>
+                    <th>Email address</th>
+                    <th>Date Reg.</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <tr key={i} className="text-gray-700">
+                      <td className="py-4 whitespace-nowrap">0{i}</td>
+                      <td className="whitespace-nowrap">Kingsley Alhaji</td>
+                      <td className="whitespace-nowrap">Kingsley@gmail.com</td>
+                      <td className="whitespace-nowrap">08/01/25</td>
+                      <td>
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full ${
+                            i % 2 === 0
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-green-100 text-green-700"
+                          }`}
+                        >
+                          {i % 2 === 0 ? "Pending" : "Verified"}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </CardContent>
         </Card>
 
         {/* Top Investments */}
-        <Card className="overflow-y-auto h-[300px]">
+        <Card className="overflow-y-auto max-h-[300px]">
           <CardContent>
             <h3 className="text-lg font-semibold mb-3 text-gray-800">Top Performing Investments</h3>
             <div className="flex justify-between items-center bg-gray-100 rounded px-4 py-2 text-sm text-gray-600 mb-2">

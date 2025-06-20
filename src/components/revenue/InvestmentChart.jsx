@@ -80,16 +80,16 @@ const InvestmentChart = () => {
         {/* Legend */}
         <div className="flex flex-col sm:flex-row justify-around items-center mt-6 text-xs sm:text-sm gap-2">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#ca8a04]" />
-            <span>Gold Investment</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#8b5cf6]" />
+            <span className="w-6 h-4 rounded bg-[#8b5cf6]" />
             <span>Platinum Investment</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-[#064e3b]" />
+            <span className="w-6 h-4 rounded bg-[#064e3b]" />
             <span>Diamond Investment</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-6 h-4 rounded bg-[#ca8a04]" />
+            <span>Gold Investment</span>
           </div>
         </div>
       </div>
