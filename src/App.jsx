@@ -20,6 +20,7 @@ import Transactions from "./pages/Transactions";
 import InviteAdminModal from "./components/modals/InviteAdminModal";
 import Withdrawals from "./pages/Withdrawals";
 import Settings from "./pages/Settings";
+// import UserDetailsModal from "./components/modals/UserDetailsModal";
 
 const NotFound = () => (
   <div className="flex items-center justify-center h-screen text-gray-700 text-xl">
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="invite-admin" element={<InviteAdminModal />} />
           <Route path="withdrawals" element={<Withdrawals/>}/>
           <Route path="settings" element={<Settings/>}/>
+          {/* <Route path="user-details" element={<UserDetailsModal/>}/> */}
         </Route>
 
         {/* Fallback */}

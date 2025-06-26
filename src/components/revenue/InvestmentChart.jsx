@@ -53,7 +53,7 @@ const InvestmentChart = () => {
               <span className="text-[11px]  text-gray-500">
                 Total Investment Sold
               </span>
-              <span className="text-xl sm:text-3xl font-bold text-[#064e3b]">
+              <span className="text-xl sm:text-3xl font-textFont2 text-[#064e3b]">
                 1210
               </span>
             </div>

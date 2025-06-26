@@ -5,7 +5,9 @@ import InvestmentChart from "../revenue/InvestmentChart";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Card = ({ children, className = "" }) => (
-  <div className={`rounded-2xl bg-white p-4 shadow-sm hover:shadow-md transition ${className}`}>
+  <div
+    className={`rounded-2xl bg-white p-4 shadow-sm hover:shadow-md transition ${className}`}
+  >
     {children}
   </div>
 );
@@ -15,7 +17,12 @@ const CardContent = ({ children }) => <div>{children}</div>;
 const Hero = () => {
   const [selectedDateRange, setSelectedDateRange] = useState("Jan-Feb 2025");
 
-  const statTitles = ["Total Investment", "Total Property Sold", "All Users", "All Orders"];
+  const statTitles = [
+    "Total Investment",
+    "Total Property Sold",
+    "All Users",
+    "All Orders",
+  ];
   const statValues = ["₦6.05B", "₦100.05M", "100", "200"];
 
   const handleDateChange = (e) => {
@@ -55,12 +62,16 @@ const Hero = () => {
             <CardContent>
               <p className="text-xs text-gray-500">{title}</p>
               <div className="flex items-center justify-between mt-1">
-                <h2 className="text-lg font-semibold text-gray-800">{statValues[index]}</h2>
+                <h2 className="text-lg font-semibold text-gray-800">
+                  {statValues[index]}
+                </h2>
                 <span className="text-xs text-green-600 flex items-center gap-1">
                   <FaArrowUp size={10} /> +10
                 </span>
               </div>
-              <p className="text-[11px] text-gray-400 mt-1">from 0% (last 4 weeks)</p>
+              <p className="text-[11px] text-gray-400 mt-1">
+                from 0% (last 4 weeks)
+              </p>
             </CardContent>
           </Card>
         ))}
@@ -97,7 +108,9 @@ const Hero = () => {
 
         <Card className="xl:col-span-2 h-[430px]">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">All Investments</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">
+              All Investments
+            </h3>
             <InvestmentChart />
           </CardContent>
         </Card>
@@ -109,31 +122,39 @@ const Hero = () => {
         <Card className="overflow-x-auto">
           <CardContent>
             <div className="flex justify-between items-center mb-2">
-              <select className="text-sm rounded-3xl p-1 font-light">
+              <select className="text-sm rounded-full px-4  py-2 bg-gray-100 focus:outline-none shadow-sm   cursor-pointer ">
                 <option>Latest Sign ups</option>
+                <option>Top Investors</option>
+                <option>Recent Properties</option>
               </select>
             </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full mt-2 text-sm">
-                <thead className="text-left text-gray-500">
+
+            <div className="overflow-x-auto rounded-xl shadow border border-gray-100">
+              <table className="min-w-full text-sm">
+                <thead className="text-left text-gray-500 bg-gray-50">
                   <tr>
-                    <th>S/N</th>
-                    <th>Name</th>
-                    <th>Email address</th>
-                    <th>Date Reg.</th>
-                    <th>Status</th>
+                    <th className="px-4 py-3 rounded-tl-lg">S/N</th>
+                    <th className="px-4 py-3">Name</th>
+                    <th className="px-4 py-3">Email address</th>
+                    <th className="px-2 py-3">Date Reg.</th>
+                    <th className="px-4 py-3 rounded-tr-lg">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+
+                <tbody className="divide-y divide-gray-100">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <tr key={i} className="text-gray-700">
-                      <td className="py-4 whitespace-nowrap">0{i}</td>
-                      <td className="whitespace-nowrap">Kingsley Alhaji</td>
-                      <td className="whitespace-nowrap">Kingsley@gmail.com</td>
-                      <td className="whitespace-nowrap">08/01/25</td>
-                      <td>
+                    <tr key={i} className="hover:bg-gray-50 text-gray-700">
+                      <td className="px-4 py-4 whitespace-nowrap">0{i}</td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        Kingsley Alhaji
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        Kingsley@gmail.com
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">08/01/25</td>
+                      <td className="px-4 py-4">
                         <span
-                          className={`text-xs px-2 py-1 rounded-full ${
+                          className={`text-xs px-2 py-1 rounded-full font-medium ${
                             i % 2 === 0
                               ? "bg-yellow-100 text-yellow-700"
                               : "bg-green-100 text-green-700"
@@ -153,7 +174,9 @@ const Hero = () => {
         {/* Top Investments */}
         <Card className="overflow-y-auto max-h-[300px]">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-3 text-gray-800">Top Performing Investments</h3>
+            <h3 className="text-lg font-semibold mb-3 text-gray-800">
+              Top Performing Investments
+            </h3>
             <div className="flex justify-between items-center bg-gray-100 rounded px-4 py-2 text-sm text-gray-600 mb-2">
               <span>Name</span>
               <span>Unit Sold</span>
@@ -170,7 +193,9 @@ const Hero = () => {
                       alt="land"
                       className="w-8 h-8 rounded object-cover"
                     />
-                    <span className="text-sm font-medium text-gray-700">Cocoa Land</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      Cocoa Land
+                    </span>
                   </div>
                   <span className="font-semibold text-sm text-gray-800">
                     {unit.toLocaleString()}

@@ -5,7 +5,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Header = () => {
   return (
-    <div className="fixed top-0 left-0 md:left-[268px] right-0 z-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-6 py-3 md:py-4 bg-white shadow-sm border-b border-gray-200 h-auto md:h-[72px] gap-4 md:gap-0">
+    <div className="fixed top-0 left-0 md:left-[268px] right-0 z-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-6 py-3 md:py-3 bg-white shadow-sm border-b border-gray-200 h-auto md:h-[72px] gap-4 md:gap-0">
       {/* Search Input */}
       <div className="w-full md:w-auto flex-1 max-w-full md:max-w-md">
         <div className="relative">

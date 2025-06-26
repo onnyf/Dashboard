@@ -1,220 +1,183 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiMoreVertical } from "react-icons/fi";
+import { FaArrowUp } from "react-icons/fa";
+import { RiArrowDownSFill, RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import { GoPlus } from "react-icons/go";
+
+const stats = [
+  { title: "All Investment", value: 1043, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "all" },
+  { title: "Platinum Investment", value: 1000, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "ongoing" },
+  { title: "Diamond Investment", value: 43, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "completed" },
+  { title: "Gold Investment", value: 43, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "maintenance" },
+];
+
+const images = [
+  { src: "/Rectangle 36.png", status: "completed" },
+  { src: "/Rectangle 36.svg", status: "ongoing" },
+  { src: "/Rectangle 6.svg", status: "completed" },
+  { src: "/Rectangle 5.svg", status: "completed" },
+  { src: "/Rectangle 4.svg", status: "completed" },
+  { src: "/Rectangle 3.svg", status: "completed" },
+];
 
 const Investment = () => {
-  const orders = [
-    {
-      sn: "01",
-      orderId: "090388982",
-      descriptions: [
-        "Coco land - Platinum X2",
-        "Coco land - Gold X2",
-        "Coco land - Gold X2",
-      ],
-      investorName: "Kingsley Alhoji",
-      amount: "500,000.00",
-      date: "08-01-2023",
-      status: "Successful",
-    },
-    {
-      sn: "02",
-      orderId: "090388983",
-      descriptions: [
-        "Coco land - Platinum X2",
-        "Coco land - Gold X2",
-        "Coco land - Gold X2",
-      ],
-      investorName: "Kingsley Alhoji",
-      amount: "500,000.00",
-      date: "08-01-2023",
-      status: "Successful",
-    },
-    {
-      sn: "03",
-      orderId: "090388984",
-      descriptions: [
-        "Coco land - Platinum X2",
-        "Coco land - Gold X2",
-        "Coco land - Gold X2",
-      ],
-      investorName: "Kingsley Alhoji",
-      amount: "500,000.00",
-      date: "08-01-2023",
-      status: "Failed",
-    },
-  ];
+  const navigate = useNavigate();
+  const [filter, setFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 5;
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const handleExport = () => console.log("Export triggered");
+  const handleStatClick = (filterType) => setFilter(filterType);
+  const handlePrevious = () => currentPage > 1 && setCurrentPage(currentPage - 1);
+  const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const toggleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
+
+  const renderPageNumbers = () => {
+    const pages = [1, 2, 3, '...', totalPages];
+    return (
+      <div className="flex items-center gap-2">
+        {pages.map((page, index) => (
+          <span
+            key={index}
+            className={`text-sm ${currentPage === page ? 'text-[#00644C] font-semibold' : 'text-gray-700'} ${page === '...' ? 'cursor-default' : 'cursor-pointer'}`}
+            onClick={() => typeof page === 'number' && setCurrentPage(page)}
+          >
+            {page}
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  const filteredImages = filter === "all" ? images : images.filter(img => img.status === filter);
 
   return (
-    <div className="absolute bg-[#EEF2F1] w-full max-w-[982px] top-[72px] left-[282px] px-12 py-6 space-y-6 overflow-y-auto overflow-x-hidden rounded-lg shadow">
-      {/* Top Bar */}
-      <div className="flex flex-wrap justify-between items-center gap-4">
-        <h1 className="text-xl font-semibold text-gray-800">Cocoa Land</h1>
-        <div className="flex flex-wrap items-center gap-3 text-sm">
-          <div className="flex gap-2 rounded-full bg-white w-fit px-4 py-2 items-center">
-            <img src="/export.svg" alt="export" className="w-5 h-5" />
-            <button className="">Edit Property</button>
-          </div>
-          <button className="rounded-full bg-[#eacccc] px-4 py-2">
-            Un-publish Investment
+    <div className="w-[1000px] h-[943px] pt-[24px] pr-[48px] pb-[24px] pl-[48px] bg-[#EEF2F1] flex flex-col gap-[24px] relative top-[2px] left-[238px]">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-gray-700">Investment</h2>
+        <div className="flex gap-3">
+          <button
+            onClick={handleExport}
+            className="flex items-center gap-2 text-[#00644C] text-sm px-4 py-2 rounded-2xl border bg-white"
+          >
+            <img src="/export.svg" alt="Export" className="w-4 h-4" />
+            Export
+          </button>
+          <button
+            onClick={() => navigate("/dashboard/add-investment")}
+            className="flex items-center gap-2 text-white text-sm px-4 py-2 rounded-2xl bg-[#00644C]"
+          >
+            <GoPlus /> Investment
           </button>
         </div>
       </div>
 
-      <div className="bg-white rounded-t-4xl">
-        <div className="">
-          <img
-            src="/Frame 1618873004.png"
-            alt="Overview Banner"
-            className="w-full h-auto rounded-t-4xl"
-          />
-        </div>
-        {/* Header */}
-        <header className=" pt-4 rounded-lg">
-          <nav className="mt-4 mx-4 flex flex-wrap gap-4 text-sm font-medium text-gray-600">
-            {[
-              "Overview",
-              "Investors",
-              "Disbursement Transaction",
-              "Orders",
-              "About Investment Property",
-            ].map((tab, i) => (
-              <span
-                key={i}
-                className={`cursor-pointer rounded-full px-4 py-2 ${
-                  i === 0
-                    ? "bg-[#E5FAF9]"
-                    : "hover:text-gray-900 border-gray-200 border "
-                }`}
-              >
-                {tab}
-              </span>
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {stats.map((stat, index) => {
+          const isActive = filter === stat.filter;
+          return (
+            <div
+              key={index}
+              onClick={() => handleStatClick(stat.filter)}
+              className={`cursor-pointer p-5 rounded-2xl shadow-sm border transition duration-200 hover:shadow-md ${isActive ? "bg-green-900 text-white" : "bg-white text-black"}`}
+            >
+              <div className="text-sm font-medium mb-1">{stat.title}</div>
+              <div className="text-3xl font-bold flex items-center justify-between">
+                {stat.value}
+                <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-[2px] rounded-full flex items-center gap-1">
+                  <FaArrowUp className="text-xs" />
+                  {stat.change}
+                </span>
+              </div>
+              <div className={`text-xs mt-1 ${isActive ? "text-white/70" : "text-gray-400"}`}>{stat.subtext}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Table Section */}
+      <div className="bg-white rounded-xl shadow-sm border overflow-auto mt-4">
+        <table className="min-w-full text-sm">
+          <thead className="bg-gray-100 text-gray-500">
+            <tr>
+              <th className="p-4 text-left">S/N</th>
+              <th className="p-4 text-left">Name</th>
+              <th className="p-4 text-left">Type</th>
+              <th className="p-4 text-left">No. of investors</th>
+              <th className="p-4 text-left">Price (₦)</th>
+              <th className="p-4 text-left">Date Mod.</th>
+              <th className="p-4 text-left">Status</th>
+              <th className="p-4 text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredImages.map((img, index) => (
+              <tr key={index} className="hover:bg-gray-50 relative">
+                <td className="p-4">0{index + 1}</td>
+                <td className="p-4 flex items-center gap-2">
+                  <img src={img.src} alt="property" className="h-8 w-8 rounded object-cover" />
+                  Cocoa Land
+                </td>
+                <td className="p-4">
+                  <span className="text-xs px-2 py-1 border rounded-full text-gray-600">
+                    {index % 2 === 0 ? "Apartment" : index % 3 === 0 ? "Flat" : "Bungalow"}
+                  </span>
+                </td>
+                <td className="p-4">100</td>
+                <td className="p-4">#8,000,000,000...</td>
+                <td className="p-4">08-01-2023</td>
+                <td className="p-4">
+                  <span className={`text-xs px-2 py-1 rounded-full font-medium 
+                    ${img.status === "completed" ? "bg-[#ECFFEC] text-green-600" : 
+                      img.status === "ongoing" ? "bg-[#FFF9DB] text-yellow-600" : 
+                      "bg-gray-200 text-gray-500"}`}>
+                    {img.status.charAt(0).toUpperCase() + img.status.slice(1)}
+                  </span>
+                </td>
+                <td className="p-4 relative">
+                  <FiMoreVertical
+                    className="text-gray-500 cursor-pointer"
+                    onClick={() => toggleDropdown(index)}
+                  />
+                  {activeDropdown === index && (
+                    <div className="absolute top-8 right-0 bg-white border border-gray-200 shadow-lg rounded-md w-48 z-50">
+                      <ul className="py-2 text-sm">
+                        <li className="px-4 py-2 hover:bg-gray-100 text-green-800 cursor-pointer">View Details</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 text-green-800 cursor-pointer">Edit Details</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 text-green-800 cursor-pointer">Edit Status</li>
+                        <li className="px-4 py-2 hover:bg-gray-100 text-red-600 cursor-pointer">Un-publish Investment</li>
+                      </ul>
+                    </div>
+                  )}
+                </td>
+              </tr>
             ))}
-          </nav>
-        </header>
+          </tbody>
+        </table>
+      </div>
 
-        {/* Investment Progress Dropdown Title */}
-        <div className="p-4 ">
-          <label
-            htmlFor="progress"
-            className="block text-sm mb-2 text-gray-700"
-          ></label>
-          <select
-            id="progress"
-            className="border border-gray-200 text-sm rounded-md p-2 focus:outline-none"
-          >
-            <option>Investment progress</option>
-          </select>
+      {/* Pagination */}
+      <div className="flex items-center w-[760px] h-8 gap-12 p-4 text-sm text-gray-500 mb-8">
+        <div className="flex items-center gap-1">
+          <span>10 Entries</span>
+          <RiArrowDownSFill className="text-lg" />
         </div>
-
-        {/* Investment Progress Section */}
-        <section className="border-gray-200 border rounded-lg p-4 mx-4">
-          <div className="flex flex-col gap-4">
-            <div className="text-sm text-gray-700 font-medium">
-              Investment Progress
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-              <div className="bg-[#DCA332] h-4 w-[58%] rounded-l-full"></div>
-            </div>
-
-            <div className="flex justify-between text-xs text-gray-700 font-medium mt-2">
-              <div>Total sold: 2,000,000,000.00</div>
-              <div>No. of Investors: 102</div>
-              <div className="text-gray-500 text-xs">64% completed</div>
-            </div>
+        <div className="flex items-center gap-2">
+          <span>Showing 1 to 10 of 95 entries.</span>
+          <div className="ml-24 flex items-center gap-2">
+            <button onClick={handlePrevious} disabled={currentPage === 1} className={`p-2 ${currentPage === 1 ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`}>
+              <RiArrowLeftSLine size={20} />
+            </button>
+            {renderPageNumbers()}
+            <button onClick={handleNext} disabled={currentPage === totalPages} className={`p-2 ${currentPage === totalPages ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`}>
+              <RiArrowRightSLine size={20} />
+            </button>
           </div>
-        </section>
-        <div className="mx-4 my-5">
-          <h2 className="text-xl font-normal text-gray-700 mb-4">
-            Latest Orders
-          </h2>
         </div>
-        {/* Latest Orders */}
-        <section className="bg-white p-4 rounded-lg border-gray-200 border  mx-4 mt-[24px]">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-[#FAFBFB]">
-                <tr>
-                  {[
-                    "S/N",
-                    "Order ID",
-                    "Description",
-                    "Investor's name",
-                    "Amount (₦)",
-                    "Date",
-                    "Status",
-                  ].map((head) => (
-                    <th
-                      key={head}
-                      className="px-4 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
-                    >
-                      {head}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {orders.map((order, index) => (
-                  <React.Fragment key={index}>
-                    <tr>
-                      <td
-                        rowSpan={order.descriptions.length}
-                        className="px-4 py-4 align-top font-medium"
-                      >
-                        {order.sn}
-                      </td>
-                      <td
-                        rowSpan={order.descriptions.length}
-                        className="px-4 py-4 text-gray-500 align-top"
-                      >
-                        {order.orderId}
-                      </td>
-                      <td className="px-4 py-4 text-gray-500">
-                        {order.descriptions[0]}
-                      </td>
-                      <td
-                        rowSpan={order.descriptions.length}
-                        className="px-4 py-4 text-gray-500 align-top"
-                      >
-                        {order.investorName}
-                      </td>
-                      <td
-                        rowSpan={order.descriptions.length}
-                        className="px-4 py-4 text-gray-500 align-top"
-                      >
-                        {order.amount}
-                      </td>
-                      <td
-                        rowSpan={order.descriptions.length}
-                        className="px-4 py-4 text-gray-500 align-top"
-                      >
-                        {order.date}
-                      </td>
-                      <td
-                        rowSpan={order.descriptions.length}
-                        className="px-4 py-4 align-top"
-                      >
-                        <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                          ${
-                            order.status === "Successful"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
-                          }`}
-                        >
-                          {order.status}
-                        </span>
-                      </td>
-                    </tr>
-                    {order.descriptions.slice(1).map((desc, idx) => (
-                      <tr key={idx}>
-                        <td className="px-4 py-4 text-gray-500">{desc}</td>
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
       </div>
     </div>
   );
