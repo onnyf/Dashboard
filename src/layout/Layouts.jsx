@@ -1,18 +1,25 @@
-// src/layout/Layouts.jsx
-import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../components/common/Header";  // Adjust paths as needed
-import Sidebar from "../components/common/Sidebar"; // Adjust paths as needed
+import Header from "../components/common/Header";
+import Sidebar from "../components/common/Sidebar";
+import InviteAdminModal from "../components/modals/InviteAdminModal";
+import { useState } from "react";
 
 const Layouts = () => {
+  const [showInviteModal, setShowInviteModal] = useState(false);
+
   return (
-    <div>
-      <Sidebar/>
-      <div className="ml-[2px]">
-        <Header />
-        <main className="pt-[72px] px-6">
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar />
+      <div className="flex-1 relative">
+        <Header onOpenInviteModal={() => setShowInviteModal(true)} />
+        
+        <main className="pt-[72px] p-4">
           <Outlet />
         </main>
+
+        {showInviteModal && (
+          <InviteAdminModal onClose={() => setShowInviteModal(false)} />
+        )}
       </div>
     </div>
   );

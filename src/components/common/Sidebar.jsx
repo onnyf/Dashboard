@@ -34,8 +34,8 @@ const Sidebar = () => {
       icon: <img src="/building-4.svg" alt="Property" className="w-5 h-5" />,
     },
     {
-      label: "User",
-      path: "/dashboard/user",
+      label: "Users",
+      path: "/dashboard/users",
       icon: <HiMiniUserGroup className="text-lg" />,
     },
     {
@@ -77,7 +77,7 @@ const Sidebar = () => {
               key={index}
               className={`flex items-center gap-3 px-4 py-2 rounded-md text-sm transition ${
                 location.pathname === item.path
-                  ? "bg-green-900 text-[#e8f0ee] font-semibold"
+                  ? "bg-[#014d3a] text-[#e8f0ee] font-semibold"
                   : "hover:bg-[#014d3a] hover:text-white"
               }`}
             >
@@ -127,7 +127,7 @@ const Sidebar = () => {
               <IoMdClose size={20} className="text-gray-500 hover:text-black" />
             </button>
 
-            <h3 className="text-sm font-semibold mb-6">
+            <h3 className="text-sm font-semibold mb-6 ">
               What would you like to add?
             </h3>
 
@@ -137,10 +137,12 @@ const Sidebar = () => {
                   setShowForm("property");
                   setShowModal(false);
                 }}
-                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition w-40"
+                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition w-50"
               >
                 <img src="/Apartment.svg" alt="Apartment" className="w-8 h-8" />
-                <span className="text-sm">Add Property</span>
+                <span className="text-sm whitespace-nowrap">
+                  Add an Investment
+                </span>
               </button>
 
               <button
@@ -148,7 +150,7 @@ const Sidebar = () => {
                   setShowForm("investment");
                   setShowModal(false);
                 }}
-                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition w-40"
+                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition w-50"
               >
                 <img
                   src="/Investment.svg"

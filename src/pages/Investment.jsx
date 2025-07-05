@@ -1,48 +1,178 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMoreVertical } from "react-icons/fi";
 import { FaArrowUp } from "react-icons/fa";
-import { RiArrowDownSFill, RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import {
+  RiArrowDownSFill,
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+} from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
+import { IoFilter } from "react-icons/io5";
 
 const stats = [
-  { title: "All Investment", value: 1043, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "all" },
-  { title: "Platinum Investment", value: 1000, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "ongoing" },
-  { title: "Diamond Investment", value: 43, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "completed" },
-  { title: "Gold Investment", value: 43, change: "+10", subtext: "From 0% (last 4 weeks)", filter: "maintenance" },
+  {
+    title: "All Investment",
+    value: 1043,
+    change: "+10",
+    subtext: "From 0% (last 4 weeks)",
+    filter: "all",
+  },
+  {
+    title: "Platinum Investment",
+    value: 1000,
+    change: "+10",
+    subtext: "From 0% (last 4 weeks)",
+    filter: "ongoing",
+  },
+  {
+    title: "Diamond Investment",
+    value: 43,
+    change: "+10",
+    subtext: "From 0% (last 4 weeks)",
+    filter: "completed",
+  },
+  {
+    title: "Gold Investment",
+    value: 43,
+    change: "+10",
+    subtext: "From 0% (last 4 weeks)",
+    filter: "completed",
+  },
 ];
 
-const images = [
-  { src: "/Rectangle 36.png", status: "completed" },
-  { src: "/Rectangle 36.svg", status: "ongoing" },
-  { src: "/Rectangle 6.svg", status: "completed" },
-  { src: "/Rectangle 5.svg", status: "completed" },
-  { src: "/Rectangle 4.svg", status: "completed" },
-  { src: "/Rectangle 3.svg", status: "completed" },
+const investments = [
+  {
+    id: "01",
+    name: "Cocoa Land",
+    image: "/Rectangle 36.png",
+    type: "Land",
+    investors: 100,
+    valuation: "₦8,000,000,000",
+    date: "08-01-2023",
+    status: "Completed",
+  },
+  {
+    id: "02",
+    name: "Cocoa Land",
+    image: "/Rectangle 5.svg",
+    type: "Apartment",
+    investors: 100,
+    valuation: "₦8,000,000,000",
+    date: "08-01-2023",
+    status: "Ongoing",
+  },
+  {
+    id: "03",
+    name: "Cocoa Land",
+    image: "/Rectangle 3.svg",
+    type: "Bungalow",
+    investors: 100,
+    valuation: "₦8,000,000,000",
+    date: "08-01-2023",
+    status: "Completed",
+  },
+  {
+    id: "04",
+    name: "Cocoa Land",
+    image: "/Rectangle 6.svg",
+    type: "Apartment",
+    investors: 100,
+    valuation: "₦8,000,000,000",
+    date: "08-01-2023",
+    status: "Completed",
+  },
+  {
+    id: "05",
+    name: "Cocoa Land",
+    image: "/Rectangle 5.svg",
+    type: "Apartment",
+    investors: 100,
+    valuation: "₦8,000,000,000",
+    date: "08-01-2023",
+    status: "Completed",
+  },
+  {
+    id: "06",
+    name: "Cocoa Land",
+    image: "/Rectangle 4.svg",
+    type: "Flat",
+    investors: 100,
+    valuation: "₦8,000,000,000",
+    date: "08-01-2023",
+    status: "Completed",
+  },
 ];
+
+const ActionDropdown = ({ onAction }) => (
+  <div className="absolute top-10 right-0 z-10 w-48 bg-white shadow-lg rounded-lg border border-gray-100">
+    <ul className="text-sm text-gray-800 py-2">
+      <li onClick={() => onAction("view")} className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-[#00644C]">View Details</li>
+      <li onClick={() => onAction("edit")} className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-[#00644C]">Edit Details</li>
+      <li onClick={() => onAction("status")} className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-[#00644C]">Edit Status</li>
+      <li onClick={() => onAction("unpublish")} className="px-4 py-2 hover:bg-gray-50 cursor-pointer text-red-600">Un-publish Investment</li>
+    </ul>
+  </div>
+);
 
 const Investment = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [dropdownIndex, setDropdownIndex] = useState(null);
+  const dropdownRef = useRef(null);
   const totalPages = 5;
-  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const handleExport = () => console.log("Export triggered");
-  const handleStatClick = (filterType) => setFilter(filterType);
-  const handlePrevious = () => currentPage > 1 && setCurrentPage(currentPage - 1);
-  const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
-  const toggleDropdown = (index) => setActiveDropdown(activeDropdown === index ? null : index);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownIndex(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredInvestments = filter === "all"
+    ? investments
+    : investments.filter((inv) => inv.status.toLowerCase() === filter);
+
+  const handleAction = (action, investment) => {
+    switch (action) {
+      case "view":
+        navigate(`/dashboard/investment/${investment.id}`);
+        break;
+      case "edit":
+        navigate(`/dashboard/edit-investment/${investment.id}`);
+        break;
+      case "status":
+        alert(`Edit status of "${investment.name}"`);
+        break;
+      case "unpublish":
+        const confirmed = window.confirm(`Un-publish "${investment.name}"?`);
+        if (confirmed) {
+          alert(`"${investment.name}" has been unpublished.`);
+          // TODO: API call or state update
+        }
+        break;
+      default:
+        break;
+    }
+  };
 
   const renderPageNumbers = () => {
-    const pages = [1, 2, 3, '...', totalPages];
+    const pages = [1, 2, 3, "...", totalPages];
     return (
       <div className="flex items-center gap-2">
-        {pages.map((page, index) => (
+        {pages.map((page, i) => (
           <span
-            key={index}
-            className={`text-sm ${currentPage === page ? 'text-[#00644C] font-semibold' : 'text-gray-700'} ${page === '...' ? 'cursor-default' : 'cursor-pointer'}`}
-            onClick={() => typeof page === 'number' && setCurrentPage(page)}
+            key={i}
+            onClick={() => typeof page === "number" && setCurrentPage(page)}
+            className={`text-sm ${
+              currentPage === page
+                ? "text-[#00644C] font-semibold"
+                : "text-gray-700"
+            } ${page === "..." ? "cursor-default" : "cursor-pointer"}`}
           >
             {page}
           </span>
@@ -51,18 +181,13 @@ const Investment = () => {
     );
   };
 
-  const filteredImages = filter === "all" ? images : images.filter(img => img.status === filter);
-
   return (
-    <div className="w-[1000px] h-[943px] pt-[24px] pr-[48px] pb-[24px] pl-[48px] bg-[#EEF2F1] flex flex-col gap-[24px] relative top-[2px] left-[238px]">
+    <div className="w-[1000px] min-h-[943px] p-6 bg-[#EEF2F1] flex flex-col gap-6 relative left-[238px]" ref={dropdownRef}>
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-gray-700">Investment</h2>
+        <h2 className="text-xl font-semibold text-[#4A4A4A]">Investment</h2>
         <div className="flex gap-3">
-          <button
-            onClick={handleExport}
-            className="flex items-center gap-2 text-[#00644C] text-sm px-4 py-2 rounded-2xl border bg-white"
-          >
+          <button className="flex items-center gap-2 text-[#00644C] text-sm px-4 py-2 rounded-2xl bg-white">
             <img src="/export.svg" alt="Export" className="w-4 h-4" />
             Export
           </button>
@@ -75,83 +200,87 @@ const Investment = () => {
         </div>
       </div>
 
-      {/* Stats Section */}
+      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {stats.map((stat, index) => {
+        {stats.map((stat, i) => {
           const isActive = filter === stat.filter;
           return (
             <div
-              key={index}
-              onClick={() => handleStatClick(stat.filter)}
-              className={`cursor-pointer p-5 rounded-2xl shadow-sm border transition duration-200 hover:shadow-md ${isActive ? "bg-green-900 text-white" : "bg-white text-black"}`}
+              key={i}
+              onClick={() => setFilter(stat.filter)}
+              className={`cursor-pointer p-5 rounded-2xl transition shadow-sm hover:shadow-md ${
+                isActive ? "bg-green-900 text-white" : "bg-white text-black"
+              }`}
             >
               <div className="text-sm font-medium mb-1">{stat.title}</div>
               <div className="text-3xl font-bold flex items-center justify-between">
                 {stat.value}
-                <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-[2px] rounded-full flex items-center gap-1">
+                <span
+                  className={`text-xs font-semibold px-2 py-[2px] rounded-full flex items-center gap-1 ${
+                    isActive
+                      ? "bg-green-200 text-green-800"
+                      : "bg-green-100 text-green-700"
+                  }`}
+                >
                   <FaArrowUp className="text-xs" />
                   {stat.change}
                 </span>
               </div>
-              <div className={`text-xs mt-1 ${isActive ? "text-white/70" : "text-gray-400"}`}>{stat.subtext}</div>
+              <div className={`text-xs mt-1 ${isActive ? "text-white/70" : "text-gray-400"}`}>
+                {stat.subtext}
+              </div>
             </div>
           );
         })}
       </div>
 
-      {/* Table Section */}
-      <div className="bg-white rounded-xl shadow-sm border overflow-auto mt-4">
+      {/* Table */}
+      <div className="bg-white rounded-xl overflow-auto">
         <table className="min-w-full text-sm">
           <thead className="bg-gray-100 text-gray-500">
             <tr>
               <th className="p-4 text-left">S/N</th>
               <th className="p-4 text-left">Name</th>
-              <th className="p-4 text-left">Type</th>
-              <th className="p-4 text-left">No. of investors</th>
-              <th className="p-4 text-left">Price (₦)</th>
+              <th className="p-4 text-left flex items-center">Type <IoFilter className="ml-1" /></th>
+              <th className="p-4 text-left">No. of Investors</th>
+              <th className="p-4 text-left">Total Valuation</th>
               <th className="p-4 text-left">Date Mod.</th>
-              <th className="p-4 text-left">Status</th>
+              <th className="p-4 text-left flex items-center">Status <IoFilter className="ml-1" /></th>
               <th className="p-4 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
-            {filteredImages.map((img, index) => (
+            {filteredInvestments.map((inv, index) => (
               <tr key={index} className="hover:bg-gray-50 relative">
-                <td className="p-4">0{index + 1}</td>
+                <td className="p-4">{inv.id}</td>
                 <td className="p-4 flex items-center gap-2">
-                  <img src={img.src} alt="property" className="h-8 w-8 rounded object-cover" />
-                  Cocoa Land
+                  <img src={inv.image} alt={inv.name} className="w-10 h-10 rounded object-cover" />
+                  {inv.name}
                 </td>
                 <td className="p-4">
-                  <span className="text-xs px-2 py-1 border rounded-full text-gray-600">
-                    {index % 2 === 0 ? "Apartment" : index % 3 === 0 ? "Flat" : "Bungalow"}
+                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+                    {inv.type}
                   </span>
                 </td>
-                <td className="p-4">100</td>
-                <td className="p-4">#8,000,000,000...</td>
-                <td className="p-4">08-01-2023</td>
+                <td className="p-4">{inv.investors}</td>
+                <td className="p-4 font-medium">{inv.valuation}</td>
+                <td className="p-4">{inv.date}</td>
                 <td className="p-4">
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium 
-                    ${img.status === "completed" ? "bg-[#ECFFEC] text-green-600" : 
-                      img.status === "ongoing" ? "bg-[#FFF9DB] text-yellow-600" : 
-                      "bg-gray-200 text-gray-500"}`}>
-                    {img.status.charAt(0).toUpperCase() + img.status.slice(1)}
+                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                    inv.status === "Ongoing" ? "bg-[#FFF9DB] text-yellow-600" : "bg-[#ECFFEC] text-green-600"
+                  }`}>
+                    {inv.status}
                   </span>
                 </td>
                 <td className="p-4 relative">
                   <FiMoreVertical
-                    className="text-gray-500 cursor-pointer"
-                    onClick={() => toggleDropdown(index)}
+                    className="text-gray-600 cursor-pointer"
+                    onClick={() =>
+                      setDropdownIndex(dropdownIndex === index ? null : index)
+                    }
                   />
-                  {activeDropdown === index && (
-                    <div className="absolute top-8 right-0 bg-white border border-gray-200 shadow-lg rounded-md w-48 z-50">
-                      <ul className="py-2 text-sm">
-                        <li className="px-4 py-2 hover:bg-gray-100 text-green-800 cursor-pointer">View Details</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 text-green-800 cursor-pointer">Edit Details</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 text-green-800 cursor-pointer">Edit Status</li>
-                        <li className="px-4 py-2 hover:bg-gray-100 text-red-600 cursor-pointer">Un-publish Investment</li>
-                      </ul>
-                    </div>
+                  {dropdownIndex === index && (
+                    <ActionDropdown onAction={(action) => handleAction(action, inv)} />
                   )}
                 </td>
               </tr>
@@ -161,21 +290,31 @@ const Investment = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center w-[760px] h-8 gap-12 p-4 text-sm text-gray-500 mb-8">
+      <div className="flex mt-4 text-sm text-gray-500">
         <div className="flex items-center gap-1">
           <span>10 Entries</span>
-          <RiArrowDownSFill className="text-lg" />
+          <RiArrowDownSFill className="w-6 h-6 gap-2" />
         </div>
-        <div className="flex items-center gap-2">
-          <span>Showing 1 to 10 of 95 entries.</span>
-          <div className="ml-24 flex items-center gap-2">
-            <button onClick={handlePrevious} disabled={currentPage === 1} className={`p-2 ${currentPage === 1 ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`}>
-              <RiArrowLeftSLine size={20} />
-            </button>
-            {renderPageNumbers()}
-            <button onClick={handleNext} disabled={currentPage === totalPages} className={`p-2 ${currentPage === totalPages ? "cursor-not-allowed opacity-50" : "hover:bg-gray-100"}`}>
-              <RiArrowRightSLine size={20} />
-            </button>
+        <div className="flex items-center gap-12 ml-12">
+          <span>Showing 1 to 10 of 95 entries</span>
+          <div className="flex gap-40">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`p-1 ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`}
+              >
+                <RiArrowLeftSLine size={20} />
+              </button>
+              {renderPageNumbers()}
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`p-1 ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`}
+              >
+                <RiArrowRightSLine size={20} />
+              </button>
+            </div>
           </div>
         </div>
       </div>

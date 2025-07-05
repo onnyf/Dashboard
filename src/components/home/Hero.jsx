@@ -5,9 +5,7 @@ import InvestmentChart from "../revenue/InvestmentChart";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Card = ({ children, className = "" }) => (
-  <div
-    className={`rounded-2xl bg-white p-4 shadow-sm hover:shadow-md transition ${className}`}
-  >
+  <div className={`rounded-2xl bg-white p-4 shadow-sm hover:shadow-md transition ${className}`}>
     {children}
   </div>
 );
@@ -17,32 +15,27 @@ const CardContent = ({ children }) => <div>{children}</div>;
 const Hero = () => {
   const [selectedDateRange, setSelectedDateRange] = useState("Jan-Feb 2025");
 
-  const statTitles = [
-    "Total Investment",
-    "Total Property Sold",
-    "All Users",
-    "All Orders",
+  const statData = [
+    { title: "Total Investment", value: "₦6.05B" },
+    { title: "Total Property Sold", value: "₦100.05M" },
+    { title: "All Users", value: "100" },
+    { title: "All Orders", value: "200" },
   ];
-  const statValues = ["₦6.05B", "₦100.05M", "100", "200"];
-
-  const handleDateChange = (e) => {
-    setSelectedDateRange(e.target.value);
-  };
 
   return (
     <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
-      {/* Header */}
+      {/* Top Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold text-gray-800">Welcome Admin</h1>
           <p className="text-sm text-gray-500">Here's a quick update for you</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600 rounded-full px-4 py-2 bg-white shadow">
+        <div className="flex items-center gap-2 text-sm text-gray-600 bg-white shadow rounded-full px-4 py-2">
           <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
           <select
             value={selectedDateRange}
-            onChange={handleDateChange}
-            className="bg-transparent focus:outline-none appearance-none pr-4"
+            onChange={(e) => setSelectedDateRange(e.target.value)}
+            className="bg-transparent focus:outline-none pr-4 appearance-none"
           >
             <option>Jan-Feb 2025</option>
             <option>Mar-Apr 2025</option>
@@ -51,33 +44,29 @@ const Hero = () => {
             <option>Sep-Oct 2025</option>
             <option>Nov-Dec 2025</option>
           </select>
-          <MdOutlineKeyboardArrowDown className="text-lg text-gray-500 -ml-4 pointer-events-none" />
+          <MdOutlineKeyboardArrowDown className="-ml-4 pointer-events-none text-lg text-gray-500" />
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4">
-        {statTitles.map((title, index) => (
-          <Card key={index}>
+      {/* Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        {statData.map((item, i) => (
+          <Card key={i}>
             <CardContent>
-              <p className="text-xs text-gray-500">{title}</p>
-              <div className="flex items-center justify-between mt-1">
-                <h2 className="text-lg font-semibold text-gray-800">
-                  {statValues[index]}
-                </h2>
+              <p className="text-xs text-gray-500">{item.title}</p>
+              <div className="flex justify-between items-center mt-1">
+                <h2 className="text-lg font-semibold text-gray-800">{item.value}</h2>
                 <span className="text-xs text-green-600 flex items-center gap-1">
                   <FaArrowUp size={10} /> +10
                 </span>
               </div>
-              <p className="text-[11px] text-gray-400 mt-1">
-                from 0% (last 4 weeks)
-              </p>
+              <p className="text-[11px] text-gray-400 mt-1">from 0% (last 4 weeks)</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Charts */}
+      {/* Charts Section */}
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-4">
         <Card className="xl:col-span-3 h-[430px]">
           <CardContent>
@@ -85,12 +74,12 @@ const Hero = () => {
               <h3 className="text-lg font-semibold text-gray-600 rounded-full px-6 py-1 bg-gray-50 w-fit">
                 Revenue Flow
               </h3>
-              <div className="flex items-center gap-2 text-sm text-gray-600 rounded-full px-4 py-1 bg-gray-50 shadow">
+              <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 shadow rounded-full px-4 py-1">
                 <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
                 <select
                   value={selectedDateRange}
-                  onChange={handleDateChange}
-                  className="bg-transparent focus:outline-none appearance-none pr-4"
+                  onChange={(e) => setSelectedDateRange(e.target.value)}
+                  className="bg-transparent focus:outline-none pr-4 appearance-none"
                 >
                   <option>Jan-Feb 2025</option>
                   <option>Mar-Apr 2025</option>
@@ -99,7 +88,7 @@ const Hero = () => {
                   <option>Sep-Oct 2025</option>
                   <option>Nov-Dec 2025</option>
                 </select>
-                <MdOutlineKeyboardArrowDown className="text-lg text-gray-500 -ml-4 pointer-events-none" />
+                <MdOutlineKeyboardArrowDown className="-ml-4 pointer-events-none text-lg text-gray-500" />
               </div>
             </div>
             <RevenueChart />
@@ -108,30 +97,28 @@ const Hero = () => {
 
         <Card className="xl:col-span-2 h-[430px]">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">
-              All Investments
-            </h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">All Investments</h3>
             <InvestmentChart />
           </CardContent>
         </Card>
       </div>
 
-      {/* Tables Section */}
+      {/* Tables */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-        {/* Signups Table */}
+        {/* Sign Ups Table */}
         <Card className="overflow-x-auto">
           <CardContent>
-            <div className="flex justify-between items-center mb-2">
-              <select className="text-sm rounded-full px-4  py-2 bg-gray-100 focus:outline-none shadow-sm   cursor-pointer ">
+            <div className="flex justify-between items-center mb-3">
+              <select className="text-sm rounded-full px-4 py-2 bg-gray-100 focus:outline-none shadow-sm cursor-pointer">
                 <option>Latest Sign ups</option>
                 <option>Top Investors</option>
                 <option>Recent Properties</option>
               </select>
             </div>
 
-            <div className="overflow-x-auto rounded-xl shadow border border-gray-100">
+            <div className="rounded-xl shadow border border-gray-100 overflow-x-auto">
               <table className="min-w-full text-sm">
-                <thead className="text-left text-gray-500 bg-gray-50">
+                <thead className="bg-gray-50 text-left text-gray-500">
                   <tr>
                     <th className="px-4 py-3 rounded-tl-lg">S/N</th>
                     <th className="px-4 py-3">Name</th>
@@ -140,26 +127,19 @@ const Hero = () => {
                     <th className="px-4 py-3 rounded-tr-lg">Status</th>
                   </tr>
                 </thead>
-
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-100 text-gray-700">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <tr key={i} className="hover:bg-gray-50 text-gray-700">
-                      <td className="px-4 py-4 whitespace-nowrap">0{i}</td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        Kingsley Alhaji
-                      </td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        Kingsley@gmail.com
-                      </td>
-                      <td className="px-4 py-4 whitespace-nowrap">08/01/25</td>
+                    <tr key={i} className="hover:bg-gray-50">
+                      <td className="px-4 py-4">0{i}</td>
+                      <td className="px-4 py-4">Kingsley Alhaji</td>
+                      <td className="px-4 py-4">Kingsley@gmail.com</td>
+                      <td className="px-4 py-4">08/01/25</td>
                       <td className="px-4 py-4">
-                        <span
-                          className={`text-xs px-2 py-1 rounded-full font-medium ${
-                            i % 2 === 0
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-green-100 text-green-700"
-                          }`}
-                        >
+                        <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                          i % 2 === 0
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-green-100 text-green-700"
+                        }`}>
                           {i % 2 === 0 ? "Pending" : "Verified"}
                         </span>
                       </td>
@@ -183,23 +163,16 @@ const Hero = () => {
             </div>
             <ul className="space-y-2">
               {[1200, 800, 640].map((unit, index) => (
-                <li
-                  key={index}
-                  className="flex justify-between items-center px-4 py-2 bg-white rounded shadow-sm"
-                >
+                <li key={index} className="flex justify-between items-center px-4 py-2 bg-white rounded shadow-sm">
                   <div className="flex items-center gap-3">
                     <img
                       src="/Rectangle 36.png"
                       alt="land"
                       className="w-8 h-8 rounded object-cover"
                     />
-                    <span className="text-sm font-medium text-gray-700">
-                      Cocoa Land
-                    </span>
+                    <span className="text-sm font-medium text-gray-700">Cocoa Land</span>
                   </div>
-                  <span className="font-semibold text-sm text-gray-800">
-                    {unit.toLocaleString()}
-                  </span>
+                  <span className="font-semibold text-sm text-gray-800">{unit.toLocaleString()}</span>
                 </li>
               ))}
             </ul>

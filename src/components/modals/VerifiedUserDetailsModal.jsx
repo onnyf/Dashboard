@@ -6,7 +6,7 @@ const VerifiedUserDetailsModal = ({ user, onClose }) => {
   if (!user) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm px-4 mt-6">
       <div className="w-[880px] max-w-full bg-white rounded-2xl shadow-xl p-6 relative">
         {/* Close Button */}
         <button

@@ -101,7 +101,7 @@ const Transactions = () => {
                 setCurrentPage(1);
               }}
               className={`rounded-xl cursor-pointer transition duration-200 overflow-hidden ${
-                isActive ? "bg-green-900 text-white" : "bg-white text-[#101928]"
+                isActive ? "bg-[#003F30] text-white" : "bg-white text-[#101928]"
               }`}
               style={{
                 height: "107px",

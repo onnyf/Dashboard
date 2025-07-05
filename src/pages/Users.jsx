@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import { FiMoreVertical } from "react-icons/fi";
-import { TbArrowDownFromArc } from "react-icons/tb";
+import { TbArrowDownFromArc, TbArrowsUpDown } from "react-icons/tb";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import UserDetailsModal from "../components/modals/UserDetailsModal";
+import { IoFilter } from "react-icons/io5";
 
 const stats = [
   { title: "All Users", value: 1043, filter: "all" },
@@ -20,9 +21,8 @@ const allUsers = Array.from({ length: 95 }, (_, i) => ({
   status: i % 2 === 0 ? "Verified" : "Pending",
 }));
 
-const User = () => {
+const Users = () => {
   const [activeFilter, setActiveFilter] = useState("all");
-  const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
   const [actionMenu, setActionMenu] = useState({
@@ -92,11 +92,9 @@ const User = () => {
         closeActionMenu();
       }
     };
-
     if (actionMenu.open) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -105,7 +103,7 @@ const User = () => {
   return (
     <div className="min-h-screen bg-[#EEF2F1] pt-[30px] px-4 md:pl-[268px] md:pr-6 pb-6 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm gap-2">
-        <p className="font-medium">All users</p>
+        <p className="text-[20px] font-[400]">All users</p>
         <button className="flex gap-2 items-center text-[#00644C] px-3 py-2 bg-white rounded-full shadow-sm">
           <TbArrowDownFromArc className="text-lg" />
           Export
@@ -148,31 +146,39 @@ const User = () => {
         })}
       </div>
 
-      <div className="bg-white rounded-xl px-4 shadow-sm overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="text-gray-600">
-            <tr className="text-xs font-medium bg-[#FAFBFB]">
-              <th className="py-2">S/N</th>
-              <th className="py-2">Name</th>
-              <th className="py-2">Email address</th>
-              <th className="py-2">Phone number</th>
-              <th className="py-2">Date Reg.</th>
-              <th className="py-2">Status</th>
-              <th className="py-2 text-right">Action</th>
+      <div className="overflow-x-auto rounded-xl shadow border border-gray-100">
+        <table className="min-w-full text-sm">
+          <thead className="text-left text-gray-500 bg-[#FAFBFB]">
+            <tr>
+              <th className="px-4 py-3 rounded-tl-lg">S/N</th>
+              <th className="px-4 py-3 flex items-center gap-1">
+                Name <TbArrowsUpDown />
+              </th>
+              <th className="px-4 py-3">Email address</th>
+              <th className="px-4 py-3">Phone number</th>
+              <th className="px-4 py-3 flex items-center gap-1">
+                Date Reg. <TbArrowsUpDown />
+              </th>
+              <th className="px-4 py-3">
+                <div className="flex items-center gap-1">
+                  Status <IoFilter className="text-gray-400" />
+                </div>
+              </th>
+              <th className="px-4 py-3 rounded-tr-lg">Action</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700">
+          <tbody className="divide-y divide-gray-100 text-gray-700">
             {paginatedUsers.map((user, index) => (
               <tr
                 key={index}
-                className="border-b border-gray-100 hover:bg-gray-50"
+                className="hover:bg-gray-50 transition-colors duration-150"
               >
-                <td className="py-4">{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-                <td>{user.date}</td>
-                <td>
+                <td className="px-4 py-3">{user.id}</td>
+                <td className="px-4 py-3">{user.name}</td>
+                <td className="px-4 py-3">{user.email}</td>
+                <td className="px-4 py-3">{user.phone}</td>
+                <td className="px-4 py-3">{user.date}</td>
+                <td className="px-4 py-3">
                   <span
                     className={`text-xs px-2 py-1 rounded-full font-medium ${
                       user.status === "Verified"
@@ -180,15 +186,15 @@ const User = () => {
                         : "bg-yellow-100 text-yellow-700"
                     }`}
                   >
-                    {user.status === "Verified" ? "Verified" : "Pending"}
+                    {user.status}
                   </span>
                 </td>
-                <td className="text-right">
+                <td className="px-4 py-3 text-right">
                   <button
                     onClick={(e) => handleActionClick(e, user.id)}
                     className="text-gray-600 hover:text-gray-900"
                   >
-                    <FiMoreVertical />
+                    <FiMoreVertical className="text-xl" />
                   </button>
                 </td>
               </tr>
@@ -197,14 +203,14 @@ const User = () => {
         </table>
       </div>
 
+      {/* Pagination */}
       <div className="flex flex-col md:flex-row text-sm mt-6 text-gray-600 gap-3">
         <span>{itemsPerPage} Entries ▼</span>
         <div className="flex items-center ml-4">
           <span>
-            Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(
-              currentPage * itemsPerPage,
-              totalItems
-            )} of {totalItems} entries.
+            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+            {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{" "}
+            entries.
           </span>
           <div className="flex items-center gap-1 ml-40">
             <button
@@ -218,7 +224,9 @@ const User = () => {
             </button>
             {buildPages().map((n, idx) =>
               n === "..." ? (
-                <span key={idx} className="px-2">...</span>
+                <span key={idx} className="px-2">
+                  ...
+                </span>
               ) : (
                 <button
                   key={idx}
@@ -248,6 +256,7 @@ const User = () => {
         </div>
       </div>
 
+      {/* Action Dropdown */}
       {actionMenu.open && (
         <div
           ref={actionMenuRef}
@@ -275,6 +284,7 @@ const User = () => {
         </div>
       )}
 
+      {/* Modal */}
       {selectedUser && (
         <UserDetailsModal
           user={selectedUser}
@@ -285,4 +295,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Users;
