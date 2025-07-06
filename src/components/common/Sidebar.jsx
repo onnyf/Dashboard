@@ -35,7 +35,7 @@ const Sidebar = () => {
     },
     {
       label: "Users",
-      path: "/dashboard/users",
+      path: "/dashboard/user",
       icon: <HiMiniUserGroup className="text-lg" />,
     },
     {

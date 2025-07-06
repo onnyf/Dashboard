@@ -21,7 +21,7 @@ const allUsers = Array.from({ length: 95 }, (_, i) => ({
   status: i % 2 === 0 ? "Verified" : "Pending",
 }));
 
-const Users = () => {
+const User = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -295,4 +295,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default User;
