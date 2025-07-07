@@ -103,7 +103,7 @@ const Sidebar = () => {
 
           <button
             onClick={handleLogout}
-            className="flex items-center justify-center gap-2 w-full border border-[#91BBAE] rounded-md py-2 text-sm hover:bg-[#014d3a] transition"
+            className="flex items-center justify-center gap-2 w-full border  border-[#FFFFFF] rounded-md py-4 text-sm hover:bg-[#014d3a] transition"
           >
             <FaSignOutAlt size={16} />
             Log Out
