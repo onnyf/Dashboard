@@ -71,70 +71,78 @@ const Withdrawals = () => {
     document.body.removeChild(link);
   };
 
+  const handleRetry = (item) => {
+    alert(`Retrying withdrawal for ${item.investor.name}`);
+    // Add your actual retry logic here (e.g., API call)
+  };
+
   return (
-    <div className="absolute bg-[#EEF2F1] w-full max-w-[980px] top-[72px] left-[282px] px-8 py-6 space-y-6 overflow-y-auto overflow-x-hidden rounded-lg shadow">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Disbursement Portal</h1>
+    <div className="relative bg-[#EEF2F1] w-full px-4 py-6 space-y-6 overflow-x-auto rounded-lg shadow md:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-xl md:text-2xl font-semibold">Disbursement Portal</h1>
         <button
           onClick={handleExport}
-          className="flex items-center gap-2  text-[#00644C] text-sm px-4 py-2 rounded-2xl border bg-white"
+          className="flex items-center gap-2 text-[#00644C] text-sm px-4 py-2 rounded-2xl border bg-white"
         >
           <img src="/export.svg" alt="Export" className="w-4 h-4" />
           Export
         </button>
       </div>
 
-      <div className="overflow-x-auto bg-white rounded-lg shadow-sm">
-        <table className="w-full text-sm text-left text-gray-700">
+      <div className="overflow-auto bg-white rounded-lg shadow-sm">
+        <table className="min-w-full text-sm text-left text-gray-700">
           <thead className="border-b border-gray-300 bg-gray-50">
             <tr>
-              <th className="py-3 px-4 font-semibold whitespace-nowrap">S/N</th>
-              <th className="py-3 px-4 font-semibold whitespace-nowrap">
+              <th className="py-3 px-4 font-semibold">S/N</th>
+              <th className="py-3 px-4 font-semibold">
                 <div className="flex items-center justify-between">
                   <span>Investor's Details</span>
                   <TbArrowsUpDown className="ml-2 text-gray-500" />
                 </div>
               </th>
-              <th className="py-3 px-4 font-semibold whitespace-nowrap">Investment Details</th>
-              <th className="py-3 px-4 font-semibold whitespace-nowrap">Total Amount (M)</th>
-              <th className="py-3 px-4 font-semibold whitespace-nowrap">
+              <th className="py-3 px-4 font-semibold">Investment Details</th>
+              <th className="py-3 px-4 font-semibold">Total Amount (M)</th>
+              <th className="py-3 px-4 font-semibold">
                 <div className="flex items-center justify-between">
                   <span>Vested Date</span>
                   <TbArrowsUpDown className="ml-2 text-gray-500" />
                 </div>
               </th>
-              <th className="py-3 px-4 font-semibold whitespace-nowrap">Status</th>
-              <th className="py-3 px-4 font-semibold whitespace-nowrap">Action</th>
+              <th className="py-3 px-4 font-semibold">Status</th>
+              <th className="py-3 px-4 font-semibold">Action</th>
             </tr>
           </thead>
           <tbody>
             {data.map((item) => (
-              <tr key={item.sn} className="border-b border-gray-200 bg-white">
-                <td className="py-3 px-4 font-medium whitespace-nowrap">{item.sn}</td>
-                <td className="py-3 px-4 whitespace-nowrap">
+              <tr key={item.sn} className="border-b border-gray-200">
+                <td className="py-3 px-4 font-medium">{item.sn}</td>
+                <td className="py-3 px-4">
                   <div className="font-medium">{item.investor.name}</div>
                   <div className="text-xs text-gray-500">{item.investor.email}</div>
                   <div className="text-xs text-gray-500">{item.investor.phone}</div>
                   <div className="text-xs text-gray-500">Bank: {item.investor.bank}</div>
                   <div className="text-xs text-gray-500">Acct No: {item.investor.account}</div>
                 </td>
-                <td className="py-3 px-4 whitespace-nowrap">
+                <td className="py-3 px-4">
                   <div>{item.investment}</div>
                   <div className="text-xs text-gray-500">{item.plan}</div>
                 </td>
-                <td className="py-3 px-4 whitespace-nowrap">{item.totalAmount}</td>
-                <td className="py-3 px-4 whitespace-nowrap">{item.vestedDate}</td>
-                <td className="py-3 px-4 whitespace-nowrap">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-xs font-semibold rounded-full w-fit">
+                <td className="py-3 px-4">{item.totalAmount}</td>
+                <td className="py-3 px-4">{item.vestedDate}</td>
+                <td className="py-3 px-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-xs font-semibold rounded-full">
                     <img src="/verify.png" alt="Verified" className="w-4 h-4" />
                     {item.status}
                   </div>
                 </td>
-                <td className="py-3 px-4 whitespace-nowrap">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 text-[#00644C] text-xs font-semibold rounded-full w-fit border border-green-200">
+                <td className="py-3 px-4">
+                  <button
+                    onClick={() => handleRetry(item)}
+                    className="inline-flex items-center gap-2 px-3 py-1 text-[#00644C] text-xs font-semibold rounded-full border border-green-200 hover:bg-green-50"
+                  >
                     <img src="/History.svg" alt="Retry" className="w-4 h-4" />
-                    <span>Retry</span>
-                  </div>
+                    Retry
+                  </button>
                 </td>
               </tr>
             ))}
@@ -143,12 +151,12 @@ const Withdrawals = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-col md:flex-row justify-between items-center pt-3 border-t border-gray-300">
-        <div className="mb-3 md:mb-0 flex items-center text-gray-600">
+      <div className="flex flex-col lg:flex-row justify-between items-center pt-3 border-t border-gray-300 gap-3 text-xs sm:text-sm">
+        <div className="flex items-center text-gray-600">
           <span>10 Entries</span>
           <span className="ml-1">▼</span>
         </div>
-        <div className="mb-3 md:mb-0 text-gray-600">Showing 1 to 10 of 95 entries</div>
+        <div className="text-gray-600">Showing 1 to 10 of 95 entries</div>
         <div className="flex items-center space-x-1">
           <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded">&lt;</button>
           <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded font-medium">1</button>

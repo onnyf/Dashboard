@@ -112,7 +112,7 @@ const Properties = () => {
 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
   {stats.map((stat, index) => {
     const isActive = filter === stat.filter;
-    const cardBg = isActive ? "bg-green-900" : "bg-white";
+    const cardBg = isActive ? "bg-[#003F30]" : "bg-white";
     const cardText = isActive ? "text-white" : "text-black";
     const subTextColor = isActive ? "text-white/70" : "text-gray-400";
 

@@ -22,7 +22,7 @@ const data = [
 const RevenueChart = () => {
   return (
     // Removed absolute positioning from here and managed it in Hero.jsx
-    <div className="bg-white rounded-xl shadow-sm p-4 w-full max-w-md mx-auto">
+    <div className="bg-white rounded-xl shadow-sm p-4 w-full max-w-md mx-auto mr-20">
       
       <div className="w-full h-72">
         <ResponsiveContainer width="100%" height="100%">

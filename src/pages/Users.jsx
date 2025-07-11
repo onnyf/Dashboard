@@ -117,7 +117,7 @@ const User = () => {
             <div
               key={i}
               className={`p-4 rounded-lg shadow-sm cursor-pointer transition ${
-                isActive ? "bg-green-900 text-white" : "bg-white text-gray-900"
+                isActive ? "bg-[#003F30] text-white" : "bg-white text-gray-900"
               }`}
               onClick={() => setActiveFilter(stat.filter)}
             >
@@ -146,14 +146,14 @@ const User = () => {
         })}
       </div>
 
-      <div className="overflow-x-auto rounded-xl shadow border border-gray-100">
+      <div className="overflow-x-auto rounded-xl shadow border border-[#FAFBFB] bg[#FAFBFB]">
         <table className="min-w-full text-sm">
-          <thead className="text-left text-gray-500 bg-[#FAFBFB]">
+          <thead className="text-left text-[#606060] bg-[#FFFFFF]">
             <tr>
               <th className="px-4 py-3 rounded-tl-lg">S/N</th>
               <th className="px-4 py-3 flex items-center gap-1">
                 Name <TbArrowsUpDown />
-              </th>
+              </th> 
               <th className="px-4 py-3">Email address</th>
               <th className="px-4 py-3">Phone number</th>
               <th className="px-4 py-3 flex items-center gap-1">

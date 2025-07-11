@@ -1,12 +1,13 @@
 // Sidebar.js
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaSignOutAlt } from "react-icons/fa";
+import { TbArrowRightToArc } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
+import { FiMenu } from "react-icons/fi";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -63,10 +64,13 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="hidden md:flex flex-col fixed top-0 left-0 w-[268px] min-h-screen bg-[#003A2B] text-white px-5 py-6 z-30 shadow-md overflow-y-auto">
-        {/* Logo */}
-        <div className="flex items-center justify-center mb-10">
+      <div className={`fixed top-0 left-0 w-[268px] min-h-screen bg-[#003A2B] text-white px-5 py-6 z-50 shadow-md overflow-y-auto transform transition-transform duration-300 md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        {/* Logo + Close for mobile */}
+        <div className="flex items-center justify-between mb-10">
           <img src="/Group.svg" alt="Caerus" className="h-6" />
+          <button className="md:hidden" onClick={toggleSidebar}>
+            <IoMdClose className="text-white text-xl" />
+          </button>
         </div>
 
         {/* Navigation */}
@@ -91,34 +95,43 @@ const Sidebar = () => {
         <div className="mt-10 space-y-4">
           <div
             onClick={() => setShowModal(true)}
-            className="border border-dashed border-[#91BBAE] p-3 rounded-md text-center cursor-pointer hover:bg-[#014d3a] transition text-sm w-[234px] h-[120px]"
+            className="border border-dashed border-[#91BBAE] p-3 rounded-md text-center cursor-pointer hover:bg-[#014d3a] transition text-sm"
           >
             <img
               src="/Properties (1).svg"
               alt=""
-              className="mx-auto py-2 mt-4 "
+              className="mx-auto py-2 mt-4"
             />
             <span>Add a Property/Investment</span>
           </div>
 
           <button
             onClick={handleLogout}
-            className="flex items-center justify-center gap-2 w-full border  border-[#FFFFFF] rounded-md py-4 text-sm hover:bg-[#014d3a] transition"
+            className="flex items-center justify-center text-[#FFCDCD] gap-2 w-full border border-[#FFFFFF] rounded-md py-4 text-sm hover:bg-[#014d3a] transition"
           >
-            <FaSignOutAlt size={16} />
+            <TbArrowRightToArc size={16} />
             Log Out
           </button>
         </div>
       </div>
 
+      {/* Mobile Menu Toggle Button */}
+      <button
+        className="fixed top-4 left-4 z-50 p-2 bg-[#00644C] text-white rounded-md shadow-md md:hidden"
+        onClick={toggleSidebar}
+      >
+        <FiMenu size={22} />
+      </button>
+
+      {/* Modals and Forms */}
       {showModal && (
         <div
           className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center"
-          onClick={() => setShowModal(false)} // clicking backdrop closes modal
+          onClick={() => setShowModal(false)}
         >
           <div
             className="bg-white p-6 rounded-2xl shadow-lg w-[360px] relative"
-            onClick={(e) => e.stopPropagation()} // clicking inside modal won't close
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setShowModal(false)}
@@ -127,7 +140,7 @@ const Sidebar = () => {
               <IoMdClose size={20} className="text-gray-500 hover:text-black" />
             </button>
 
-            <h3 className="text-sm font-semibold mb-6 ">
+            <h3 className="text-sm font-semibold mb-6">
               What would you like to add?
             </h3>
 
@@ -137,12 +150,10 @@ const Sidebar = () => {
                   setShowForm("property");
                   setShowModal(false);
                 }}
-                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition w-50"
+                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition"
               >
                 <img src="/Apartment.svg" alt="Apartment" className="w-8 h-8" />
-                <span className="text-sm whitespace-nowrap">
-                  Add an Investment
-                </span>
+                <span className="text-sm whitespace-nowrap">Add an Investment</span>
               </button>
 
               <button
@@ -150,13 +161,9 @@ const Sidebar = () => {
                   setShowForm("investment");
                   setShowModal(false);
                 }}
-                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition w-50"
+                className="flex flex-col items-center gap-2 border rounded-lg p-4 hover:shadow-md transition"
               >
-                <img
-                  src="/Investment.svg"
-                  alt="Investment"
-                  className="w-8 h-8"
-                />
+                <img src="/Investment.svg" alt="Investment" className="w-8 h-8" />
                 <span className="text-sm">Add Investment</span>
               </button>
             </div>
@@ -167,12 +174,12 @@ const Sidebar = () => {
       {showForm && (
         <div
           className="fixed inset-0 bg-black/40 z-50 flex justify-end items-start pt-20 pr-10"
-          onClick={() => setShowForm(null)} // backdrop click closes modal
+          onClick={() => setShowForm(null)}
         >
           <form
             onSubmit={handleFormSubmit}
             className="bg-white w-[360px] rounded-xl p-6 relative bottom-14 overflow-y-auto max-h-[90vh]"
-            onClick={(e) => e.stopPropagation()} // prevents click inside form from closing modal
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">

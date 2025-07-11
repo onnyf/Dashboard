@@ -9,6 +9,7 @@ const Header = () => {
   const [adminName, setAdminName] = useState("Admin");
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(3); 
   const dropdownRef = useRef();
   const notificationsRef = useRef();
   const navigate = useNavigate();
@@ -47,13 +48,13 @@ const Header = () => {
       {/* Search Input */}
       <div className="flex-1 max-w-md">
         <div className="relative">
-          <span className="absolute inset-y-0 left-3 flex items-center text-gray-400 text-lg">
+          <span className="absolute inset-y-0 left-3 flex items-center text-[#D2D2D2] text-lg">
             <RiSearch2Line />
           </span>
           <input
             type="text"
             placeholder="Search for any member and properties"
-            className="w-full h-[44px] pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 text-sm"
+            className="w-full h-[44px] pl-10 pr-4 py-2 border border-gray-300 text-[#D2D2D2] rounded-full focus:outline-none text-sm"
           />
         </div>
       </div>
@@ -63,17 +64,21 @@ const Header = () => {
         {/* Notification Bell */}
         <button
           onClick={() => setShowNotifications(!showNotifications)}
-          className="relative flex items-center justify-center w-10 h-10 rounded-xl border border-gray-300 hover:bg-gray-100"
+          className="relative flex items-center justify-center w-10 h-10 rounded-xl border border-[#E8E8E8]"
         >
           <GoBell className="text-gray-700 text-xl" />
-          <span className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+          {notificationCount > 0 && (
+            <span className="absolute -top-0 -right-0 bg-[#920E0E] text-white text-[10px] font-semibold px-[6px] py-[1px] rounded-full mb-2">
+              {notificationCount}
+            </span>
+          )}
         </button>
 
         {/* Notifications Dropdown */}
         {showNotifications && (
           <div
             ref={notificationsRef}
-            className="absolute top-14 right-8 w-[380px] h-[500px] bg-white  rounded-[24px] shadow-lg z-50 overflow-y-auto"
+            className="absolute top-14 right-8 w-[380px] h-[500px] bg-white rounded-[24px] shadow-lg z-50 overflow-y-auto"
           >
             <div className="w-full h-[80px] bg-[#FAFAFA] px-6 flex items-center justify-between rounded-t-[24px]">
               <h2 className="text-lg font-semibold">Notifications</h2>
@@ -85,7 +90,7 @@ const Header = () => {
 
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <div className="text-6xl text-yellow-600">
-                <GoBell />
+                <GoBell  />
               </div>
               <p className="mt-4 font-medium">No Notifications!</p>
               <p className="text-gray-400 text-sm">It is still empty here!</p>
@@ -97,19 +102,19 @@ const Header = () => {
         <div ref={dropdownRef} className="relative">
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="flex items-center border border-gray-300 rounded-lg px-3 py-2 gap-2 hover:bg-gray-50 transition"
+            className="flex items-center border border-[#E8E8E8] rounded-lg px-3 py-2 gap-2 hover:bg-gray-50 transition"
           >
-            <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center text-white text-sm">
+            <div className="w-6 h-6 rounded-full bg-[#333333] flex items-center justify-center text-white text-sm">
               {initials}
             </div>
-            <span className="text-sm font-medium text-gray-800 hidden sm:block">
+            <span className="text-sm font-medium text-[#000000] hidden sm:block">
               {adminName}
             </span>
             <MdOutlineKeyboardArrowDown className="text-gray-500" />
           </button>
 
           {showDropdown && (
-            <div className="absolute top-[60px] right-0 bg-white shadow-md border rounded-md w-48 z-50">
+            <div className="absolute top-[60px] right-0 bg-white shadow-md border-[#E8E8E8] rounded-md w-48 z-50">
               <ul className="text-sm text-gray-700">
                 <li
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"

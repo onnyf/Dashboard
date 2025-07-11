@@ -23,44 +23,44 @@ const Hero = () => {
   ];
 
   return (
-    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
+    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen ml-4">
       {/* Top Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-semibold text-gray-800">Welcome Admin</h1>
-          <p className="text-sm text-gray-500">Here's a quick update for you</p>
+          <h1 className="text-[16px] font-semibold text-[#4A4A4A]">Welcome Admin</h1>
+          <p className="text-[14px] font-normal text-[#4A4A4A]">Here's a quick update for you</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-600 bg-white shadow rounded-full px-4 py-2">
+        <div className="w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2">
           <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
           <select
             value={selectedDateRange}
             onChange={(e) => setSelectedDateRange(e.target.value)}
             className="bg-transparent focus:outline-none pr-4 appearance-none"
           >
-            <option>Jan-Feb 2025</option>
-            <option>Mar-Apr 2025</option>
-            <option>May-Jun 2025</option>
-            <option>Jul-Aug 2025</option>
-            <option>Sep-Oct 2025</option>
-            <option>Nov-Dec 2025</option>
+            <option>January 2025-February 2025</option>
+            <option>March 2025-April 2025</option>
+            <option>May 2025-June 2025</option>
+            <option>July 2025-August 2025</option>
+            <option>September 2025-October 2025</option>
+            <option>November 2025-December 2025</option>
           </select>
-          <MdOutlineKeyboardArrowDown className="-ml-4 pointer-events-none text-lg text-gray-500" />
+          <MdOutlineKeyboardArrowDown className="-ml-4 pointer-events-none text-lg text-[#606060]" />
         </div>
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {statData.map((item, i) => (
           <Card key={i}>
             <CardContent>
-              <p className="text-xs text-gray-500">{item.title}</p>
+              <p className="text-xs text-[#4A4A4A]">{item.title}</p>
               <div className="flex justify-between items-center mt-1">
-                <h2 className="text-lg font-semibold text-gray-800">{item.value}</h2>
-                <span className="text-xs text-green-600 flex items-center gap-1">
+                <h2 className="text-lg font-semibold text-[#4A4A4A]">{item.value}</h2>
+                <span className="w-[40px] h-[24px] text-xs text-[#008000] rounded-full bg-[#EBFFEB] flex items-center gap-1 justify-center">
                   <FaArrowUp size={10} /> +10
                 </span>
               </div>
-              <p className="text-[11px] text-gray-400 mt-1">from 0% (last 4 weeks)</p>
+              <p className="text-[11px] text-[#9CA3AF] mt-1">from 0% (last 4 weeks)</p>
             </CardContent>
           </Card>
         ))}
@@ -71,22 +71,22 @@ const Hero = () => {
         <Card className="xl:col-span-3 h-[430px]">
           <CardContent>
             <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
-              <h3 className="text-lg font-semibold text-gray-600 rounded-full px-6 py-1 bg-gray-50 w-fit">
+              <h3 className="text-[14px] text-[#9CA3AF] rounded-full px-6 py-1 bg-gray-50 w-fit">
                 Revenue Flow
               </h3>
-              <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 shadow rounded-full px-4 py-1">
+              <div className="w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 shadow rounded-full px-4 py-1">
                 <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
                 <select
                   value={selectedDateRange}
                   onChange={(e) => setSelectedDateRange(e.target.value)}
                   className="bg-transparent focus:outline-none pr-4 appearance-none"
                 >
-                  <option>Jan-Feb 2025</option>
-                  <option>Mar-Apr 2025</option>
-                  <option>May-Jun 2025</option>
-                  <option>Jul-Aug 2025</option>
-                  <option>Sep-Oct 2025</option>
-                  <option>Nov-Dec 2025</option>
+                  <option>January 2025-February 2025</option>
+                  <option>March 2025-April 2025</option>
+                  <option>May 2025-June 2025</option>
+                  <option>July-August 2025</option>
+                  <option>September 2025-October 2025</option>
+                  <option>November 2025-December 2025</option>
                 </select>
                 <MdOutlineKeyboardArrowDown className="-ml-4 pointer-events-none text-lg text-gray-500" />
               </div>
@@ -104,11 +104,11 @@ const Hero = () => {
       </div>
 
       {/* Tables */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+      <div className=" grid grid-cols-1 xl:grid-cols-2 gap-4">
         {/* Sign Ups Table */}
-        <Card className="overflow-x-auto">
+        <Card>
           <CardContent>
-            <div className="flex justify-between items-center mb-3">
+            <div className="w-[800px] flex justify-between items-center mb-3">
               <select className="text-sm rounded-full px-4 py-2 bg-gray-100 focus:outline-none shadow-sm cursor-pointer">
                 <option>Latest Sign ups</option>
                 <option>Top Investors</option>
@@ -116,43 +116,48 @@ const Hero = () => {
               </select>
             </div>
 
-            <div className="rounded-xl shadow border border-gray-100 overflow-x-auto">
-              <table className="min-w-full text-sm">
-                <thead className="bg-gray-50 text-left text-gray-500">
-                  <tr>
-                    <th className="px-4 py-3 rounded-tl-lg">S/N</th>
-                    <th className="px-4 py-3">Name</th>
-                    <th className="px-4 py-3">Email address</th>
-                    <th className="px-2 py-3">Date Reg.</th>
-                    <th className="px-4 py-3 rounded-tr-lg">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100 text-gray-700">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <tr key={i} className="hover:bg-gray-50">
-                      <td className="px-4 py-4">0{i}</td>
-                      <td className="px-4 py-4">Kingsley Alhaji</td>
-                      <td className="px-4 py-4">Kingsley@gmail.com</td>
-                      <td className="px-4 py-4">08/01/25</td>
-                      <td className="px-4 py-4">
-                        <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                          i % 2 === 0
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-green-100 text-green-700"
-                        }`}>
-                          {i % 2 === 0 ? "Pending" : "Verified"}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+           <div className="w-full rounded-xl shadow border border-gray-100 bg-white">
+  <table className="w-full text-sm table-auto">
+    <thead className="bg-gray-50 text-left text-gray-500">
+      <tr>
+        <th className="px-4 py-3 rounded-tl-lg">S/N</th>
+        <th className="px-4 py-3">Name</th>
+        <th className="px-4 py-3">Email Address</th>
+        <th className="px-4 py-3">Date Reg.</th>
+        <th className="px-4 py-3 rounded-tr-lg">Status</th>
+      </tr>
+    </thead>
+    <tbody className="divide-y divide-gray-100 text-[#4A4A4A]">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <tr key={i} className="hover:bg-gray-50">
+          <td className="px-4 py-4">0{i}</td>
+          <td className="px-4 py-4 font-medium">Kingsley Alhaji</td>
+          <td className="px-4 py-4 break-words">Kingsley@gmail.com</td>
+          <td className="px-4 py-4">08/01/25</td>
+          <td className="px-4 py-4">
+            {i % 2 === 0 ? (
+              <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-yellow-100 text-[#DE940B]">
+                <img src="/clock.svg" alt="pending" className="w-3 h-3" />
+                Pending
+              </span>
+            ) : (
+              <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-green-100 text-[#008000]">
+                <img src="/verify.png" alt="verified" className="w-3 h-3" />
+                Verified
+              </span>
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
           </CardContent>
         </Card>
 
         {/* Top Investments */}
-        <Card className="overflow-y-auto max-h-[300px]">
+        <Card className="w-[370px] overflow-y-auto max-h-[300px] ml-24">
           <CardContent>
             <h3 className="text-lg font-semibold mb-3 text-gray-800">
               Top Performing Investments

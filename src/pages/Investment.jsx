@@ -209,7 +209,7 @@ const Investment = () => {
               key={i}
               onClick={() => setFilter(stat.filter)}
               className={`cursor-pointer p-5 rounded-2xl transition shadow-sm hover:shadow-md ${
-                isActive ? "bg-green-900 text-white" : "bg-white text-black"
+                isActive ? "bg-[#003F30] text-white" : "bg-white text-black"
               }`}
             >
               <div className="text-sm font-medium mb-1">{stat.title}</div>
