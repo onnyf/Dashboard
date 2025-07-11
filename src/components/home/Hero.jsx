@@ -67,8 +67,8 @@ const Hero = () => {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-5 gap-4">
-        <Card className="xl:col-span-3 h-[430px]">
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 max-w-[1320px]">
+        <Card className="xl:col-span-3 h-[445px]">
           <CardContent>
             <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
               <h3 className="text-[14px] text-[#9CA3AF] rounded-full px-6 py-1 bg-gray-50 w-fit">
@@ -95,7 +95,7 @@ const Hero = () => {
           </CardContent>
         </Card>
 
-        <Card className="xl:col-span-2 h-[430px]">
+        <Card className="xl:col-span-2 h-[445px]">
           <CardContent>
             <h3 className="text-lg font-semibold mb-4 text-gray-800">All Investments</h3>
             <InvestmentChart />
@@ -104,11 +104,11 @@ const Hero = () => {
       </div>
 
       {/* Tables */}
-      <div className=" grid grid-cols-1 xl:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 max-w-[1320px]">
         {/* Sign Ups Table */}
-        <Card>
+        <Card className="xl:col-span-2">
           <CardContent>
-            <div className="w-[800px] flex justify-between items-center mb-3">
+            <div className="flex justify-between items-center mb-3">
               <select className="text-sm rounded-full px-4 py-2 bg-gray-100 focus:outline-none shadow-sm cursor-pointer">
                 <option>Latest Sign ups</option>
                 <option>Top Investors</option>
@@ -116,52 +116,49 @@ const Hero = () => {
               </select>
             </div>
 
-           <div className="w-full rounded-xl shadow border border-gray-100 bg-white">
-  <table className="w-full text-sm table-auto">
-    <thead className="bg-gray-50 text-left text-gray-500">
-      <tr>
-        <th className="px-4 py-3 rounded-tl-lg">S/N</th>
-        <th className="px-4 py-3">Name</th>
-        <th className="px-4 py-3">Email Address</th>
-        <th className="px-4 py-3">Date Reg.</th>
-        <th className="px-4 py-3 rounded-tr-lg">Status</th>
-      </tr>
-    </thead>
-    <tbody className="divide-y divide-gray-100 text-[#4A4A4A]">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <tr key={i} className="hover:bg-gray-50">
-          <td className="px-4 py-4">0{i}</td>
-          <td className="px-4 py-4 font-medium">Kingsley Alhaji</td>
-          <td className="px-4 py-4 break-words">Kingsley@gmail.com</td>
-          <td className="px-4 py-4">08/01/25</td>
-          <td className="px-4 py-4">
-            {i % 2 === 0 ? (
-              <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-yellow-100 text-[#DE940B]">
-                <img src="/clock.svg" alt="pending" className="w-3 h-3" />
-                Pending
-              </span>
-            ) : (
-              <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-green-100 text-[#008000]">
-                <img src="/verify.png" alt="verified" className="w-3 h-3" />
-                Verified
-              </span>
-            )}
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
+            <div className="w-full rounded-xl border border-gray-100 bg-white">
+              <table className="w-full text-sm table-auto">
+                <thead className="bg-gray-50 text-left text-gray-500">
+                  <tr>
+                    <th className="px-4 py-3 rounded-tl-lg">S/N</th>
+                    <th className="px-4 py-3">Name</th>
+                    <th className="px-4 py-3">Email Address</th>
+                    <th className="px-4 py-3">Date Reg.</th>
+                    <th className="px-4 py-3 rounded-tr-lg">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-[#4A4A4A]">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <tr key={i} className="hover:bg-gray-50">
+                      <td className="px-4 py-4">0{i}</td>
+                      <td className="px-4 py-4 font-medium">Kingsley Alhaji</td>
+                      <td className="px-4 py-4 break-words">Kingsley@gmail.com</td>
+                      <td className="px-4 py-4">08/01/25</td>
+                      <td className="px-4 py-4">
+                        {i % 2 === 0 ? (
+                          <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-yellow-100 text-[#DE940B]">
+                            <img src="/clock.svg" alt="pending" className="w-3 h-3" />
+                            Pending
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-green-100 text-[#008000]">
+                            <img src="/verify.png" alt="verified" className="w-3 h-3" />
+                            Verified
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </CardContent>
         </Card>
 
         {/* Top Investments */}
-        <Card className="w-[370px] overflow-y-auto max-h-[300px] ml-24">
+        <Card className="overflow-y-auto max-h-[300px]">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-3 text-gray-800">
-              Top Performing Investments
-            </h3>
+            <h3 className="text-lg font-semibold mb-3 text-gray-800">Top Performing Investments</h3>
             <div className="flex justify-between items-center bg-gray-100 rounded px-4 py-2 text-sm text-gray-600 mb-2">
               <span>Name</span>
               <span>Unit Sold</span>
