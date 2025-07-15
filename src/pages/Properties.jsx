@@ -94,7 +94,7 @@ const Properties = () => {
         <div className="flex gap-3">
           <button
             onClick={handleExport}
-            className="flex items-center gap-2 text-[#00644C] text-sm px-4 py-2 rounded-2xl border bg-white"
+            className="flex items-center gap-2 text-[#00644C] text-sm px-4 py-2 rounded-2xl  bg-white"
           >
             <img src="/export.svg" alt="Export" className="w-4 h-4" />
             Export
@@ -138,21 +138,21 @@ const Properties = () => {
 
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-auto mt-4">
+      <div className="bg-white rounded-xl shadow-sm  overflow-auto mt-4">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-100 text-gray-500">
+          <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
             <tr>
               <th className="p-4 text-left">S/N</th>
               <th className="p-4 text-left">Name</th>
               <th className="p-4 text-left flex items-center gap-1">
-                Type <img src="/liner.svg" alt="liner" className="w-4 h-3 mt-2" />
+                Type <img src="/liner.svg" alt="liner" className="w-6 h-4" />
               </th>
               <th className="p-4 text-left">Price (₦)</th>
               <th className="p-4 text-left">Owner</th>
               <th className="p-4 text-left">Date Mod.</th>
               <th className="p-4 text-left">Status</th>
               <th className="p-4 text-left flex items-center gap-1">
-                Action <img src="/liner.svg" alt="liner" className="w-4 h-3 mt-2" />
+                Action <img src="/liner.svg" alt="liner" className="w-6 h-4" />
               </th>
             </tr>
           </thead>
@@ -165,7 +165,7 @@ const Properties = () => {
                   Cocoa Land
                 </td>
                 <td className="p-4">
-                  <span className="text-xs px-2 py-1 border rounded-full text-gray-600">
+                  <span className="text-xs px-2 py-1 rounded-full text-[#606060] bg-[#FAFAFA]">
                     {index % 2 === 0 ? "Apartment" : index % 3 === 0 ? "Flat" : "Bungalow"}
                   </span>
                 </td>
@@ -173,12 +173,12 @@ const Properties = () => {
                 <td className="p-4">{index < 4 ? "Moses Victor" : "---"}</td>
                 <td className="p-4">08-01-2023</td>
                 <td className="p-4">
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${img.status === "available" ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-500"}`}>
+                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${img.status === "available" ? "bg-[#ECFFEC] text-[#008000]" : "bg-[#F8F8F8] text-[#4A4A4A]"}`}>
                     {img.status.charAt(0).toUpperCase() + img.status.slice(1)}
                   </span>
                 </td>
                 <td className="p-4">
-                  <FiMoreVertical className="text-gray-500 cursor-pointer" />
+                  <FiMoreVertical className="text-[#4A4A4A] cursor-pointer" />
                 </td>
               </tr>
             ))}
@@ -188,8 +188,8 @@ const Properties = () => {
 
       {/* Pagination */}
       <div className="flex items-center w-[760px] h-8 gap-12 p-4 text-sm text-gray-500 mb-8">
-        <div className="flex items-center gap-1">
-          <span>10 Entries</span>
+        <div className="flex items-center gap-1 text-[#272833] font-semibold">
+          <span className="">10 Entries</span>
           <RiArrowDownSFill className="text-lg" />
         </div>
         <div className="flex items-center gap-2">

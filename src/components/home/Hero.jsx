@@ -13,7 +13,7 @@ const Card = ({ children, className = "" }) => (
 const CardContent = ({ children }) => <div>{children}</div>;
 
 const Hero = () => {
-  const [selectedDateRange, setSelectedDateRange] = useState("Jan-Feb 2025");
+  const [selectedDateRange, setSelectedDateRange] = useState("January 2025-February 2025");
 
   const statData = [
     { title: "Total Investment", value: "₦6.05B" },
@@ -23,19 +23,19 @@ const Hero = () => {
   ];
 
   return (
-    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen ml-4">
+    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen ml-">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
         <div>
           <h1 className="text-[16px] font-semibold text-[#4A4A4A]">Welcome Admin</h1>
           <p className="text-[14px] font-normal text-[#4A4A4A]">Here's a quick update for you</p>
         </div>
-        <div className="w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2">
+        <div className="relative w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2">
           <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
           <select
             value={selectedDateRange}
             onChange={(e) => setSelectedDateRange(e.target.value)}
-            className="bg-transparent focus:outline-none pr-4 appearance-none"
+            className="bg-transparent focus:outline-none pr-4 appearance-none w-full"
           >
             <option>January 2025-February 2025</option>
             <option>March 2025-April 2025</option>
@@ -44,12 +44,14 @@ const Hero = () => {
             <option>September 2025-October 2025</option>
             <option>November 2025-December 2025</option>
           </select>
-          <MdOutlineKeyboardArrowDown className="-ml-4 pointer-events-none text-lg text-[#606060]" />
+          <div className="absolute right-4 pointer-events-none">
+            <MdOutlineKeyboardArrowDown className="text-lg text-[#606060]" />
+          </div>
         </div>
       </div>
 
       {/* Stat Cards */}
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="h-[100px] w-[910px] relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 ml-4">
         {statData.map((item, i) => (
           <Card key={i}>
             <CardContent>
@@ -67,44 +69,46 @@ const Hero = () => {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 max-w-[1320px]">
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-2 max-w-[1100px] ml-3">
         <Card className="xl:col-span-3 h-[445px]">
           <CardContent>
             <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
               <h3 className="text-[14px] text-[#9CA3AF] rounded-full px-6 py-1 bg-gray-50 w-fit">
                 Revenue Flow
               </h3>
-              <div className="w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 shadow rounded-full px-4 py-1">
+              <div className="relative w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 shadow rounded-full px-4 py-1">
                 <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
                 <select
                   value={selectedDateRange}
                   onChange={(e) => setSelectedDateRange(e.target.value)}
-                  className="bg-transparent focus:outline-none pr-4 appearance-none"
+                  className="bg-transparent focus:outline-none pr-4 appearance-none w-full"
                 >
                   <option>January 2025-February 2025</option>
                   <option>March 2025-April 2025</option>
                   <option>May 2025-June 2025</option>
-                  <option>July-August 2025</option>
+                  <option>July 2025-August 2025</option>
                   <option>September 2025-October 2025</option>
                   <option>November 2025-December 2025</option>
                 </select>
-                <MdOutlineKeyboardArrowDown className="-ml-4 pointer-events-none text-lg text-gray-500" />
+                <div className="absolute right-4 pointer-events-none">
+                  <MdOutlineKeyboardArrowDown className="text-lg text-[#606060]" />
+                </div>
               </div>
             </div>
             <RevenueChart />
           </CardContent>
         </Card>
 
-        <Card className="xl:col-span-2 h-[445px]">
+        <Card className="w-[360px] xl:col-span-2 h-[445px] ml-3">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">All Investments</h3>
+            <h3 className="text-lg font-semibold mb-4 text-[#000000]">All Investments</h3>
             <InvestmentChart />
           </CardContent>
         </Card>
       </div>
 
       {/* Tables */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 max-w-[1320px]">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 max-w-[880px] ml-2 ">
         {/* Sign Ups Table */}
         <Card className="xl:col-span-2">
           <CardContent>
@@ -156,9 +160,9 @@ const Hero = () => {
         </Card>
 
         {/* Top Investments */}
-        <Card className="overflow-y-auto max-h-[300px]">
+        <Card className="w-[340px] overflow-y-auto max-h-[300px] ml-2">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-3 text-gray-800">Top Performing Investments</h3>
+            <h3 className="text-lg font-semibold mb-3 text-[#000000]">Top Performing Investments</h3>
             <div className="flex justify-between items-center bg-gray-100 rounded px-4 py-2 text-sm text-gray-600 mb-2">
               <span>Name</span>
               <span>Unit Sold</span>

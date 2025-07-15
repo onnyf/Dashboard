@@ -9,25 +9,32 @@ const Header = () => {
   const [adminName, setAdminName] = useState("Admin");
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [notificationCount, setNotificationCount] = useState(3); 
+  const [notificationCount, setNotificationCount] = useState(3);
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const dropdownRef = useRef();
   const notificationsRef = useRef();
   const navigate = useNavigate();
+
+  // Sample investment options
+  const investmentOptions = [
+    "Cocoa Land",
+    "Emerald Estate",
+    "Platinum Villa",
+    "Sunset Court",
+    "Diamond Residency",
+    "Ocean View Heights",
+  ];
 
   useEffect(() => {
     const storedName = localStorage.getItem("adminName");
     if (storedName) setAdminName(storedName);
 
     const handleClickOutside = (e) => {
-      if (
-        dropdownRef.current && !dropdownRef.current.contains(e.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setShowDropdown(false);
       }
-
-      if (
-        notificationsRef.current && !notificationsRef.current.contains(e.target)
-      ) {
+      if (notificationsRef.current && !notificationsRef.current.contains(e.target)) {
         setShowNotifications(false);
       }
     };
@@ -35,6 +42,23 @@ const Header = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (searchText.trim() === "") {
+      setSearchResults([]);
+    } else {
+      const filtered = investmentOptions.filter((item) =>
+        item.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setSearchResults(filtered);
+    }
+  }, [searchText]);
+
+  const handleSelect = (value) => {
+    setSearchText(value);
+    setSearchResults([]);
+    // Optional: navigate(`/investment/${value}`); if routing is needed
+  };
 
   const initials = adminName?.charAt(0).toUpperCase();
 
@@ -45,18 +69,35 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 md:left-[268px] right-0 flex items-center justify-between px-4 md:px-6 py-3 bg-white shadow-sm border-b border-gray-200 h-[72px] z-40">
-      {/* Search Input */}
-      <div className="flex-1 max-w-md">
+      {/* Search Input with Dropdown */}
+      <div className="flex-1 max-w-md relative">
         <div className="relative">
           <span className="absolute inset-y-0 left-3 flex items-center text-[#D2D2D2] text-lg">
             <RiSearch2Line />
           </span>
           <input
             type="text"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search for any member and properties"
-            className="w-full h-[44px] pl-10 pr-4 py-2 border border-gray-300 text-[#D2D2D2] rounded-full focus:outline-none text-sm"
+            className="w-full h-[44px] pl-10 pr-4 py-2 border border-gray-300 text-[#4A4A4A] rounded-full focus:outline-none text-sm"
           />
         </div>
+
+        {/* Search Suggestions Dropdown */}
+        {searchResults.length > 0 && (
+          <ul className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+            {searchResults.map((item, index) => (
+              <li
+                key={index}
+                onClick={() => handleSelect(item)}
+                className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Right Controls */}
@@ -90,7 +131,7 @@ const Header = () => {
 
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <div className="text-6xl text-yellow-600">
-                <GoBell  />
+                <GoBell />
               </div>
               <p className="mt-4 font-medium">No Notifications!</p>
               <p className="text-gray-400 text-sm">It is still empty here!</p>

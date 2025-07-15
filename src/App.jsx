@@ -5,6 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast"; // ✅ Add this
 
 // Layout
 import Layouts from "./layout/Layouts";
@@ -28,6 +29,7 @@ const NotFound = () => (
 const App = () => {
   return (
     <Router>
+      <Toaster position="top-right" reverseOrder={false} /> {/* ✅ Added here */}
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />

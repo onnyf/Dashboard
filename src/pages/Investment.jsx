@@ -9,6 +9,7 @@ import {
 } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
 import { IoFilter } from "react-icons/io5";
+import UserDetailsModal from "../components/UserDetailsModal"; // adjust the path as needed
 
 const stats = [
   {
@@ -72,36 +73,6 @@ const investments = [
     date: "08-01-2023",
     status: "Completed",
   },
-  {
-    id: "04",
-    name: "Cocoa Land",
-    image: "/Rectangle 6.svg",
-    type: "Apartment",
-    investors: 100,
-    valuation: "₦8,000,000,000",
-    date: "08-01-2023",
-    status: "Completed",
-  },
-  {
-    id: "05",
-    name: "Cocoa Land",
-    image: "/Rectangle 5.svg",
-    type: "Apartment",
-    investors: 100,
-    valuation: "₦8,000,000,000",
-    date: "08-01-2023",
-    status: "Completed",
-  },
-  {
-    id: "06",
-    name: "Cocoa Land",
-    image: "/Rectangle 4.svg",
-    type: "Flat",
-    investors: 100,
-    valuation: "₦8,000,000,000",
-    date: "08-01-2023",
-    status: "Completed",
-  },
 ];
 
 const ActionDropdown = ({ onAction }) => (
@@ -120,6 +91,8 @@ const Investment = () => {
   const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [dropdownIndex, setDropdownIndex] = useState(null);
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const dropdownRef = useRef(null);
   const totalPages = 5;
 
@@ -133,14 +106,22 @@ const Investment = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredInvestments = filter === "all"
-    ? investments
-    : investments.filter((inv) => inv.status.toLowerCase() === filter);
+  const filteredInvestments =
+    filter === "all"
+      ? investments
+      : investments.filter((inv) => inv.status.toLowerCase() === filter);
 
   const handleAction = (action, investment) => {
     switch (action) {
       case "view":
-        navigate(`/dashboard/investment/${investment.id}`);
+        setSelectedUser({
+          name: investment.name,
+          email: `${investment.name.replace(/\s/g, "").toLowerCase()}@gmail.com`,
+          phone: "+2348099999999",
+          date: investment.date,
+          status: investment.status === "Completed" ? "Verified" : "Pending",
+        });
+        setShowUserModal(true);
         break;
       case "edit":
         navigate(`/dashboard/edit-investment/${investment.id}`);
@@ -152,7 +133,6 @@ const Investment = () => {
         const confirmed = window.confirm(`Un-publish "${investment.name}"?`);
         if (confirmed) {
           alert(`"${investment.name}" has been unpublished.`);
-          // TODO: API call or state update
         }
         break;
       default:
@@ -182,8 +162,10 @@ const Investment = () => {
   };
 
   return (
-    <div className="w-[1000px] min-h-[943px] p-6 bg-[#EEF2F1] flex flex-col gap-6 relative left-[238px]" ref={dropdownRef}>
-      {/* Header */}
+    <div
+      className="w-[1000px] min-h-[943px] p-6 bg-[#EEF2F1] flex flex-col gap-6 relative left-[238px]"
+      ref={dropdownRef}
+    >
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-[#4A4A4A]">Investment</h2>
         <div className="flex gap-3">
@@ -200,7 +182,6 @@ const Investment = () => {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {stats.map((stat, i) => {
           const isActive = filter === stat.filter;
@@ -226,7 +207,11 @@ const Investment = () => {
                   {stat.change}
                 </span>
               </div>
-              <div className={`text-xs mt-1 ${isActive ? "text-white/70" : "text-gray-400"}`}>
+              <div
+                className={`text-xs mt-1 ${
+                  isActive ? "text-white/70" : "text-gray-400"
+                }`}
+              >
                 {stat.subtext}
               </div>
             </div>
@@ -234,7 +219,7 @@ const Investment = () => {
         })}
       </div>
 
-      {/* Table */}
+      {/* Investment Table */}
       <div className="bg-white rounded-xl overflow-auto">
         <table className="min-w-full text-sm">
           <thead className="bg-gray-100 text-gray-500">
@@ -318,6 +303,14 @@ const Investment = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {showUserModal && selectedUser && (
+        <UserDetailsModal
+          user={selectedUser}
+          onClose={() => setShowUserModal(false)}
+        />
+      )}
     </div>
   );
 };

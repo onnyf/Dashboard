@@ -1,172 +1,168 @@
-import React from "react";
+import React, { useState } from 'react';
 import { TbArrowsUpDown } from "react-icons/tb";
+import { IoFilter } from "react-icons/io5";
+
+const disbursementData = Array(95).fill({
+  name: 'Kingsley Alhaji',
+  email: 'Kingsley@gmail.com',
+  phone: '+5897949488',
+  bank: 'GTB',
+  accountNo: '893793839393',
+  investment: 'Cocooland Premium x2',
+  amount: '300,000.00',
+  date: '08-01-2023',
+  status: 'Paid',
+});
 
 const Withdrawals = () => {
-  const data = [
-    {
-      sn: "Q1",
-      investor: {
-        name: "Kingsley Alhoji",
-        email: "Kingsley@gmail.com",
-        phone: "+5897949488",
-        bank: "GTB",
-        account: "893798339393",
-      },
-      investment: "Cocoaland",
-      totalAmount: "300,000.00",
-      vestedDate: "08-01-2023",
-      status: "Paid",
-      plan: "Premium x2",
-    },
-    ...Array(3).fill().map((_, i) => ({
-      sn: `Q${i + 2}`,
-      investor: {
-        name: "Kingsley Alhoji",
-        email: "Kingsley@gmail.com",
-        phone: "+5897949488",
-        bank: "GTB",
-        account: "893798339393",
-      },
-      investment: "Cocoaland",
-      totalAmount: "300,000.00",
-      vestedDate: "08-01-2023",
-      status: "Paid",
-      plan: "Premium x2",
-    })),
-  ];
+  const entriesPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalEntries = disbursementData.length;
+  const totalPages = Math.ceil(totalEntries / entriesPerPage);
 
-  const handleExport = () => {
-    const headers = [
-      "S/N", "Name", "Email", "Phone", "Bank", "Account",
-      "Investment", "Plan", "Total Amount", "Vested Date", "Status"
-    ];
-
-    const rows = data.map(item => [
-      item.sn,
-      item.investor.name,
-      item.investor.email,
-      item.investor.phone,
-      item.investor.bank,
-      item.investor.account,
-      item.investment,
-      item.plan,
-      item.totalAmount,
-      item.vestedDate,
-      item.status
-    ]);
-
-    const csvContent = [
-      headers.join(","), 
-      ...rows.map(r => r.join(","))
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", "withdrawals.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleRetry = (item) => {
-    alert(`Retrying withdrawal for ${item.investor.name}`);
-    // Add your actual retry logic here (e.g., API call)
-  };
+  const currentEntries = disbursementData.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
 
   return (
-    <div className="relative bg-[#EEF2F1] w-full px-4 py-6 space-y-6 overflow-x-auto rounded-lg shadow md:px-6 lg:px-8">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-xl md:text-2xl font-semibold">Disbursement Portal</h1>
-        <button
-          onClick={handleExport}
-          className="flex items-center gap-2 text-[#00644C] text-sm px-4 py-2 rounded-2xl border bg-white"
-        >
-          <img src="/export.svg" alt="Export" className="w-4 h-4" />
-          Export
+    <div className="absolute top-[72px] left-[262px] w-[1000px] min-h-screen bg-[#EEF2F1] px-12 py-6 space-y-6 opacity-100">
+      <div className="flex justify-between items-center">
+        <div className="text-lg font-semibold text-[#4A4A4A]">Disbursement Portal</div>
+        <button className="flex items-center gap-2 text-sm bg-white border border-white shadow px-4 py-2 rounded-full font-medium text-[#00644C]">
+          <img src="/export.svg" alt="" className="h-5" /> Export
         </button>
       </div>
 
-      <div className="overflow-auto bg-white rounded-lg shadow-sm">
-        <table className="min-w-full text-sm text-left text-gray-700">
-          <thead className="border-b border-gray-300 bg-gray-50">
+      <div className="bg-white shadow-sm rounded-xl overflow-x-auto">
+        <table className="min-w-full text-sm text-left">
+          <thead className="bg-[#f5f7f7] text-[#4B5563]">
             <tr>
-              <th className="py-3 px-4 font-semibold">S/N</th>
-              <th className="py-3 px-4 font-semibold">
-                <div className="flex items-center justify-between">
-                  <span>Investor's Details</span>
-                  <TbArrowsUpDown className="ml-2 text-gray-500" />
+              <th className="px-4 py-3 font-Gilroy-Medium">S/N</th>
+              <th className="px-4 py-3 font-Gilroy-Medium">
+                <div className="flex items-center gap-1">
+                  Investor's Details <TbArrowsUpDown className="w-4 h-4" />
                 </div>
               </th>
-              <th className="py-3 px-4 font-semibold">Investment Details</th>
-              <th className="py-3 px-4 font-semibold">Total Amount (M)</th>
-              <th className="py-3 px-4 font-semibold">
-                <div className="flex items-center justify-between">
-                  <span>Vested Date</span>
-                  <TbArrowsUpDown className="ml-2 text-gray-500" />
+              <th className="px-4 py-3 font-Gilroy-Medium">Investment Details</th>
+              <th className="px-1 py-3 font-Gilroy-Medium">Total Amount(₦)</th>
+              <th className="px-1 py-3 font-Gilroy-Medium">
+                <div className="flex items-center gap-1">
+                  Vested Date <TbArrowsUpDown className="w-4 h-4" />
                 </div>
               </th>
-              <th className="py-3 px-4 font-semibold">Status</th>
-              <th className="py-3 px-4 font-semibold">Action</th>
+              <th className="px-4 py-3 font-Gilroy-Medium">
+                <div className="flex items-center gap-2">
+                  Status <IoFilter className="text-gray-400 w-4 h-4" />
+                </div>
+              </th>
+              <th className="px-4 py-3 font-Gilroy-Medium">Action</th>
             </tr>
           </thead>
-          <tbody>
-            {data.map((item) => (
-              <tr key={item.sn} className="border-b border-gray-200">
-                <td className="py-3 px-4 font-medium">{item.sn}</td>
-                <td className="py-3 px-4">
-                  <div className="font-medium">{item.investor.name}</div>
-                  <div className="text-xs text-gray-500">{item.investor.email}</div>
-                  <div className="text-xs text-gray-500">{item.investor.phone}</div>
-                  <div className="text-xs text-gray-500">Bank: {item.investor.bank}</div>
-                  <div className="text-xs text-gray-500">Acct No: {item.investor.account}</div>
-                </td>
-                <td className="py-3 px-4">
-                  <div>{item.investment}</div>
-                  <div className="text-xs text-gray-500">{item.plan}</div>
-                </td>
-                <td className="py-3 px-4">{item.totalAmount}</td>
-                <td className="py-3 px-4">{item.vestedDate}</td>
-                <td className="py-3 px-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-600 text-xs font-semibold rounded-full">
-                    <img src="/verify.png" alt="Verified" className="w-4 h-4" />
-                    {item.status}
+          <tbody className="text-[#6B7280]">
+            {currentEntries.length === 0 ? (
+              <tr>
+                <td colSpan="7" className="text-center py-12">
+                  <div className="flex flex-col items-center justify-center gap-3">
+                    <img src="/empty-state-icon.svg" alt="Empty state" className="w-16 h-16 opacity-50" />
+                    <p className="text-gray-400 text-sm">No disbursement transactions yet.</p>
                   </div>
                 </td>
-                <td className="py-3 px-4">
-                  <button
-                    onClick={() => handleRetry(item)}
-                    className="inline-flex items-center gap-2 px-3 py-1 text-[#00644C] text-xs font-semibold rounded-full border border-green-200 hover:bg-green-50"
-                  >
-                    <img src="/History.svg" alt="Retry" className="w-4 h-4" />
-                    Retry
-                  </button>
-                </td>
               </tr>
-            ))}
+            ) : (
+              currentEntries.map((item, index) => (
+                <tr key={index} className="hover:bg-gray-50">
+                  <td className="px-4 py-4 align-top pt-1 font-medium">
+                    {String((currentPage - 1) * entriesPerPage + index + 1).padStart(2, '0')}
+                  </td>
+                  <td className="px-4 py-4 align-top pt-1">
+                    <div className="flex flex-col gap-1">
+                      <span>{item.name}</span>
+                      <span>{item.email}</span>
+                      <span>{item.phone}</span>
+                      <span>Bank: {item.bank}</span>
+                      <span>Account no.: {item.accountNo}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 align-top pt-1">{item.investment}</td>
+                  <td className="px-4 py-4 align-top pt-1">₦{item.amount}</td>
+                  <td className="px-4 py-4 align-top pt-1">{item.date}</td>
+                  <td className="px-4 py-4 align-top pt-1">
+                    <span className="inline-flex items-center gap-1 text-green-700 text-sm font-medium bg-green-100 px-2.5 py-1 rounded-full">
+                      <img src="/verify.png" alt="Verified icon" /> Paid
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 align-top pt-1">
+                    <button className="text-[#458d7d] bg-white flex items-center gap-2 px-3 rounded-full border border-gray-300 w-[90px] h-[32px] text-sm hover:bg-gray-100">
+                      <img src="/History.svg" alt="Retry icon" className="h-5" />
+                      Retry
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
-      </div>
 
-      {/* Pagination */}
-      <div className="flex flex-col lg:flex-row justify-between items-center pt-3 border-t border-gray-300 gap-3 text-xs sm:text-sm">
-        <div className="flex items-center text-gray-600">
-          <span>10 Entries</span>
-          <span className="ml-1">▼</span>
-        </div>
-        <div className="text-gray-600">Showing 1 to 10 of 95 entries</div>
-        <div className="flex items-center space-x-1">
-          <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded">&lt;</button>
-          <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded font-medium">1</button>
-          <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded">2</button>
-          <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded">3</button>
-          <span className="px-2">⋯</span>
-          <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded">5</button>
-          <button className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 rounded">&gt;</button>
-        </div>
+        {/* Pagination */}
+       
       </div>
+       <div className="flex justify-between items-center px-4 py-6 text-sm text-gray-500 ">
+          <div className="flex items-center gap-2">
+            <div className="relative  px-2 py-1 flex items-center gap-1">
+              <span className="font-semibold text-[#464a51]">{entriesPerPage} Entries</span>
+              <span className="text-xs">&#9660;</span>
+            </div>
+            <span>
+              Showing {(currentPage - 1) * entriesPerPage + 1} to{" "}
+              {Math.min(currentPage * entriesPerPage, totalEntries)} of {totalEntries} entries.
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <button
+              className="px-2 py-1  hover:bg-gray-200"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              &#x2039;
+            </button>
+
+            {Array.from({ length: Math.min(3, totalPages) }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-2 py-1  ${
+                  currentPage === page ? "bg-[#111827] text-white" : "hover:bg-gray-100"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+            {totalPages > 4 && (
+              <>
+                <span className="px-2">...</span>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                  className={`px-2 py-1  ${
+                    currentPage === totalPages ? "bg-[#111827] text-white" : "hover:bg-gray-100"
+                  }`}
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
+
+            <button
+              className="px-2 py-1  hover:bg-gray-200"
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              &#x203A;
+            </button>
+          </div>
+        </div>
     </div>
   );
 };

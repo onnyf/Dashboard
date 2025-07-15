@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowUp, FaCheck } from "react-icons/fa";
 import { FiMoreVertical } from "react-icons/fi";
+import { GoClock } from "react-icons/go";
 import { TbArrowDownFromArc, TbArrowsUpDown } from "react-icons/tb";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
-import UserDetailsModal from "../components/modals/UserDetailsModal";
 import { IoFilter } from "react-icons/io5";
+
+import UserDetailsModal from "../components/modals/UserDetailsModal";
+import DisableAccountModal from "../components/modals/DisableAccountModal";
 
 const stats = [
   { title: "All Users", value: 1043, filter: "all" },
@@ -25,11 +28,14 @@ const User = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showDisableModal, setShowDisableModal] = useState(false);
+
   const [actionMenu, setActionMenu] = useState({
     open: false,
     userId: null,
     position: { top: 0, left: 0 },
   });
+
   const actionMenuRef = useRef(null);
   const itemsPerPage = 10;
 
@@ -110,6 +116,7 @@ const User = () => {
         </button>
       </div>
 
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {stats.map((stat, i) => {
           const isActive = activeFilter === stat.filter;
@@ -146,14 +153,15 @@ const User = () => {
         })}
       </div>
 
-      <div className="overflow-x-auto rounded-xl shadow border border-[#FAFBFB] bg[#FAFBFB]">
-        <table className="min-w-full text-sm">
-          <thead className="text-left text-[#606060] bg-[#FFFFFF]">
+      {/* Table */}
+      <div className="overflow-x-auto rounded-xl shadow  bg-white">
+        <table className="min-w-full text-sm ">
+          <thead className="text-left text-[#606060] bg-[#FAFBFB]">
             <tr>
               <th className="px-4 py-3 rounded-tl-lg">S/N</th>
               <th className="px-4 py-3 flex items-center gap-1">
                 Name <TbArrowsUpDown />
-              </th> 
+              </th>
               <th className="px-4 py-3">Email address</th>
               <th className="px-4 py-3">Phone number</th>
               <th className="px-4 py-3 flex items-center gap-1">
@@ -180,12 +188,25 @@ const User = () => {
                 <td className="px-4 py-3">{user.date}</td>
                 <td className="px-4 py-3">
                   <span
-                    className={`text-xs px-2 py-1 rounded-full font-medium ${
+                    className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium ${
                       user.status === "Verified"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-yellow-100 text-yellow-700"
+                        ? "bg-[#ECFFEC] text-[#008000]"
+                        : "bg-[#F7F1E5] text-[#DE940B]"
                     }`}
                   >
+                    <span
+                      className={`w-4 h-4 flex items-center justify-center rounded-full text-white ${
+                        user.status === "Verified"
+                          ? ""
+                          : ""
+                      }`}
+                    >
+                      {user.status === "Verified" ? (
+                       <img src="/verify.png" alt="" className="text-[#008000]"/>
+                      ) : (
+                        <img src="/clock.svg" alt="" className="text-[#DE940B]"/>
+                      )}
+                    </span>
                     {user.status}
                   </span>
                 </td>
@@ -277,18 +298,33 @@ const User = () => {
             >
               View Details
             </button>
-            <button className="w-full text-left px-4 py-2 text-sm text-[#B30000] hover:bg-gray-100 rounded">
+            <button
+              className="w-full text-left px-4 py-2 text-sm text-[#B30000] hover:bg-gray-100 rounded"
+              onClick={() => {
+                setShowDisableModal(true);
+                closeActionMenu();
+              }}
+            >
               Disable account
             </button>
           </div>
         </div>
       )}
 
-      {/* Modal */}
+      {/* Modals */}
       {selectedUser && (
         <UserDetailsModal
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
+        />
+      )}
+      {showDisableModal && (
+        <DisableAccountModal
+          onClose={() => setShowDisableModal(false)}
+          onConfirm={() => {
+            // Add logic to disable the user
+            setShowDisableModal(false);
+          }}
         />
       )}
     </div>
