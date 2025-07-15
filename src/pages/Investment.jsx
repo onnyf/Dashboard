@@ -9,7 +9,7 @@ import {
 } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
 import { IoFilter } from "react-icons/io5";
-import UserDetailsModal from "../components/UserDetailsModal"; // adjust the path as needed
+import UserDetailsModal from "../components/modals/UserDetailsModal"; // adjust the path as needed
 
 const stats = [
   {
