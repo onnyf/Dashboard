@@ -206,13 +206,13 @@ const InvestmentBreakdown = () => {
             {/* Info List */}
             <div className="grid grid-cols-2 gap-y-8 text-sm">
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Name:
                 </span>
                 <p>Kingsley Alhaji</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Location:
                 </span>
                 <p>Lagos State</p>
@@ -245,7 +245,7 @@ const InvestmentBreakdown = () => {
                 <span className="text-[#8E8E8E] py-4 font-semibold block">
                   Status:
                 </span>
-                <p className="text-[#008000] py-4 font-semibold">Completed</p>
+                <p className="text-[#008000] py-4 font-medium">Completed</p>
               </div>
               <div>
                 <span className="text-[#8E8E8E] py-4 font-semibold block">
