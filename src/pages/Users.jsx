@@ -108,8 +108,8 @@ const User = () => {
 
   return (
     <div className="min-h-screen bg-[#EEF2F1] pt-[30px] px-4 md:pl-[268px] md:pr-6 pb-6 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm gap-2">
-        <p className="text-[20px] font-[400]">All users</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm gap-2 ">
+        <p className="text-[20px] font-[400] ml-6">All users</p>
         <button className="flex gap-2 items-center text-[#00644C] px-3 py-2 bg-white rounded-full shadow-sm">
           <TbArrowDownFromArc className="text-lg" />
           Export
@@ -117,7 +117,7 @@ const User = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 ml-6 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {stats.map((stat, i) => {
           const isActive = activeFilter === stat.filter;
           return (
@@ -154,7 +154,7 @@ const User = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl shadow  bg-white">
+      <div className="overflow-x-auto rounded-xl shadow  ml-6 bg-white">
         <table className="min-w-full text-sm ">
           <thead className="text-left text-[#606060] bg-[#FAFBFB]">
             <tr>
@@ -225,8 +225,10 @@ const User = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-col md:flex-row text-sm mt-6 text-gray-600 gap-3">
-        <span>{itemsPerPage} Entries ▼</span>
+      <div className="flex flex-col md:flex-row text-sm mt-6 text-gray-600 gap-3 ml-6">
+        <div className="font-Gilroy-Medium flex items-center gap-2 font-semibold">
+          <span>{itemsPerPage} Entries ▼</span>
+        </div>
         <div className="flex items-center ml-4">
           <span>
             Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
@@ -254,7 +256,7 @@ const User = () => {
                   onClick={() => goToPage(n)}
                   className={`px-2 py-1 rounded ${
                     currentPage === n
-                      ? "bg-green-800 text-white"
+                      ? " text-[#6B6C7E]"
                       : "hover:bg-gray-100"
                   }`}
                 >

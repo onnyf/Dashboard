@@ -88,7 +88,7 @@ const Properties = () => {
   const filteredImages = filter === "all" ? images : images.filter(img => img.status === filter);
 
   return (
-    <div className="w-[1000px] h-[943px] pt-[24px] pr-[48px] pb-[24px] pl-[48px] bg-[#EEF2F1] flex flex-col gap-[24px] relative top-[2px] left-[238px]">
+    <div className="w-[1130px] h-[943px] pt-[24px] pr-[48px] pb-[24px] pl-[48px] bg-[#EEF2F1] flex flex-col gap-[24px] relative top-[2px] left-[258px]">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-[#4A4A4A]">Properties</h2>
         <div className="flex gap-3">

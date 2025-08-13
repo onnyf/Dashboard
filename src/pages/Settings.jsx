@@ -40,7 +40,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="absolute left-0 md:left-[282px] top-[68px] w-full md:w-[960px] bg-[#EEF2F1] p-4 md:p-6 rounded-lg overflow-y-auto min-h-screen">
+    <div className="absolute left-0 md:left-[282px] top-[68px] w-full md:w-[1110px] bg-[#EEF2F1] p-4 md:p-6 rounded-lg overflow-y-auto min-h-screen">
       <h1 className="text-[400] font-semibold mb-6">Settings</h1>
 
       <div className="flex flex-col lg:flex-row gap-6">

@@ -23,19 +23,19 @@ const Hero = () => {
   ];
 
   return (
-    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen ml-">
+    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen ">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-        <div>
+      <div className="flex flex-col md:flex-row items-start ">
+        <div className="ml-5 relative">
           <h1 className="text-[16px] font-semibold text-[#4A4A4A]">Welcome Admin</h1>
           <p className="text-[14px] font-normal text-[#4A4A4A]">Here's a quick update for you</p>
         </div>
-        <div className="relative w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2">
+        <div className="relative w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2 ml-142">
           <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
           <select
             value={selectedDateRange}
             onChange={(e) => setSelectedDateRange(e.target.value)}
-            className="bg-transparent focus:outline-none pr-4 appearance-none w-full"
+            className="bg-transparent focus:outline-none pr-2 appearance-none w-full"
           >
             <option>January 2025-February 2025</option>
             <option>March 2025-April 2025</option>
@@ -44,25 +44,25 @@ const Hero = () => {
             <option>September 2025-October 2025</option>
             <option>November 2025-December 2025</option>
           </select>
-          <div className="absolute right-4 pointer-events-none">
+          <div className="absolute right-2 pointer-events-none">
             <MdOutlineKeyboardArrowDown className="text-lg text-[#606060]" />
           </div>
         </div>
       </div>
 
       {/* Stat Cards */}
-      <div className="h-[100px] w-[910px] relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 ml-4">
+      <div className="h-[120px] w-[1030px] relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 ml-4">
         {statData.map((item, i) => (
           <Card key={i}>
             <CardContent>
               <p className="text-xs text-[#4A4A4A]">{item.title}</p>
-              <div className="flex justify-between items-center mt-1">
-                <h2 className="text-lg font-semibold text-[#4A4A4A]">{item.value}</h2>
+              <div className="flex justify-between items-center mt-3">
+                <h2 className="text-3xl font-bold text-[#4A4A4A]">{item.value}</h2>
                 <span className="w-[40px] h-[24px] text-xs text-[#008000] rounded-full bg-[#EBFFEB] flex items-center gap-1 justify-center">
                   <FaArrowUp size={10} /> +10
                 </span>
               </div>
-              <p className="text-[11px] text-[#9CA3AF] mt-1">from 0% (last 4 weeks)</p>
+              <p className="text-[11px] text-[#9CA3AF] mt-4">from 0% (last 4 weeks)</p>
             </CardContent>
           </Card>
         ))}
@@ -73,9 +73,12 @@ const Hero = () => {
         <Card className="xl:col-span-3 h-[445px]">
           <CardContent>
             <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
-              <h3 className="text-[14px] text-[#9CA3AF] rounded-full px-6 py-1 bg-gray-50 w-fit">
+             <div className="flex text-[14px] text-[#9CA3AF] rounded-full px-6 py-1 bg-gray-50 w-fit gap-2">
+               <h3 className="">
                 Revenue Flow
               </h3>
+               <MdOutlineKeyboardArrowDown className="text-lg text-[#606060] ml-2" />
+             </div>
               <div className="relative w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 shadow rounded-full px-4 py-1">
                 <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
                 <select
@@ -99,7 +102,7 @@ const Hero = () => {
           </CardContent>
         </Card>
 
-        <Card className="w-[360px] xl:col-span-2 h-[445px] ml-3">
+        <Card className="w-[380px] xl:col-span-2 h-[445px] ml-3">
           <CardContent>
             <h3 className="text-lg font-semibold mb-4 text-[#000000]">All Investments</h3>
             <InvestmentChart />
@@ -108,7 +111,7 @@ const Hero = () => {
       </div>
 
       {/* Tables */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 max-w-[880px] ml-2 ">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 max-w-[960px] ml-4 ">
         {/* Sign Ups Table */}
         <Card className="xl:col-span-2">
           <CardContent>
@@ -160,9 +163,9 @@ const Hero = () => {
         </Card>
 
         {/* Top Investments */}
-        <Card className="w-[340px] overflow-y-auto max-h-[300px] ml-2">
+        <Card className="w-[360px] overflow-y-auto max-h-[300px] ml-4">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-3 text-[#000000]">Top Performing Investments</h3>
+            <h3 className="text-[16px] font-semibold mb-3 text-[#000000]">Top Performing Investments</h3>
             <div className="flex justify-between items-center bg-gray-100 rounded px-4 py-2 text-sm text-gray-600 mb-2">
               <span>Name</span>
               <span>Unit Sold</span>

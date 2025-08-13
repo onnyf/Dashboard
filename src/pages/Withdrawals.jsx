@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TbArrowsUpDown } from "react-icons/tb";
 import { IoFilter } from "react-icons/io5";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const disbursementData = Array(95).fill({
   name: 'Kingsley Alhaji',
@@ -25,11 +26,26 @@ const Withdrawals = () => {
     currentPage * entriesPerPage
   );
 
+  // Export function
+  const handleExport = () => {
+    console.log("Export button clicked. Ready to download disbursement data.");
+    // Add actual export logic (CSV/XLSX) here
+  };
+
+  // Retry function
+  const handleRetry = (user) => {
+    console.log(`Retrying payment for: ${user.name}`);
+    // Add actual retry logic (e.g. re-trigger transaction)
+  };
+
   return (
-    <div className="absolute top-[72px] left-[262px] w-[1000px] min-h-screen bg-[#EEF2F1] px-12 py-6 space-y-6 opacity-100">
+    <div className="absolute top-[72px] left-[262px] w-[1130px] min-h-screen bg-[#EEF2F1] px-12 py-6 space-y-6 opacity-100">
       <div className="flex justify-between items-center">
         <div className="text-lg font-semibold text-[#4A4A4A]">Disbursement Portal</div>
-        <button className="flex items-center gap-2 text-sm bg-white border border-white shadow px-4 py-2 rounded-full font-medium text-[#00644C]">
+        <button
+          onClick={handleExport}
+          className="flex items-center gap-2 text-sm bg-white border border-white shadow px-4 py-2 rounded-full font-medium text-[#00644C]"
+        >
           <img src="/export.svg" alt="" className="h-5" /> Export
         </button>
       </div>
@@ -93,7 +109,10 @@ const Withdrawals = () => {
                     </span>
                   </td>
                   <td className="px-4 py-4 align-top pt-1">
-                    <button className="text-[#458d7d] bg-white flex items-center gap-2 px-3 rounded-full border border-gray-300 w-[90px] h-[32px] text-sm hover:bg-gray-100">
+                    <button
+                      onClick={() => handleRetry(item)}
+                      className="text-[#458d7d] bg-white flex items-center gap-2 px-3 rounded-full border border-[#E8E8E8] w-[90px] h-[32px] text-sm hover:bg-gray-100"
+                    >
                       <img src="/History.svg" alt="Retry icon" className="h-5" />
                       Retry
                     </button>
@@ -103,66 +122,65 @@ const Withdrawals = () => {
             )}
           </tbody>
         </table>
-
-        {/* Pagination */}
-       
       </div>
-       <div className="flex justify-between items-center px-4 py-6 text-sm text-gray-500 ">
-          <div className="flex items-center gap-2">
-            <div className="relative  px-2 py-1 flex items-center gap-1">
-              <span className="font-semibold text-[#464a51]">{entriesPerPage} Entries</span>
-              <span className="text-xs">&#9660;</span>
-            </div>
-            <span>
-              Showing {(currentPage - 1) * entriesPerPage + 1} to{" "}
-              {Math.min(currentPage * entriesPerPage, totalEntries)} of {totalEntries} entries.
-            </span>
+
+      {/* Pagination */}
+      <div className="flex justify-between items-center px-4 py-6 text-sm text-gray-500 ">
+        <div className="flex items-center gap-2">
+          <div className="relative  px-2 py-1 flex items-center gap-1">
+            <span className="font-semibold text-[#464a51]">{entriesPerPage} Entries</span>
+            <span className="text-xs">&#9660;</span>
           </div>
+          <span>
+            Showing {(currentPage - 1) * entriesPerPage + 1} to{" "}
+            {Math.min(currentPage * entriesPerPage, totalEntries)} of {totalEntries} entries.
+          </span>
+        </div>
 
-          <div className="flex items-center gap-1">
+        <div className=" flex items-center gap-1 mr-80 ">
+          <button
+            className="px-2 py-1 hover:bg-gray-200"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            <IoIosArrowBack className="w-[20px] h-[20px]" />
+          </button>
+
+          {Array.from({ length: Math.min(3, totalPages) }, (_, i) => i + 1).map((page) => (
             <button
-              className="px-2 py-1  hover:bg-gray-200"
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-2 py-1  ${
+                currentPage === page ? " text-[#6B6C7E]" : "hover:bg-gray-100"
+              }`}
             >
-              &#x2039;
+              {page}
             </button>
+          ))}
 
-            {Array.from({ length: Math.min(3, totalPages) }, (_, i) => i + 1).map((page) => (
+          {totalPages > 4 && (
+            <>
+              <span className="px-2">...</span>
               <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
+                onClick={() => setCurrentPage(totalPages)}
                 className={`px-2 py-1  ${
-                  currentPage === page ? "bg-[#111827] text-white" : "hover:bg-gray-100"
+                  currentPage === totalPages ? "bg-[#111827] text-white" : "hover:bg-gray-100"
                 }`}
               >
-                {page}
+                {totalPages}
               </button>
-            ))}
+            </>
+          )}
 
-            {totalPages > 4 && (
-              <>
-                <span className="px-2">...</span>
-                <button
-                  onClick={() => setCurrentPage(totalPages)}
-                  className={`px-2 py-1  ${
-                    currentPage === totalPages ? "bg-[#111827] text-white" : "hover:bg-gray-100"
-                  }`}
-                >
-                  {totalPages}
-                </button>
-              </>
-            )}
-
-            <button
-              className="px-2 py-1  hover:bg-gray-200"
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-            >
-              &#x203A;
-            </button>
-          </div>
+          <button
+            className="px-2 py-1 hover:bg-gray-200"
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            <IoIosArrowForward className="w-[20px] h-[20px]" />
+          </button>
         </div>
+      </div>
     </div>
   );
 };
