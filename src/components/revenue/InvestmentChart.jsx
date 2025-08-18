@@ -2,9 +2,11 @@ import React from "react";
 
 const InvestmentChart = () => {
   return (
-    <div className="flex items-center justify-center p-4 min-h-[400px] sm:min-h-[500px] md:min-h-screen">
-      <div className="bg-white rounded-xl p-4 sm:p-6 w-full max-w-md sm:max-w-lg md:max-w-xl relative bottom-28 ">
-        {/* Donut Chart */}
+    <div className=" rounded-xl  p-6 w-full max-w-sm">
+      {/* Title */}
+      
+
+     {/* Donut Chart */}
         <div className="flex justify-center relative">
           <div className="relative w-48 ">
             <svg
@@ -75,29 +77,22 @@ const InvestmentChart = () => {
           </div>
         </div>
 
-        {/* Legend */}
-        <div className="flex flex-col sm:flex-row sm:justify-start items-start sm:items-center mt-6 text-xs sm:text-sm gap-2 sm:gap-6">
-  {/* Investment Legends Column */}
-  <div className="flex flex-col gap-2">
-    {/* Row with Platinum and Diamond */}
-    <div className="flex gap-6 mr-4">
-      <div className="flex items-center gap-2">
-        <span className="w-6 h-4 rounded bg-[#8b5cf6]" />
-        <span className="relative mr-8">Platinum Investment</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="w-6 h-4 rounded bg-[#064e3b]" />
-        <span>Diamond Investment</span>
-      </div>
-    </div>
-    {/* Gold under Platinum */}
-    <div className="flex items-center gap-2 ml-0 sm:ml-0">
-      <span className="w-4 h-4 rounded bg-[#ca8a04]" />
-      <span>Gold Investment</span>
-    </div>
-  </div>
-</div>
-
+      {/* Legend */}
+      <div className="justify-center mt-6 text-xs sm:text-sm gap-6">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+          <span className="w-4 h-3 sm:w-5 sm:h-4 rounded bg-[#8b5cf6]" />
+          <span>Platinum Investment</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-4 h-3 sm:w-5 sm:h-4 rounded bg-[#064e3b]" />
+          <span>Diamond Investment</span>
+        </div>
+        </div>
+        <div className="flex items-center gap-2 py-4">
+          <span className="w-4 h-3 sm:w-5 sm:h-4 rounded bg-[#ca8a04]" />
+          <span>Gold Investment</span>
+        </div>
       </div>
     </div>
   );

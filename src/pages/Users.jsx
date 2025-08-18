@@ -107,7 +107,7 @@ const User = () => {
   }, [actionMenu.open]);
 
   return (
-    <div className="min-h-screen bg-[#EEF2F1] pt-[30px] px-4 md:pl-[268px] md:pr-6 pb-6 space-y-6">
+    <div className="w-full xl:pl-[260px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm gap-2 ">
         <p className="text-[20px] font-[400] ml-6">All users</p>
         <button className="flex gap-2 items-center text-[#00644C] px-3 py-2 bg-white rounded-full shadow-sm">

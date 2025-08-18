@@ -73,7 +73,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <>
       {/* Sidebar content */}
-      <div className={`fixed top-0 left-0 w-[268px] min-h-screen bg-[#003A2B] text-white px-5 py-6 z-50 shadow-md overflow-y-auto transform transition-transform duration-300 md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <div className={`fixed top-0 left-0  min-h-screen bg-[#003A2B] text-white px-5 py-6 z-50 shadow-md overflow-y-auto transform transition-transform duration-300 md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex items-center justify-between mb-10">
           <img src="/Group.svg" alt="Caerus" className="h-6" />
           <button className="md:hidden" onClick={toggleSidebar}>

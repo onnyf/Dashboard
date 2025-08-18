@@ -15,6 +15,10 @@ const Settings = () => {
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  // Invite admin modal
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -39,37 +43,65 @@ const Settings = () => {
     );
   };
 
+  // Example API call for invite
+  const handleInvite = () => {
+    if (!inviteEmail) {
+      alert("Please enter an email!");
+      return;
+    }
+
+    fetch("/api/admins/invite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: inviteEmail }),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        alert("Admin invited successfully!");
+        setInviteEmail("");
+        setShowInviteModal(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Failed to invite admin");
+      });
+  };
+
   return (
-    <div className="absolute left-0 md:left-[282px] top-[68px] w-full md:w-[1110px] bg-[#EEF2F1] p-4 md:p-6 rounded-lg overflow-y-auto min-h-screen">
-      <h1 className="text-[400] font-semibold mb-6">Settings</h1>
+    <div className="top-[68px] w-full md:w-[940px] bg-[#EEF2F1] p-4 md:p-6 rounded-lg overflow-y-auto min-h-screen ml-60">
+      <h1 className="text-2xl font-semibold text-gray-800 mb-6">Settings</h1>
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar */}
-        <div className="w-full lg:w-[341px] h-fit lg:h-[432px] rounded-[24px] bg-white p-6 flex flex-col justify-between shadow">
-          <div className="space-y-6">
+        <div className="w-full lg:w-[320px] h-fit rounded-2xl bg-white p-6 flex flex-col justify-between shadow-md ">
+          <div className="space-y-4">
             <div
-              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${
-                activeTab === "security" ? "bg-[#F5FCFB]" : ""
+              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition ${
+                activeTab === "security"
+                  ? "bg-[#E6F8F6] text-[#00644C]"
+                  : "hover:bg-gray-100"
               }`}
               onClick={() => setActiveTab("security")}
             >
-              <PiKeyThin className="text-[#2C3E50]" />
+              <PiKeyThin className="text-lg" />
               <div>
                 <p className="font-medium">Security</p>
-                <p className="text-sm text-gray-500">Set your password</p>
+                <p className="text-xs text-[#8E8E8E]">Set your password</p>
               </div>
             </div>
 
             <div
-              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer ${
-                activeTab === "admin" ? "bg-[#F5FCFB]" : ""
+              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition ${
+                activeTab === "admin"
+                  ? "bg-[#E6F8F6] text-[#00644C]"
+                  : "hover:bg-gray-100"
               }`}
               onClick={() => setActiveTab("admin")}
             >
-              <HiOutlineUser className="text-[#2C3E50]" />
+              <HiOutlineUser className="text-lg" />
               <div>
                 <p className="font-medium">Admin Management</p>
-                <p className="text-sm text-gray-500">Manage all admins</p>
+                <p className="text-xs text-[#8E8E8E]">Manage all admins</p>
               </div>
             </div>
           </div>
@@ -84,21 +116,22 @@ const Settings = () => {
         </div>
 
         {/* Main Content */}
-        <div className="w-full lg:w-[700px] rounded-[16px] bg-white p-6 shadow">
+        <div className="w-full lg:w-[700px] rounded-2xl bg-white p-6 shadow-md">
           {activeTab === "security" ? (
+            // Security tab
             <div className="flex flex-col gap-6">
               <div>
                 <h2 className="text-lg font-semibold text-gray-800">
                   Password Setting
                 </h2>
-                <p className="text-sm text-gray-500">
-                  Reset your login Password
+                <p className="text-sm text-[#8E8E8E]">
+                  Reset your login password
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-[#777777] mb-2">
                     New Password
                   </label>
                   <div className="relative">
@@ -107,10 +140,10 @@ const Settings = () => {
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-800 bg-gray-50"
+                      className="w-full px-4 py-3 border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700 bg-gray-50"
                     />
                     <span
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A4A4A4] cursor-pointer"
                       onClick={() => setShowNew(!showNew)}
                     >
                       {showNew ? <FiEye /> : <FiEyeOff />}
@@ -119,7 +152,7 @@ const Settings = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-[#777777] mb-2">
                     Confirm Password
                   </label>
                   <div className="relative">
@@ -128,10 +161,10 @@ const Settings = () => {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-800 bg-gray-50"
+                      className="w-full px-4 py-3 border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700 bg-gray-50"
                     />
                     <span
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A4A4A4] cursor-pointer"
                       onClick={() => setShowConfirm(!showConfirm)}
                     >
                       {showConfirm ? <FiEye /> : <FiEyeOff />}
@@ -141,7 +174,7 @@ const Settings = () => {
 
                 <button
                   type="submit"
-                  className="bg-[#00644c] text-white py-3 rounded-full font-semibold disabled:opacity-50"
+                  className="bg-[#00644C] text-white py-3 rounded-full font-semibold hover:bg-[#00513d] transition disabled:opacity-50"
                   disabled={
                     !newPassword ||
                     !confirmPassword ||
@@ -153,23 +186,30 @@ const Settings = () => {
               </form>
             </div>
           ) : (
+            // Admin management tab
             <div className="flex flex-col gap-4">
               <div className="flex justify-between items-center mb-2">
-                <h2 className="text-lg font-semibold">Admin Management</h2>
+                <h2 className="text-lg text-[#000000] font-semibold">
+                  Admin Management
+                </h2>
                 <div className="flex gap-2">
                   <button
-                    className="text-sm rounded-full px-4 py-1 text-gray-500 border"
+                    className="text-sm rounded-full px-4 py-2 text-[#4A4A4A] bg-[#F5F5F5] border hover:bg-gray-100"
                     onClick={() => setShowRoleModal(true)}
                   >
-                    Role settings
+                    Role Settings
                   </button>
-                  <button className="text-sm bg-green-900 text-white rounded-full px-4 py-1">
+                  <button
+                    className="text-sm bg-[#00644C] text-white rounded-full px-4 py-2 hover:bg-[#00513d]"
+                    onClick={() => setShowInviteModal(true)}
+                  >
                     Invite Admin
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-4 text-sm font-medium text-gray-500 bg-[#FAFBFB] rounded pb-2">
+              {/* Admin list */}
+              <div className="grid grid-cols-4 text-sm font-medium text-[#4A4A4A] bg-[#FAFBFB] rounded-md px-3 py-2">
                 <span>Name</span>
                 <span>Role</span>
                 <span>Date Added</span>
@@ -177,44 +217,24 @@ const Settings = () => {
               </div>
 
               {[
-                {
-                  name: "Caerus",
-                  role: "Superadmin",
-                  date: "29-01-2024",
-                  status: "Active",
-                },
-                {
-                  name: "Kingsley",
-                  role: "Member",
-                  date: "29-01-2024",
-                  status: "Active",
-                },
-                {
-                  name: "Victor",
-                  role: "Member",
-                  date: "29-01-2024",
-                  status: "Active",
-                },
-                {
-                  name: "Chioma",
-                  role: "Member",
-                  date: "29-01-2024",
-                  status: "Inactive",
-                },
+                { name: "Caerus", role: "Superadmin", date: "29-01-2024", status: "Active" },
+                { name: "Kingsley", role: "Member", date: "29-01-2024", status: "Active" },
+                { name: "Victor", role: "Member", date: "29-01-2024", status: "Active" },
+                { name: "Chioma", role: "Member", date: "29-01-2024", status: "Inactive" },
               ].map((admin, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-4 items-center py-2 text-sm"
+                  className="grid grid-cols-4 items-center px-3 py-2 text-sm  last:border-none"
                 >
                   <span>{admin.name}</span>
                   <span>{admin.role}</span>
                   <span>{admin.date}</span>
                   <div className="flex items-center justify-between">
                     <span
-                      className={`px-2 py-1 text-xs rounded-full ${
+                      className={`px-3 py-1 text-xs rounded-full ${
                         admin.status === "Active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-200 text-gray-500"
+                          ? "bg-[#ECFFEC] text-[#008000]"
+                          : "bg-[#FAFAFA] text-[#606060]"
                       }`}
                     >
                       {admin.status}
@@ -228,20 +248,15 @@ const Settings = () => {
         </div>
       </div>
 
+      {/* Role Settings Modal */}
       {showRoleModal && (
-        <div className="fixed inset-0 bg-black/40 z-50">
+        <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
           <div
-            className="absolute bg-white shadow-lg overflow-y-auto"
-            style={{
-              width: "340px",
-              height: "550px",
-              top: "22px",
-              left: "880px",
-              borderRadius: "24px",
-            }}
+            className="bg-white shadow-lg overflow-y-auto rounded-2xl"
+            style={{ width: "360px", height: "550px" }}
           >
             {/* Header */}
-            <div className="w-[450px] h-[80px] bg-[#FAFAFA] px-4 flex items-center justify-between rounded-t-[24px]">
+            <div className="w-full h-[70px] bg-[#FAFAFA] px-4 flex items-center justify-between rounded-t-2xl border-b">
               <h2 className="text-lg font-semibold">Role Settings</h2>
               <IoClose
                 className="text-xl text-gray-500 cursor-pointer"
@@ -249,13 +264,11 @@ const Settings = () => {
               />
             </div>
 
-            {/* Description */}
+            {/* Permissions */}
             <div className="px-6 pt-4">
               <p className="text-sm text-gray-700 mb-4">
-                Admin member should be able to
+                Admin member should be able to:
               </p>
-
-              {/* Permissions */}
               <div className="space-y-4 text-sm text-gray-800">
                 {[
                   "Create a Property",
@@ -275,16 +288,54 @@ const Settings = () => {
                   </label>
                 ))}
               </div>
-
-              {/* Button */}
               <button
                 onClick={() => {
                   alert("Permissions updated!");
                   setShowRoleModal(false);
                 }}
-                className="mt-46 w-full bg-green-900 text-white py-3 rounded-full font-semibold"
+                className="mt-12 w-full bg-green-800 text-white py-3 rounded-full font-semibold hover:bg-green-900"
               >
                 Update Settings
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Invite Admin Modal */}
+      {showInviteModal && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
+          <div className="bg-white w-[400px] rounded-2xl shadow-lg p-6">
+            <div className="flex justify-between items-center mb-4 border-b pb-2">
+              <h2 className="text-lg text-[#000000] font-semibold">
+                Invite Admin
+              </h2>
+              <IoClose
+                className="text-xl text-[#4A4A4A] cursor-pointer"
+                onClick={() => setShowInviteModal(false)}
+              />
+            </div>
+
+            <input
+              type="email"
+              placeholder="Enter admin email"
+              value={inviteEmail}
+              onChange={(e) => setInviteEmail(e.target.value)}
+              className="w-full border px-4 py-3 rounded-lg mb-4 outline-none text-sm text-gray-700"
+            />
+
+            <div className="flex justify-end gap-3">
+              <button
+                className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+                onClick={() => setShowInviteModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-[#00644C] text-white rounded-lg hover:bg-[#00513d]"
+                onClick={handleInvite}
+              >
+                Send Invite
               </button>
             </div>
           </div>

@@ -46,13 +46,7 @@ const Transactions = () => {
   };
 
   const statusFilter = getStatusFilter();
-  const filteredOrders = orders
-    .filter((order) => statusFilter[order.status])
-    .sort((a, b) => {
-      if (a.status === b.status) return 0;
-      if (a.status === "failed") return -1;
-      return 1;
-    });
+  const filteredOrders = orders.filter((order) => statusFilter[order.status]);
 
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
   const paginatedOrders = filteredOrders.slice(
@@ -65,22 +59,22 @@ const Transactions = () => {
   };
 
   return (
-    <div className="bg-[#EEF2F1] min-h-screen pt-[30px] px-4 md:pl-[268px] md:pr-6 pb-6 space-y-6">
+    <div className="w-full xl:pl-[240px] px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm gap-2">
-        <p className="font-medium text-lg ml-6">Transactions</p>
-        <button className="flex gap-2 items-center text-[#00644C] px-3 py-2 bg-white rounded-full shadow-sm">
+        <p className="font-medium text-lg">Orders</p>
+        <button className="flex gap-2 items-center text-[#00644C] px-3 py-2 bg-white rounded-full shadow-sm border">
           <TbArrowDownFromArc className="text-lg" />
           Export
         </button>
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 ml-6 ">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { key: "All", title: "All Transactions", value: 1043 },
-          { key: "Completed", title: "Completed Transactions", value: 1000 },
-          { key: "Failed", title: "Failed Transactions", value: 43 },
+          { key: "All", title: "All Orders", value: 1043 },
+          { key: "Completed", title: "Completed Orders", value: 1000 },
+          { key: "Failed", title: "Failed Orders", value: 43 },
         ].map(({ key, title, value }) => {
           const isActive = selectedCard === key;
 
@@ -92,10 +86,6 @@ const Transactions = () => {
                 setCurrentPage(1);
               }}
               className={`rounded-xl cursor-pointer transition duration-200 overflow-hidden w-full ${
-                {
-                  true: "",
-                }[true]
-              } ${
                 isActive ? "bg-[#003F30] text-white" : "bg-white text-[#101928]"
               }`}
               style={{
@@ -134,23 +124,22 @@ const Transactions = () => {
       </div>
 
       {/* Table */}
-      <div className="bg-white shadow-sm rounded-xl w-[1040px] ml-6 overflow-hidden">
-
-        <table className="min-w-[1040px] text-sm text-left">
+      <div className="bg-white shadow-sm rounded-xl w-full overflow-hidden">
+        <table className="min-w-full text-sm text-left">
           <thead className="bg-[#FAFBFB] text-[#4B5563]">
             <tr className="text-sm font-medium">
-              <th className="py-2 px-4 rounded-tl-xl">S/N</th>
-              <th className="py-2 px-4">Transaction ID</th>
-              <th className="py-2 px-4">Description</th>
-              <th className="py-2 px-4">Investor’s name</th>
-              <th className="py-2 px-4">Amount (₦)</th>
-              <th className="py-2 px-4">Date</th>
-              <th className="py-2 px-4 text-right rounded-tr-xl relative">
+              <th className="py-3 px-4 rounded-tl-xl">S/N</th>
+              <th className="py-3 px-4">Order ID</th>
+              <th className="py-3 px-4">Description</th>
+              <th className="py-3 px-4">Investor’s name</th>
+              <th className="py-3 px-4">Amount (₦)</th>
+              <th className="py-3 px-4">Date</th>
+              <th className="py-3 px-4 text-right rounded-tr-xl relative">
                 <div
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center gap-1 justify-end cursor-pointer"
                 >
-                  Status <IoFilter className="mr-6" />
+                  Status <IoFilter className="mr-1" />
                 </div>
                 {showDropdown && (
                   <div
@@ -158,14 +147,14 @@ const Transactions = () => {
                     className="absolute right-0 mt-2 w-[116px] h-[107px] p-[12px] rounded-[12px] bg-white z-50"
                     style={{ boxShadow: "0px 10px 18px -2px #10192812" }}
                   >
-                    <p className="text-[#8D98A4] text-[12px] font-medium mb-2 mr-5">
+                    <p className="text-[#8D98A4] text-[12px] font-medium mb-2">
                       Status type
                     </p>
                     <div className="flex flex-col gap-[4px]">
                       {["Successful", "Failed"].map((status) => (
                         <label
                           key={status}
-                          className="flex items-center gap-[8px] text-[#101928] text-[12px] font-normal py-2"
+                          className="flex items-center gap-[8px] text-[#101928] text-[12px] font-normal py-1"
                         >
                           <input
                             type="checkbox"
@@ -183,7 +172,7 @@ const Transactions = () => {
             </tr>
           </thead>
 
-          <tbody className="text-gray-700 relative top-2">
+          <tbody className="text-gray-700">
             {paginatedOrders.map((order, index) =>
               order.descriptions.map((desc, i) => (
                 <tr
@@ -254,7 +243,7 @@ const Transactions = () => {
 
       {/* Pagination */}
       <div className="flex flex-col md:flex-row text-sm mt-6 text-[#272833] gap-20 ">
-        <div className="ml-8 font-semibold">
+        <div className="font-semibold">
           <span>{itemsPerPage} Entries ▼</span>
         </div>
         <div className="flex items-center gap-2 mb-6">

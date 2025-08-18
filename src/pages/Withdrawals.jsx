@@ -16,7 +16,7 @@ const disbursementData = Array(95).fill({
 });
 
 const Withdrawals = () => {
-  const entriesPerPage = 10;
+  const entriesPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const totalEntries = disbursementData.length;
   const totalPages = Math.ceil(totalEntries / entriesPerPage);
@@ -39,7 +39,7 @@ const Withdrawals = () => {
   };
 
   return (
-    <div className="absolute top-[72px] left-[262px] w-[1130px] min-h-screen bg-[#EEF2F1] px-12 py-6 space-y-6 opacity-100">
+    <div className="w-full xl:pl-[240px] px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
       <div className="flex justify-between items-center">
         <div className="text-lg font-semibold text-[#4A4A4A]">Disbursement Portal</div>
         <button

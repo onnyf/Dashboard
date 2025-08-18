@@ -5,7 +5,9 @@ import InvestmentChart from "../revenue/InvestmentChart";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Card = ({ children, className = "" }) => (
-  <div className={`rounded-2xl bg-white p-4 shadow-sm hover:shadow-md transition ${className}`}>
+  <div
+    className={`rounded-2xl bg-white p-4 shadow-sm hover:shadow-md transition ${className}`}
+  >
     {children}
   </div>
 );
@@ -13,7 +15,9 @@ const Card = ({ children, className = "" }) => (
 const CardContent = ({ children }) => <div>{children}</div>;
 
 const Hero = () => {
-  const [selectedDateRange, setSelectedDateRange] = useState("January 2025-February 2025");
+  const [selectedDateRange, setSelectedDateRange] = useState(
+    "January 2025-February 2025"
+  );
 
   const statData = [
     { title: "Total Investment", value: "₦6.05B" },
@@ -23,14 +27,18 @@ const Hero = () => {
   ];
 
   return (
-    <div className="w-full xl:pl-[268px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen ">
+    <div className="w-full xl:pl-[260px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row items-start ">
-        <div className="ml-5 relative">
-          <h1 className="text-[16px] font-semibold text-[#4A4A4A]">Welcome Admin</h1>
-          <p className="text-[14px] font-normal text-[#4A4A4A]">Here's a quick update for you</p>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+        <div className="relative">
+          <h1 className="text-[16px] font-semibold text-[#4A4A4A]">
+            Welcome Admin
+          </h1>
+          <p className="text-[14px] font-normal text-[#4A4A4A]">
+            Here's a quick update for you
+          </p>
         </div>
-        <div className="relative w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2 ml-142">
+        <div className="relative w-full sm:w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2 mt-3 md:mt-0">
           <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
           <select
             value={selectedDateRange}
@@ -51,35 +59,37 @@ const Hero = () => {
       </div>
 
       {/* Stat Cards */}
-      <div className="h-[120px] w-[1030px] relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 ml-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {statData.map((item, i) => (
           <Card key={i}>
             <CardContent>
               <p className="text-xs text-[#4A4A4A]">{item.title}</p>
               <div className="flex justify-between items-center mt-3">
-                <h2 className="text-3xl font-bold text-[#4A4A4A]">{item.value}</h2>
+                <h2 className="text-2xl lg:text-3xl font-bold text-[#4A4A4A]">
+                  {item.value}
+                </h2>
                 <span className="w-[40px] h-[24px] text-xs text-[#008000] rounded-full bg-[#EBFFEB] flex items-center gap-1 justify-center">
                   <FaArrowUp size={10} /> +10
                 </span>
               </div>
-              <p className="text-[11px] text-[#9CA3AF] mt-4">from 0% (last 4 weeks)</p>
+              <p className="text-[11px] text-[#9CA3AF] mt-4">
+                from 0% (last 4 weeks)
+              </p>
             </CardContent>
           </Card>
         ))}
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-5 gap-2 max-w-[1100px] ml-3">
-        <Card className="xl:col-span-3 h-[445px]">
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 w-full">
+        <Card className="xl:col-span-3 h-[445px] w-full">
           <CardContent>
             <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
-             <div className="flex text-[14px] text-[#9CA3AF] rounded-full px-6 py-1 bg-gray-50 w-fit gap-2">
-               <h3 className="">
-                Revenue Flow
-              </h3>
-               <MdOutlineKeyboardArrowDown className="text-lg text-[#606060] ml-2" />
-             </div>
-              <div className="relative w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 shadow rounded-full px-4 py-1">
+              <div className="flex text-[14px] text-[#9CA3AF] rounded-full px-6 py-1 bg-gray-50 w-fit gap-2">
+                <h3>Revenue Flow</h3>
+                <MdOutlineKeyboardArrowDown className="text-lg text-[#606060] ml-2" />
+              </div>
+              <div className="relative w-full sm:w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 shadow rounded-full px-4 py-1">
                 <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
                 <select
                   value={selectedDateRange}
@@ -102,18 +112,20 @@ const Hero = () => {
           </CardContent>
         </Card>
 
-        <Card className="w-[380px] xl:col-span-2 h-[445px] ml-3">
+        <Card className="xl:col-span-2 h-[445px] w-full">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-4 text-[#000000]">All Investments</h3>
+            <h3 className="text-lg font-medium mb-4 text-[#000000]">
+              All Investments
+            </h3>
             <InvestmentChart />
           </CardContent>
         </Card>
       </div>
 
       {/* Tables */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 max-w-[960px] ml-4 ">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full">
         {/* Sign Ups Table */}
-        <Card className="xl:col-span-2">
+        <Card className="xl:col-span-2 w-[582px]">
           <CardContent>
             <div className="flex justify-between items-center mb-3">
               <select className="text-sm rounded-full px-4 py-2 bg-gray-100 focus:outline-none shadow-sm cursor-pointer">
@@ -123,7 +135,7 @@ const Hero = () => {
               </select>
             </div>
 
-            <div className="w-full rounded-xl border border-gray-100 bg-white">
+            <div className="w-full rounded-xl border border-gray-100 bg-white overflow-x-auto">
               <table className="w-full text-sm table-auto">
                 <thead className="bg-gray-50 text-left text-gray-500">
                   <tr>
@@ -139,17 +151,27 @@ const Hero = () => {
                     <tr key={i} className="hover:bg-gray-50">
                       <td className="px-4 py-4">0{i}</td>
                       <td className="px-4 py-4 font-medium">Kingsley Alhaji</td>
-                      <td className="px-4 py-4 break-words">Kingsley@gmail.com</td>
+                      <td className="px-4 py-4 break-words">
+                        Kingsley@gmail.com
+                      </td>
                       <td className="px-4 py-4">08/01/25</td>
                       <td className="px-4 py-4">
                         {i % 2 === 0 ? (
                           <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-yellow-100 text-[#DE940B]">
-                            <img src="/clock.svg" alt="pending" className="w-3 h-3" />
+                            <img
+                              src="/clock.svg"
+                              alt="pending"
+                              className="w-3 h-3"
+                            />
                             Pending
                           </span>
                         ) : (
                           <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium bg-green-100 text-[#008000]">
-                            <img src="/verify.png" alt="verified" className="w-3 h-3" />
+                            <img
+                              src="/verify.png"
+                              alt="verified"
+                              className="w-3 h-3"
+                            />
                             Verified
                           </span>
                         )}
@@ -163,25 +185,34 @@ const Hero = () => {
         </Card>
 
         {/* Top Investments */}
-        <Card className="w-[360px] overflow-y-auto max-h-[300px] ml-4">
+        <Card className=" overflow-y-auto max-h-[300px] w-[320px]">
           <CardContent>
-            <h3 className="text-[16px] font-semibold mb-3 text-[#000000]">Top Performing Investments</h3>
+            <h3 className="text-[16px] font-medium mb-3 text-[#000000]">
+              Top Performing Investments
+            </h3>
             <div className="flex justify-between items-center bg-gray-100 rounded px-4 py-2 text-sm text-gray-600 mb-2">
               <span>Name</span>
               <span>Unit Sold</span>
             </div>
             <ul className="space-y-2">
               {[1200, 800, 640].map((unit, index) => (
-                <li key={index} className="flex justify-between items-center px-4 py-2 bg-white rounded shadow-sm">
+                <li
+                  key={index}
+                  className="flex justify-between items-center px-4 py-2 bg-white rounded shadow-sm"
+                >
                   <div className="flex items-center gap-3">
                     <img
                       src="/Rectangle 36.png"
                       alt="land"
                       className="w-8 h-8 rounded object-cover"
                     />
-                    <span className="text-sm font-medium text-gray-700">Cocoa Land</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      Cocoa Land
+                    </span>
                   </div>
-                  <span className="font-semibold text-sm text-gray-800">{unit.toLocaleString()}</span>
+                  <span className="font-semibold text-sm text-gray-800">
+                    {unit.toLocaleString()}
+                  </span>
                 </li>
               ))}
             </ul>

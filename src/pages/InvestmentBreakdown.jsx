@@ -180,6 +180,391 @@ const InvestmentBreakdown = () => {
           </>
         )}
 
+        {/* Tab Content */}
+        {activeTab === "investors" && (
+          <>
+            
+
+            <table className="w-[940px] text-sm text-left border border-[#E8E8E8]">
+              <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
+                <tr className="border-b border-[#E8E8E8]">
+                  <th className="p-3">S/N</th>
+                  <th className="p-3">Investor’s name</th>
+                  <th className="p-3">Investment type</th>
+                  <th className="p-3">Unit</th>
+                  <th className="p-3">Amount (₦)</th>
+                  <th className="p-3">Date</th>
+                  <th className="p-3">Vested Date</th>
+                  <th className="p-3 flex items-center gap-1">
+                    Status
+                    <IoFilter className="text-[#4A4A4A] w-4 h-4" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    id: "01",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "02",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "03",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+
+                   {
+                    id: "04",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "05",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+
+                   {
+                    id: "06",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "07",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+
+                   {
+                    id: "08",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                ].map((row, idx) => (
+                  <tr key={idx} className="border-b border-[#E8E8E8]">
+                    <td className="p-3">{row.id}</td>
+                    <td className="p-3">{row.investor}</td>
+                    <td className="p-3">
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${row.typeClass}`}
+                      >
+                        {row.type}
+                      </span>
+                    </td>
+                    <td className="p-3">{row.unit}</td>
+                    <td className="p-3">{row.amount}</td>
+                    <td className="p-3">{row.date}</td>
+                    <td className="p-3">{row.vested}</td>
+                    <td className="p-3">
+                      <span
+                        className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[24px] ${row.statusClass}`}
+                      >
+                        {row.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+      )}
+
+        {/* Tab Content */}
+        {activeTab === "overview" && (
+          <>
+          
+            
+          </>
+        )}
+
+        {activeTab === "disbursement" && (
+          <>
+            
+
+            <table className="w-[940px] text-sm text-left border border-[#E8E8E8]">
+              <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
+                <tr className="border-b border-[#E8E8E8]">
+                  <th className="p-3">S/N</th>
+                  <th className="p-3">Investor’s name</th>
+                  <th className="p-3">Investment type</th>
+                  <th className="p-3">Unit</th>
+                  <th className="p-3">Amount (₦)</th>
+                  <th className="p-3">Date</th>
+                  <th className="p-3">Vested Date</th>
+                  <th className="p-3 flex items-center gap-1">
+                    Status
+                    <IoFilter className="text-[#4A4A4A] w-4 h-4" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    id: "01",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "02",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "03",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+
+                   {
+                    id: "04",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "05",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+
+                   {
+                    id: "06",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "07",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+
+                   {
+                    id: "08",
+                    investor: "Kingsley Alhaji",
+                    type: "Platinum",
+                    unit: "2",
+                    amount: "500,000.00",
+                    date: "08-01-2023",
+                    vested: "08-01-2023",
+                    status: "Active",
+                    typeClass: "text-[#008000] bg-[#ECFFEC]",
+                    statusClass: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                 
+                ].map((row, idx) => (
+                  <tr key={idx} className="border-b border-[#E8E8E8]">
+                    <td className="p-3">{row.id}</td>
+                    <td className="p-3">{row.investor}</td>
+                    <td className="p-3">
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${row.typeClass}`}
+                      >
+                        {row.type}
+                      </span>
+                    </td>
+                    <td className="p-3">{row.unit}</td>
+                    <td className="p-3">{row.amount}</td>
+                    <td className="p-3">{row.date}</td>
+                    <td className="p-3">{row.vested}</td>
+                    <td className="p-3">
+                      <span
+                        className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[24px] ${row.statusClass}`}
+                      >
+                        {row.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        {activeTab === "orders" && (
+          <>
+            {/* Orders Table */}
+            <h3 className="text-sm font-semibold mb-3 text-[#4A4A4A]">
+              Latest Orders
+            </h3>
+            <table className="w-[940px] text-sm text-left border border-[#E8E8E8]">
+              <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
+                <tr className="border-b border-[#E8E8E8]">
+                  <th className="p-3">S/N</th>
+                  <th className="p-3">Order ID</th>
+                  <th className="p-3">Description</th>
+                  <th className="p-3">Investor's name</th>
+                  <th className="p-3">Amount (₦)</th>
+                  <th className="p-3">Date</th>
+                  <th className="p-3 flex items-center gap-1">
+                    Status
+                    <IoFilter className="text-[#4A4A4A] w-4 h-4" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    id: "01",
+                    status: "Successful",
+                    classes: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "02",
+                    status: "Successful",
+                    classes: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "03",
+                    status: "Failed",
+                    classes: "text-[#B30000] bg-[#FF00001A]",
+                  },
+
+                  {
+                    id: "04",
+                    status: "Successful",
+                    classes: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                  {
+                    id: "05",
+                    status: "Successful",
+                    classes: "text-[#008000] bg-[#ECFFEC]",
+                  },
+                ].map((item, idx) => (
+                  <tr key={idx}>
+                    <td className="p-3">{item.id}</td>
+                    <td className="p-3">070398912</td>
+                    <td className="p-3">
+                      Cocoa land - Platinum X2 <br />
+                      Cocoa land - Gold X2 <br />
+                      Cocoa land - Gold X2
+                    </td>
+                    <td className="p-3">Kingsley Alhaji</td>
+                    <td className="p-3">500,000.00</td>
+                    <td className="p-3">08-01-2023</td>
+                    <td className="p-3">
+                      <span
+                        className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[24px] ${item.classes}`}
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
         {activeTab === "about" && (
           <>
             {/* About Investment Property */}
@@ -218,43 +603,43 @@ const InvestmentBreakdown = () => {
                 <p>Lagos State</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Property Type:
                 </span>
                 <p>09040944885</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Date Created:
                 </span>
                 <p>29-01-2024</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Description:
                 </span>
                 <p>09040944885</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Last Modified:
                 </span>
                 <p>29-01-2024</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Status:
                 </span>
                 <p className="text-[#008000] py-4 font-medium">Completed</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Completion Progress:
                 </span>
                 <p>29-01-2024</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-semibold block">
+                <span className="text-[#8E8E8E] py-4 font-medium block">
                   Features:
                 </span>
                 <p>---</p>
