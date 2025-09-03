@@ -1,27 +1,27 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-// New component for Owner details
+// Owner details component
 const OwnerDetails = () => (
-  <div className="w-[1130px] h-auto pt-[24px] pr-[48px] pb-[24px] pl-[20px] ">
-    <div className="">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-8 text-sm mb-12">
+  <div className="w-full h-auto pt-6 px-4 md:px-8 lg:px-12">
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-8 text-sm mb-8 md:mb-12">
         <div>
-          <p className="mb-2 py-4">
+          <p className="mb-2 py-2 md:py-4">
             <span className="text-[#8E8E8E] block">Owner's Name</span>
             Kingsley Alhaji
           </p>
-          <p className="mb-2 py-4">
+          <p className="mb-2 py-2 md:py-4">
             <span className="text-[#8E8E8E] block">Email address</span>
             alhajis@gmail.com
           </p>
         </div>
         <div>
-          <p className="mb-2 py-4">
+          <p className="mb-2 py-2 md:py-4">
             <span className="text-[#8E8E8E] block">Phone number</span>
             0909839839
           </p>
-          <p className="mb-2 py-4">
+          <p className="mb-2 py-2 md:py-4">
             <span className="text-[#8E8E8E] block">Date sold</span>
             29-01-2024
           </p>
@@ -54,25 +54,22 @@ const PropertyDetails = () => {
 
   const property = propertyData.find((p) => p.id === Number(id));
 
-  // State to manage which tab is active
   const [activeTab, setActiveTab] = React.useState("property");
 
-  // Handle Edit
   const handleEdit = () => {
-    navigate(`/edit/${property.id}`); // navigate to edit page
+    navigate(`/edit/${property.id}`);
   };
 
-  // Handle Remove
   const handleRemove = () => {
     if (window.confirm("Are you sure you want to remove this property?")) {
       propertyData = propertyData.filter((p) => p.id !== property.id);
-      navigate("/properties"); // navigate back to property list
+      navigate("/properties");
     }
   };
 
   if (!property) {
     return (
-      <div className="p-8 bg-white min-h-screen gap-y-8">
+      <div className="p-6 md:p-8 bg-white min-h-screen">
         <button
           onClick={() => navigate(-1)}
           className="mb-4 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
@@ -85,45 +82,46 @@ const PropertyDetails = () => {
   }
 
   return (
-    <div className="w-[1130px] h-auto pt-[24px] pr-[48px] pb-[24px] pl-[48px] bg-[#EEF2F1] flex flex-col gap-[24px] relative top-[2px] left-[258px]">
-      {/* Property Title */}
-      <h2 className="text-[20px] font-semibold">{property.name}</h2>
+    <div className="w-full max-w-[1000px] mx-auto h-auto pt-6 md:pt-8 px-4 md:px-8 lg:px-12 bg-[#EEF2F1] flex flex-col gap-6 md:gap-8 ml-[230px]">
+      {/* Property Title & Actions */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h2 className="text-lg md:text-xl font-semibold">{property.name}</h2>
 
-      <div className="absolute top-4 right-4 flex gap-3 mr-8">
-        <button
-          onClick={handleEdit}
-          className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm text-sm font-medium hover:bg-gray-100 border border-gray-200 text-[#00644C]"
-        >
-          {/* Dynamically switch icon */}
-          <img
-            src={activeTab === "property" ? "/edit.svg" : "/export.svg"}
-            alt="Action Icon"
-            className="w-[18px] h-[18px]"
-          />
-          {activeTab === "property" ? "Edit Property" : "Edit Property"}
-        </button>
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+          <button
+            onClick={handleEdit}
+            className="flex items-center gap-2 px-3 md:px-4 py-2 bg-white rounded-full shadow-sm text-xs md:text-sm font-medium hover:bg-gray-100 border border-gray-200 text-[#00644C] justify-center"
+          >
+            <img
+              src={activeTab === "property" ? "/edit.svg" : "/export.svg"}
+              alt="Action Icon"
+              className="w-4 h-4 md:w-[18px] md:h-[18px]"
+            />
+            Edit Property
+          </button>
 
-        <button
-          onClick={handleRemove}
-          className="px-4 py-2 bg-[#FF00001A] text-[#B30000] rounded-full text-sm font-medium hover:bg-red-100"
-        >
-          Remove Property
-        </button>
+          <button
+            onClick={handleRemove}
+            className="px-3 md:px-4 py-2 bg-[#FF00001A] text-[#B30000] rounded-full text-xs md:text-sm font-medium hover:bg-red-100"
+          >
+            Remove Property
+          </button>
+        </div>
       </div>
 
-      {/* Image + Details Card Combined */}
+      {/* Image + Details */}
       <div className="rounded-2xl overflow-hidden shadow-sm">
         <img
           src={property.image}
           alt={property.name}
-          className="w-full h-[239px] object-cover"
+          className="w-full h-[180px] md:h-[239px] object-cover"
         />
-        <div className="bg-white p-6">
+        <div className="bg-white p-4 md:p-6">
           {/* Tabs */}
-          <div className="flex gap-4 mb-6">
+          <div className="flex flex-wrap gap-3 mb-6">
             <button
               onClick={() => setActiveTab("property")}
-              className={`px-5 py-2 rounded-full text-sm font-medium ${
+              className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium ${
                 activeTab === "property"
                   ? "bg-[#E5FAF9] text-[#009773]"
                   : "bg-[#E8E8E8] text-[#606060] hover:bg-gray-200"
@@ -133,7 +131,7 @@ const PropertyDetails = () => {
             </button>
             <button
               onClick={() => setActiveTab("owner")}
-              className={`px-5 py-2 rounded-full text-sm font-medium ${
+              className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium ${
                 activeTab === "owner"
                   ? "bg-[#E5FAF9] text-[#009773]"
                   : "bg-[#E8E8E8] text-[#606060] hover:bg-gray-200"
@@ -143,23 +141,23 @@ const PropertyDetails = () => {
             </button>
           </div>
 
-          {/* Conditional rendering based on activeTab */}
+          {/* Conditional rendering */}
           {activeTab === "property" ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-8 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-8 text-sm">
               <div>
-                <p className="mb-2 py-4">
+                <p className="mb-2 py-2 md:py-4">
                   <span className="text-[#8E8E8E] block">Name</span>
                   {property.name}
                 </p>
-                <p className="mb-2 py-4">
+                <p className="mb-2 py-2 md:py-4">
                   <span className="text-[#8E8E8E] block">Property type</span>
                   {property.type}
                 </p>
-                <p className="mb-2 py-4">
+                <p className="mb-2 py-2 md:py-4">
                   <span className="text-[#8E8E8E] block">Description</span>
                   {property.description}
                 </p>
-                <p className="mb-2 py-4">
+                <p className="mb-2 py-2 md:py-4">
                   <span className="text-[#8E8E8E] block">Status</span>
                   <span
                     className={`font-semibold ${
@@ -187,15 +185,15 @@ const PropertyDetails = () => {
               </div>
 
               <div>
-                <p className="mb-2 py-4">
+                <p className="mb-2 py-2 md:py-4">
                   <span className="text-[#8E8E8E] block">Location</span>
                   {property.location}
                 </p>
-                <p className="mb-2 py-4">
+                <p className="mb-2 py-2 md:py-4">
                   <span className="text-[#8E8E8E] block">Amount</span>
                   {property.amount}
                 </p>
-                <p className="mb-2 py-4">
+                <p className="mb-2 py-2 md:py-4">
                   <span className="text-[#8E8E8E] block">Date created</span>
                   {property.dateCreated}
                 </p>

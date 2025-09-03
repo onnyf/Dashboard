@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import {
+  RiArrowDownSFill,
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+} from "react-icons/ri";
 
 const InvestmentBreakdown = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [dropdownValue, setDropdownValue] = useState("Investment Breakdown");
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 10;
 
   const handleDropdownChange = (e) => {
     const value = e.target.value;
     setDropdownValue(value);
-
     if (value === "Investment Progress") {
       navigate("/dashboard/investment/:id");
     } else if (value === "Investment Breakdown") {
@@ -18,35 +24,68 @@ const InvestmentBreakdown = () => {
     }
   };
 
+  const renderPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <button
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          className={`px-2 py-1 rounded ${
+            currentPage === i
+              ? "bg-[#009773] text-white"
+              : "hover:bg-gray-200"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return pages;
+  };
+
   return (
-    <div className="pt-6 px-12 pb-6 bg-[#EEF2F1] min-h-screen ml-[238px]">
+    <div className="pt-4 md:pt-6 px-3 md:px-6 lg:px-12 pb-6 bg-[#EEF2F1] min-h-screen md:ml-[238px]">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-[20px] font-semibold text-[#4A4A4A]">Cocoa Land</h2>
-        <div className="flex gap-4">
-          <button className="flex items-center gap-2 text-[#00644C] bg-white rounded-full px-4 py-2 text-sm font-semibold">
-            <img src="/export.svg" alt="export" className="w-4 h-4" />
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3 md:gap-4">
+        <h2 className="text-lg md:text-[20px] font-semibold text-[#4A4A4A] mt-10 md:mt-14">
+          Cocoa Land
+        </h2>
+
+        <div className="flex flex-wrap gap-2 md:gap-3 w-full md:w-auto">
+          <button className="flex items-center gap-2 text-[#00644C] bg-white rounded-full px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-semibold flex-1 md:flex-none justify-center">
+            <img src="/export.svg" alt="export" className="w-3 h-3 md:w-4 md:h-4" />
             Edit Property
           </button>
-          <button className="bg-[#FF00001A] text-[#B30000] px-4 py-2 rounded-full text-sm">
+
+          <button className="bg-[#FF00001A] text-[#B30000] px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm flex-1 md:flex-none justify-center">
             Un-publish Investment
           </button>
         </div>
       </div>
 
       {/* Top Image Banner */}
-      <div className="w-[1020px]">
+      <div className="w-full">
         <img
           src="/Frame 1618873004.png"
           alt="Cocoa Land"
-          className="rounded-t-2xl w-full h-[260px] object-cover"
+          className=" md:rounded-t-2xl w-full h-[140px] md:h-[200px] lg:h-[260px] object-cover"
         />
       </div>
 
       {/* Main Container */}
-      <div className="bg-white p-6 shadow-sm w-[1020px]">
+      <div className="bg-white p-4 md:p-6 shadow-sm w-full   rounded-xl md:rounded-none">
         {/* Tabs */}
-        <div className="flex items-center gap-6 border-b border-[#F5F5F5] pb-4 mb-4 text-sm">
+        <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide items-center gap-2 md:gap-3 border-b border-[#F5F5F5] pb-3 md:pb-4 mb-4 text-xs md:text-sm">
           {[
             { key: "overview", label: "Overview" },
             { key: "investors", label: "Investors" },
@@ -57,7 +96,7 @@ const InvestmentBreakdown = () => {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-4 py-2 rounded-full font-medium ${
+              className={`px-3 py-1.5 md:px-4 md:py-2 rounded-full font-medium ${
                 activeTab === tab.key
                   ? "text-[#009773] bg-[#E5FAF9]"
                   : "text-[#606060] border border-[#E8E8E8]"
@@ -68,106 +107,98 @@ const InvestmentBreakdown = () => {
           ))}
         </div>
 
-        {/* Dropdown */}
-        <div className="mb-6">
-          <select
-            value={dropdownValue}
-            onChange={handleDropdownChange}
-            className="w-[200px] border border-[#E8E8E8] text-sm rounded-md px-3 py-2"
-          >
-            <option value="Investment Breakdown">Investment Breakdown</option>
-            <option value="Investment Progress">Investment Progress</option>
-          </select>
-        </div>
+        {/* Dropdown - show only on overview tab */}
+        {activeTab === "overview" && (
+          <div className="mb-4 md:mb-6">
+            <select
+              value={dropdownValue}
+              onChange={handleDropdownChange}
+              className="w-full md:w-[200px] border border-[#E8E8E8] text-sm rounded-md px-3 py-2"
+            >
+              <option value="Investment Breakdown">Investment Breakdown</option>
+              <option value="Investment Progress">Investment Progress</option>
+            </select>
+          </div>
+        )}
 
-        {/* Tab Content */}
+        {/* Overview */}
         {activeTab === "overview" && (
           <>
-            {/* Investment Breakdown */}
-            <div className="bg-white p-6 rounded-xl shadow-sm mb-6 w-[940px]">
+            <div className="bg-white p-4 md:p-6 rounded-xl shadow-sm mb-4 md:mb-6 w-full">
               <label className="text-sm block mb-2 text-gray-600 font-medium">
                 Investment Breakdown
               </label>
 
               {/* Legend */}
-              <div className="flex justify-end gap-6 mb-2 text-xs">
+              <div className="flex justify-start md:justify-end gap-4 md:gap-6 mb-2 text-xs flex-wrap">
                 <div className="flex items-center gap-1">
-                  <div className="w-[27px] h-[12px] bg-[#9B51E0]" /> Platinum
+                  <div className="w-[20px] md:w-[27px] h-[10px] md:h-[12px] bg-[#9B51E0]" />
+                  Platinum
                 </div>
                 <div className="flex items-center gap-1">
-                  <div className="w-[27px] h-[12px] bg-[#00644C]" /> Diamond
+                  <div className="w-[20px] md:w-[27px] h-[10px] md:h-[12px] bg-[#00644C]" />
+                  Diamond
                 </div>
                 <div className="flex items-center gap-1">
-                  <div className="w-[27px] h-[12px] bg-[#DFB400]" /> Gold
+                  <div className="w-[20px] md:w-[27px] h-[10px] md:h-[12px] bg-[#DFB400]" />
+                  Gold
                 </div>
               </div>
 
               {/* Progress Bar */}
-              <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden flex">
+              <div className="w-full h-2 md:h-3 bg-gray-200 rounded-full overflow-hidden flex">
                 <div className="h-full bg-[#9B51E0]" style={{ width: "60%" }} />
                 <div className="h-full bg-[#00644C]" style={{ width: "25%" }} />
                 <div className="h-full bg-[#DFB400]" style={{ width: "15%" }} />
               </div>
 
               {/* Totals */}
-              <div className="flex justify-between text-sm mt-2 text-[#4A4A4A]">
+              <div className="flex flex-col md:flex-row justify-between text-xs md:text-sm mt-2 text-[#4A4A4A] gap-1 md:gap-0">
                 <p>Total Investment: ₦5,000,000,000.00</p>
                 <p>No. of Investors: 102</p>
               </div>
             </div>
 
-            {/* Latest Orders Table */}
-            <div>
+            {/* Latest Orders */}
+            <div className="overflow-x-auto">
               <h3 className="text-sm font-semibold mb-3 text-[#4A4A4A]">
                 Latest Orders
               </h3>
-              <table className="w-[940px] text-sm text-left border border-[#E8E8E8]">
+              <table className="w-full min-w-[600px] text-xs md:text-sm text-left border border-[#E8E8E8]">
                 <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
                   <tr className="border-b border-[#E8E8E8]">
-                    <th className="p-3">S/N</th>
-                    <th className="p-3">Order ID</th>
-                    <th className="p-3">Description</th>
-                    <th className="p-3">Investor's name</th>
-                    <th className="p-3">Amount (₦)</th>
-                    <th className="p-3">Date</th>
-                    <th className="p-3 flex items-center gap-1">
+                    <th className="p-2 md:p-3">S/N</th>
+                    <th className="p-2 md:p-3">Order ID</th>
+                    <th className="p-2 md:p-3">Description</th>
+                    <th className="p-2 md:p-3">Investor's name</th>
+                    <th className="p-2 md:p-3">Amount (₦)</th>
+                    <th className="p-2 md:p-3">Date</th>
+                    <th className="p-2 md:p-3 flex items-center gap-1">
                       Status
-                      <IoFilter className="text-[#4A4A4A] w-4 h-4" />
+                      <IoFilter className="text-[#4A4A4A] w-3 h-3 md:w-4 md:h-4" />
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    {
-                      id: "01",
-                      status: "Successful",
-                      classes: "text-[#008000] bg-[#ECFFEC]",
-                    },
-                    {
-                      id: "02",
-                      status: "Successful",
-                      classes: "text-[#008000] bg-[#ECFFEC]",
-                    },
-                    {
-                      id: "03",
-                      status: "Failed",
-                      classes: "text-[#B30000] bg-[#FF00001A]",
-                    },
+                    { id: "01", status: "Successful", classes: "text-[#008000] bg-[#ECFFEC]" },
+                    { id: "02", status: "Successful", classes: "text-[#008000] bg-[#ECFFEC]" },
+                    { id: "03", status: "Failed", classes: "text-[#B30000] bg-[#FF00001A]" },
                   ].map((item, idx) => (
                     <tr key={idx}>
-                      <td className="p-3">{item.id}</td>
-                      <td className="p-3">070398912</td>
-                      <td className="p-3">
+                      <td className="p-2 md:p-3">{item.id}</td>
+                      <td className="p-2 md:p-3">070398912</td>
+                      <td className="p-2 md:p-3">
                         Cocoa land - Platinum X2 <br />
                         Cocoa land - Gold X2 <br />
                         Cocoa land - Gold X2
                       </td>
-                      <td className="p-3">Kingsley Alhaji</td>
-                      <td className="p-3">500,000.00</td>
-                      <td className="p-3">08-01-2023</td>
-                      <td className="p-3">
+                      <td className="p-2 md:p-3">Kingsley Alhaji</td>
+                      <td className="p-2 md:p-3">500,000.00</td>
+                      <td className="p-2 md:p-3">08-01-2023</td>
+                      <td className="p-2 md:p-3">
                         <span
-                          className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[24px] ${item.classes}`}
+                          className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[20px] md:h-[24px] ${item.classes}`}
                         >
                           {item.status}
                         </span>
@@ -180,466 +211,340 @@ const InvestmentBreakdown = () => {
           </>
         )}
 
-        {/* Tab Content */}
+        {/* Investors */}
         {activeTab === "investors" && (
           <>
+            <div className="overflow-x-auto">
+                          <table className="w-full min-w-[800px] text-xs md:text-sm text-left border border-[#E8E8E8]">
+                            <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
+                              <tr className="border-b border-[#E8E8E8]">
+                                <th className="p-2 md:p-3">S/N</th>
+                                <th className="p-2 md:p-3">Investor's name</th>
+                                <th className="p-2 md:p-3">Investment type</th>
+                                <th className="p-2 md:p-3">Unit</th>
+                                <th className="p-2 md:p-3">Amount (₦)</th>
+                                <th className="p-2 md:p-3">Date</th>
+                                <th className="p-2 md:p-3">Vested Date</th>
+                                <th className="p-2 md:p-3">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[...Array(5)].map((_, idx) => (
+                                <tr key={idx} className="border-b border-[#E8E8E8]">
+                                  <td className="p-2 md:p-3">{idx + 1}</td>
+                                  <td className="p-2 md:p-3">Kingsley Alhaji</td>
+                                  <td className="p-2 md:p-3">
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-[#008000] bg-[#ECFFEC]">
+                                      Platinum
+                                    </span>
+                                  </td>
+                                  <td className="p-2 md:p-3">2</td>
+                                  <td className="p-2 md:p-3">500,000.00</td>
+                                  <td className="p-2 md:p-3">08-01-2023</td>
+                                  <td className="p-2 md:p-3">08-01-2023</td>
+                                  <td className="p-2 md:p-3">
+                                    <span className="inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[20px] md:h-[24px] text-[#008000] bg-[#ECFFEC]">
+                                      Active
+                                    </span>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
             
+                        {/* Pagination visible here */}
+                        <div className="flex flex-col md:flex-row justify-between items-center mt-4 text-xs md:text-sm gap-3">
+                          <div className="flex items-center gap-1 text-[#272833]">
+                            <span className="font-semibold">10 Entries</span>
+                            <RiArrowDownSFill className="w-4 h-4 md:w-6 md:h-6" />
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 md:gap-4 text-[#6B6C7E]">
+                            <span className="block md:mr-40 text-center md:text-left">
+                              Showing 1 to 10 of 95 entries
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className={`p-1 rounded ${
+                                  currentPage === 1
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-200"
+                                }`}
+                              >
+                                <RiArrowLeftSLine size={18} />
+                              </button>
+                              {renderPageNumbers()}
+                              <button
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className={`p-1 rounded ${
+                                  currentPage === totalPages
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-200"
+                                }`}
+                              >
+                                <RiArrowRightSLine size={18} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
 
-            <table className="w-[940px] text-sm text-left border border-[#E8E8E8]">
-              <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
-                <tr className="border-b border-[#E8E8E8]">
-                  <th className="p-3">S/N</th>
-                  <th className="p-3">Investor’s name</th>
-                  <th className="p-3">Investment type</th>
-                  <th className="p-3">Unit</th>
-                  <th className="p-3">Amount (₦)</th>
-                  <th className="p-3">Date</th>
-                  <th className="p-3">Vested Date</th>
-                  <th className="p-3 flex items-center gap-1">
-                    Status
-                    <IoFilter className="text-[#4A4A4A] w-4 h-4" />
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    id: "01",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "02",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "03",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-
-                   {
-                    id: "04",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "05",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-
-                   {
-                    id: "06",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "07",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-
-                   {
-                    id: "08",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                ].map((row, idx) => (
-                  <tr key={idx} className="border-b border-[#E8E8E8]">
-                    <td className="p-3">{row.id}</td>
-                    <td className="p-3">{row.investor}</td>
-                    <td className="p-3">
-                      <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${row.typeClass}`}
-                      >
-                        {row.type}
-                      </span>
-                    </td>
-                    <td className="p-3">{row.unit}</td>
-                    <td className="p-3">{row.amount}</td>
-                    <td className="p-3">{row.date}</td>
-                    <td className="p-3">{row.vested}</td>
-                    <td className="p-3">
-                      <span
-                        className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[24px] ${row.statusClass}`}
-                      >
-                        {row.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-      )}
-
-        {/* Tab Content */}
-        {activeTab === "overview" && (
-          <>
-          
-            
-          </>
-        )}
-
+        {/* Disbursement */}
         {activeTab === "disbursement" && (
           <>
+            <div className="overflow-x-auto">
+                          <table className="w-full min-w-[800px] text-xs md:text-sm text-left border border-[#E8E8E8]">
+                            <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
+                              <tr className="border-b border-[#E8E8E8]">
+                                <th className="p-2 md:p-3">S/N</th>
+                                <th className="p-2 md:p-3">Investor's name</th>
+                                <th className="p-2 md:p-3">Investment type</th>
+                                <th className="p-2 md:p-3">Unit</th>
+                                <th className="p-2 md:p-3">Amount (₦)</th>
+                                <th className="p-2 md:p-3">Date</th>
+                                <th className="p-2 md:p-3">Vested Date</th>
+                                <th className="p-2 md:p-3">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[...Array(5)].map((_, idx) => (
+                                <tr key={idx} className="border-b border-[#E8E8E8]">
+                                  <td className="p-2 md:p-3">{idx + 1}</td>
+                                  <td className="p-2 md:p-3">Kingsley Alhaji</td>
+                                  <td className="p-2 md:p-3">
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium text-[#008000] bg-[#ECFFEC]">
+                                      Platinum
+                                    </span>
+                                  </td>
+                                  <td className="p-2 md:p-3">2</td>
+                                  <td className="p-2 md:p-3">500,000.00</td>
+                                  <td className="p-2 md:p-3">08-01-2023</td>
+                                  <td className="p-2 md:p-3">08-01-2023</td>
+                                  <td className="p-2 md:p-3">
+                                    <span className="inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[20px] md:h-[24px] text-[#008000] bg-[#ECFFEC]">
+                                      Active
+                                    </span>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
             
+            
+                        {/* Pagination visible here */}
+                        <div className="flex flex-col md:flex-row justify-between items-center mt-4 text-xs md:text-sm gap-3">
+                          <div className="flex items-center gap-1 text-[#272833]">
+                            <span className="font-semibold">10 Entries</span>
+                            <RiArrowDownSFill className="w-4 h-4 md:w-6 md:h-6" />
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 md:gap-4 text-[#6B6C7E]">
+                            <span className="block md:mr-40 text-center md:text-left">
+                              Showing 1 to 10 of 95 entries
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className={`p-1 rounded ${
+                                  currentPage === 1
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-200"
+                                }`}
+                              >
+                                <RiArrowLeftSLine size={18} />
+                              </button>
+                              {renderPageNumbers()}
+                              <button
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className={`p-1 rounded ${
+                                  currentPage === totalPages
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-200"
+                                }`}
+                              >
+                                <RiArrowRightSLine size={18} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+            
+                    {/* Orders */}
+                    {activeTab === "orders" && (
+                      <>
+                        
+                         <div className="overflow-x-auto">
+                          <table className="w-full min-w-[600px] text-xs md:text-sm text-left border border-[#E8E8E8]">
+                            <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
+                              <tr className="border-b border-[#E8E8E8]">
+                                <th className="p-2 md:p-3">S/N</th>
+                                <th className="p-2 md:p-3">Order ID</th>
+                                <th className="p-2 md:p-3">Description</th>
+                                <th className="p-2 md:p-3">Investor's name</th>
+                                <th className="p-2 md:p-3">Amount (₦)</th>
+                                <th className="p-2 md:p-3">Date</th>
+                                <th className="p-2 md:p-3">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[...Array(5)].map((_, idx) => (
+                                <tr key={idx} className="border-b border-[#E8E8E8]">
+                                  <td className="p-2 md:p-3">{idx + 1}</td>
+                                  <td className="p-2 md:p-3">070398912</td>
+                                  <td className="p-2 md:p-3">
+                                    Cocoa land - Platinum X2 <br />
+                                    Cocoa land - Gold X2
+                                  </td>
+                                  <td className="p-2 md:p-3">Kingsley Alhaji</td>
+                                  <td className="p-2 md:p-3">500,000.00</td>
+                                  <td className="p-2 md:p-3">08-01-2023</td>
+                                  <td className="p-2 md:p-3">
+                                    <span className="inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[20px] md:h-[24px] text-[#008000] bg-[#ECFFEC]">
+                                      Successful
+                                    </span>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+            
+                        
+                        {/* Pagination visible here */}
+                        <div className="flex flex-col md:flex-row justify-between items-center mt-4 text-xs md:text-sm gap-3">
+                          <div className="flex items-center gap-1 text-[#272833]">
+                            <span className="font-semibold">10 Entries</span>
+                            <RiArrowDownSFill className="w-4 h-4 md:w-6 md:h-6" />
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 md:gap-4 text-[#6B6C7E]">
+                            <span className="block md:mr-40 text-center md:text-left">
+                              Showing 1 to 10 of 95 entries
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className={`p-1 rounded ${
+                                  currentPage === 1
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-200"
+                                }`}
+                              >
+                                <RiArrowLeftSLine size={18} />
+                              </button>
+                              {renderPageNumbers()}
+                              <button
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className={`p-1 rounded ${
+                                  currentPage === totalPages
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-200"
+                                }`}
+                              >
+                                <RiArrowRightSLine size={18} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
 
-            <table className="w-[940px] text-sm text-left border border-[#E8E8E8]">
-              <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
-                <tr className="border-b border-[#E8E8E8]">
-                  <th className="p-3">S/N</th>
-                  <th className="p-3">Investor’s name</th>
-                  <th className="p-3">Investment type</th>
-                  <th className="p-3">Unit</th>
-                  <th className="p-3">Amount (₦)</th>
-                  <th className="p-3">Date</th>
-                  <th className="p-3">Vested Date</th>
-                  <th className="p-3 flex items-center gap-1">
-                    Status
-                    <IoFilter className="text-[#4A4A4A] w-4 h-4" />
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    id: "01",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "02",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "03",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-
-                   {
-                    id: "04",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "05",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-
-                   {
-                    id: "06",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "07",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-
-                   {
-                    id: "08",
-                    investor: "Kingsley Alhaji",
-                    type: "Platinum",
-                    unit: "2",
-                    amount: "500,000.00",
-                    date: "08-01-2023",
-                    vested: "08-01-2023",
-                    status: "Active",
-                    typeClass: "text-[#008000] bg-[#ECFFEC]",
-                    statusClass: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                 
-                ].map((row, idx) => (
-                  <tr key={idx} className="border-b border-[#E8E8E8]">
-                    <td className="p-3">{row.id}</td>
-                    <td className="p-3">{row.investor}</td>
-                    <td className="p-3">
-                      <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${row.typeClass}`}
-                      >
-                        {row.type}
-                      </span>
-                    </td>
-                    <td className="p-3">{row.unit}</td>
-                    <td className="p-3">{row.amount}</td>
-                    <td className="p-3">{row.date}</td>
-                    <td className="p-3">{row.vested}</td>
-                    <td className="p-3">
-                      <span
-                        className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[24px] ${row.statusClass}`}
-                      >
-                        {row.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-
+        {/* Orders */}
         {activeTab === "orders" && (
           <>
-            {/* Orders Table */}
-            <h3 className="text-sm font-semibold mb-3 text-[#4A4A4A]">
-              Latest Orders
-            </h3>
-            <table className="w-[940px] text-sm text-left border border-[#E8E8E8]">
-              <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
-                <tr className="border-b border-[#E8E8E8]">
-                  <th className="p-3">S/N</th>
-                  <th className="p-3">Order ID</th>
-                  <th className="p-3">Description</th>
-                  <th className="p-3">Investor's name</th>
-                  <th className="p-3">Amount (₦)</th>
-                  <th className="p-3">Date</th>
-                  <th className="p-3 flex items-center gap-1">
-                    Status
-                    <IoFilter className="text-[#4A4A4A] w-4 h-4" />
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    id: "01",
-                    status: "Successful",
-                    classes: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "02",
-                    status: "Successful",
-                    classes: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "03",
-                    status: "Failed",
-                    classes: "text-[#B30000] bg-[#FF00001A]",
-                  },
+            <div className="overflow-x-auto">
+              {/* table code here... */}
+            </div>
 
-                  {
-                    id: "04",
-                    status: "Successful",
-                    classes: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                  {
-                    id: "05",
-                    status: "Successful",
-                    classes: "text-[#008000] bg-[#ECFFEC]",
-                  },
-                ].map((item, idx) => (
-                  <tr key={idx}>
-                    <td className="p-3">{item.id}</td>
-                    <td className="p-3">070398912</td>
-                    <td className="p-3">
-                      Cocoa land - Platinum X2 <br />
-                      Cocoa land - Gold X2 <br />
-                      Cocoa land - Gold X2
-                    </td>
-                    <td className="p-3">Kingsley Alhaji</td>
-                    <td className="p-3">500,000.00</td>
-                    <td className="p-3">08-01-2023</td>
-                    <td className="p-3">
-                      <span
-                        className={`inline-flex items-center justify-center rounded-full text-xs font-medium w-[68px] h-[24px] ${item.classes}`}
-                      >
-                        {item.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {/* Pagination */}
+            <div className="flex flex-col md:flex-row justify-between items-center mt-4 text-xs md:text-sm gap-3">
+              {/* pagination content here... */}
+            </div>
           </>
         )}
 
+        {/* About */}
         {activeTab === "about" && (
           <>
-            {/* About Investment Property */}
-            <h3 className="text-sm font-semibold mb-4 text-[#4A4A4A]">
+             <h3 className="text-sm font-semibold mb-4 text-[#4A4A4A]">
               About Investment Property
             </h3>
-            <div className="flex gap-6 mb-6">
-              <div className="bg-[#FAFAFA] rounded-lg p-4 w-[303.33px]">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
+              <div className="bg-[#FAFAFA] rounded-lg p-3 md:p-4">
                 <p className="text-xs text-gray-500">
                   Total Property Valuation
                 </p>
-                <h2 className="text-lg font-semibold">₦10,000,000.00</h2>
+                <h2 className="text-base md:text-lg font-semibold">₦10,000,000.00</h2>
               </div>
-              <div className="bg-[#FAFAFA] rounded-lg p-4 w-[303.33px]">
+              <div className="bg-[#FAFAFA] rounded-lg p-3 md:p-4">
                 <p className="text-xs text-gray-500">Unit Sold</p>
-                <h2 className="text-lg font-semibold">1002</h2>
+                <h2 className="text-base md:text-lg font-semibold">1002</h2>
               </div>
-              <div className="bg-[#FAFAFA]  rounded-lg p-4 w-[303.33px]">
+              <div className="bg-[#FAFAFA] rounded-lg p-3 md:p-4">
                 <p className="text-xs text-gray-500">No. of Investors</p>
-                <h2 className="text-lg font-semibold">1250</h2>
+                <h2 className="text-base md:text-lg font-semibold">1250</h2>
               </div>
             </div>
 
             {/* Info List */}
-            <div className="grid grid-cols-2 gap-y-8 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-y-6 gap-x-4 md:gap-x-8 text-sm">
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
-                  Name:
-                </span>
+                <span className="text-[#8E8E8E] font-medium block">Name:</span>
                 <p>Kingsley Alhaji</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+                <span className="text-[#8E8E8E] font-medium block">
                   Location:
                 </span>
                 <p>Lagos State</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+                <span className="text-[#8E8E8E] font-medium block">
                   Property Type:
                 </span>
-                <p>09040944885</p>
+                <p>Residential</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+                <span className="text-[#8E8E8E] font-medium block">
                   Date Created:
                 </span>
                 <p>29-01-2024</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+                <span className="text-[#8E8E8E] font-medium block">
                   Description:
                 </span>
-                <p>09040944885</p>
+                <p>A premium cocoa land investment</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+                <span className="text-[#8E8E8E] font-medium block">
                   Last Modified:
                 </span>
                 <p>29-01-2024</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+                <span className="text-[#8E8E8E] font-medium block">
                   Status:
                 </span>
-                <p className="text-[#008000] py-4 font-medium">Completed</p>
+                <p className="text-[#008000] font-medium">Completed</p>
               </div>
               <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+                <span className="text-[#8E8E8E] font-medium block">
                   Completion Progress:
                 </span>
-                <p>29-01-2024</p>
+                <p>100%</p>
               </div>
-              <div>
-                <span className="text-[#8E8E8E] py-4 font-medium block">
+              <div className="md:col-span-2">
+                <span className="text-[#8E8E8E] font-medium block">
                   Features:
                 </span>
                 <p>---</p>

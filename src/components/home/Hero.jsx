@@ -29,16 +29,17 @@ const Hero = () => {
   return (
     <div className="w-full xl:pl-[260px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-        <div className="relative">
-          <h1 className="text-[16px] font-semibold text-[#4A4A4A]">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 mt-4">
+        <div>
+          <h1 className="text-[18px] font-semibold text-[#4A4A4A] mt-2">
             Welcome Admin
           </h1>
           <p className="text-[14px] font-normal text-[#4A4A4A]">
             Here's a quick update for you
           </p>
         </div>
-        <div className="relative w-full sm:w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-white shadow rounded-full px-4 py-2 mt-3 md:mt-0">
+        {/* Date Picker */}
+        <div className="relative w-full sm:w-[263px] h-[36px] flex items-center gap-2 text-sm text-[#333333] bg-white border border-gray-200 rounded-full px-4 py-2">
           <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
           <select
             value={selectedDateRange}
@@ -68,7 +69,7 @@ const Hero = () => {
                 <h2 className="text-2xl lg:text-3xl font-bold text-[#4A4A4A]">
                   {item.value}
                 </h2>
-                <span className="w-[40px] h-[24px] text-xs text-[#008000] rounded-full bg-[#EBFFEB] flex items-center gap-1 justify-center">
+                <span className="w-[50px] h-[24px] text-xs text-[#008000] rounded-full bg-[#EBFFEB] flex items-center gap-1 justify-center">
                   <FaArrowUp size={10} /> +10
                 </span>
               </div>
@@ -82,6 +83,7 @@ const Hero = () => {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 w-full">
+        {/* Revenue Chart */}
         <Card className="xl:col-span-3 h-[445px] w-full">
           <CardContent>
             <div className="flex flex-col sm:flex-row justify-between mb-4 gap-2">
@@ -89,7 +91,7 @@ const Hero = () => {
                 <h3>Revenue Flow</h3>
                 <MdOutlineKeyboardArrowDown className="text-lg text-[#606060] ml-2" />
               </div>
-              <div className="relative w-full sm:w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 shadow rounded-full px-4 py-1">
+              <div className="relative w-full sm:w-[263px] h-[32px] flex items-center gap-2 text-sm text-[#333333] bg-gray-50 border border-gray-200 rounded-full px-4 py-1">
                 <img src="/calendar.svg" alt="calendar" className="w-4 h-4" />
                 <select
                   value={selectedDateRange}
@@ -109,9 +111,22 @@ const Hero = () => {
               </div>
             </div>
             <RevenueChart />
+
+            {/* Legend at Bottom */}
+            <div className="flex flex-col sm:flex-row justify-center sm:gap-6 gap-3 mb-4 text-xs sm:text-sm">
+              <div className="flex items-center gap-2">
+                <span className="w-4 h-4 rounded-full bg-gradient-to-b from-[#a78bfa] to-[#d8d4fc]" />
+                <span>Investment</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-4 h-4 rounded-full bg-gradient-to-b from-[#555] to-[#bbb]" />
+                <span>Expenses (Disbursement)</span>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
+        {/* Investment Chart */}
         <Card className="xl:col-span-2 h-[445px] w-full">
           <CardContent>
             <h3 className="text-lg font-medium mb-4 text-[#000000]">
@@ -122,10 +137,10 @@ const Hero = () => {
         </Card>
       </div>
 
-      {/* Tables */}
+      {/* Tables Section */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 w-full">
         {/* Sign Ups Table */}
-        <Card className="xl:col-span-2 w-[582px]">
+        <Card className="xl:col-span-2 w-full overflow-x-auto">
           <CardContent>
             <div className="flex justify-between items-center mb-3">
               <select className="text-sm rounded-full px-4 py-2 bg-gray-100 focus:outline-none shadow-sm cursor-pointer">
@@ -136,7 +151,7 @@ const Hero = () => {
             </div>
 
             <div className="w-full rounded-xl border border-gray-100 bg-white overflow-x-auto">
-              <table className="w-full text-sm table-auto">
+              <table className="w-full text-sm table-auto min-w-[549px]">
                 <thead className="bg-gray-50 text-left text-gray-500">
                   <tr>
                     <th className="px-4 py-3 rounded-tl-lg">S/N</th>
@@ -185,7 +200,7 @@ const Hero = () => {
         </Card>
 
         {/* Top Investments */}
-        <Card className=" overflow-y-auto max-h-[300px] w-[320px]">
+        <Card className="w-full">
           <CardContent>
             <h3 className="text-[16px] font-medium mb-3 text-[#000000]">
               Top Performing Investments

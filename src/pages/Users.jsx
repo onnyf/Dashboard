@@ -43,10 +43,10 @@ const User = () => {
     activeFilter === "all"
       ? allUsers
       : allUsers.filter((user) =>
-          activeFilter === "verified"
-            ? user.status === "Verified"
-            : user.status !== "Verified"
-        );
+        activeFilter === "verified"
+          ? user.status === "Verified"
+          : user.status !== "Verified"
+      );
 
   const totalItems = filteredUsers.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -108,8 +108,14 @@ const User = () => {
 
   return (
     <div className="w-full xl:pl-[260px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm gap-2 ">
-        <p className="text-[20px] font-[400] ml-6">All users</p>
+
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:item gap-4">
+
+
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ml-2 lg:ml-0">
+          <h2 className="text-lg sm:text-xl font-semibold text-[#4A4A4A]">All users</h2>
+        </div>
+
         <button className="flex gap-2 items-center text-[#00644C] px-3 py-2 bg-white rounded-full shadow-sm">
           <TbArrowDownFromArc className="text-lg" />
           Export
@@ -117,34 +123,31 @@ const User = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 ml-6 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-3 gap-4">
         {stats.map((stat, i) => {
           const isActive = activeFilter === stat.filter;
           return (
             <div
               key={i}
-              className={`p-4 rounded-lg shadow-sm cursor-pointer transition ${
-                isActive ? "bg-[#003F30] text-white" : "bg-white text-gray-900"
-              }`}
+              className={`p-4 rounded-lg  w-full max-w-[370px] lg:max-w-[400px] shadow-sm cursor-pointer transition ${isActive ? "bg-[#003F30] text-white" : "bg-white text-gray-900"
+                }`}
               onClick={() => setActiveFilter(stat.filter)}
             >
               <p className="text-xs font-medium">{stat.title}</p>
               <div className="flex items-center justify-between mt-2">
                 <h2 className="text-2xl font-bold">{stat.value}</h2>
                 <span
-                  className={`flex items-center gap-1 text-xs font-medium rounded-full border px-2 py-0.5 ${
-                    isActive
-                      ? "bg-white text-green-700 border-green-700"
-                      : "bg-[#EBFFEB] text-[#008000] border-transparent"
-                  }`}
+                  className={`flex items-center gap-1 text-xs font-medium rounded-full border px-2 py-0.5 ${isActive
+                    ? "bg-white text-green-700 border-green-700"
+                    : "bg-[#EBFFEB] text-[#008000] border-transparent"
+                    }`}
                 >
                   <FaArrowUp className="text-[10px]" /> +10
                 </span>
               </div>
               <p
-                className={`text-[10px] mt-1 ${
-                  isActive ? "text-white/80" : "text-gray-500"
-                }`}
+                className={`text-[10px] mt-1 ${isActive ? "text-white/80" : "text-gray-500"
+                  }`}
               >
                 From 0% (last 4 weeks)
               </p>
@@ -154,8 +157,8 @@ const User = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl shadow  ml-6 bg-white">
-        <table className="min-w-full text-sm ">
+      <div className="overflow-x-auto rounded-xl shadow bg-white">
+        <table className="hidden md:table min-w-full text-sm">
           <thead className="text-left text-[#606060] bg-[#FAFBFB]">
             <tr>
               <th className="px-4 py-3 rounded-tl-lg">S/N</th>
@@ -188,23 +191,16 @@ const User = () => {
                 <td className="px-4 py-3">{user.date}</td>
                 <td className="px-4 py-3">
                   <span
-                    className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium ${
-                      user.status === "Verified"
-                        ? "bg-[#ECFFEC] text-[#008000]"
-                        : "bg-[#F7F1E5] text-[#DE940B]"
-                    }`}
-                  >
-                    <span
-                      className={`w-4 h-4 flex items-center justify-center rounded-full text-white ${
-                        user.status === "Verified"
-                          ? ""
-                          : ""
+                    className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium ${user.status === "Verified"
+                      ? "bg-[#ECFFEC] text-[#008000]"
+                      : "bg-[#F7F1E5] text-[#DE940B]"
                       }`}
-                    >
+                  >
+                    <span className="w-4 h-4 flex items-center justify-center rounded-full">
                       {user.status === "Verified" ? (
-                       <img src="/verify.png" alt="" className="text-[#008000]"/>
+                        <img src="/verify.png" alt="" />
                       ) : (
-                        <img src="/clock.svg" alt="" className="text-[#DE940B]"/>
+                        <img src="/clock.svg" alt="" />
                       )}
                     </span>
                     {user.status}
@@ -222,29 +218,70 @@ const User = () => {
             ))}
           </tbody>
         </table>
+
+        {/* Mobile Cards */}
+        <div className="block md:hidden divide-y-5 divide-gray-100">
+          {paginatedUsers.map((user, index) => (
+            <div key={index} className="p-4">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-semibold">{user.name}</span>
+                <button
+                  onClick={(e) => handleActionClick(e, user.id)}
+                  className="text-gray-600 hover:text-gray-900"
+                >
+                  <FiMoreVertical className="text-xl" />
+                </button>
+              </div>
+              <p className="text-xs text-gray-500">{user.email}</p>
+              <p className="text-xs text-gray-500">{user.phone}</p>
+              <p className="text-xs text-gray-500">Reg: {user.date}</p>
+              <span
+                className={`mt-2 inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium ${user.status === "Verified"
+                  ? "bg-[#ECFFEC] text-[#008000]"
+                  : "bg-[#F7F1E5] text-[#DE940B]"
+                  }`}
+              >
+                <span className="w-4 h-4 flex items-center justify-center rounded-full">
+                  {user.status === "Verified" ? (
+                    <img src="/verify.png" alt="" />
+                  ) : (
+                    <img src="/clock.svg" alt="" />
+                  )}
+                </span>
+                {user.status}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
+
       {/* Pagination */}
-      <div className="flex flex-col md:flex-row text-sm mt-6 text-gray-600 gap-3 ml-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between text-sm mt-6 text-gray-600 gap-3 px-4 md:px-6">
+        {/* Entries Dropdown */}
         <div className="font-Gilroy-Medium flex items-center gap-2 font-semibold">
           <span>{itemsPerPage} Entries ▼</span>
         </div>
-        <div className="flex items-center ml-4">
-          <span>
+
+        {/* Info + Pagination Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full md:w-auto gap-3">
+          {/* Info */}
+          <span className="text-center sm:text-left">
             Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-            {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems}{" "}
-            entries.
+            {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems} entries.
           </span>
-          <div className="flex items-center gap-1 ml-40">
+
+          {/* Pagination Buttons */}
+          <div className="flex items-center justify-center sm:justify-end gap-1">
             <button
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`px-2 py-1 rounded hover:bg-gray-100 ${
-                currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`px-2 py-1 rounded hover:bg-gray-100 ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
             >
               <RiArrowLeftSLine size={16} />
             </button>
+
             {buildPages().map((n, idx) =>
               n === "..." ? (
                 <span key={idx} className="px-2">
@@ -254,30 +291,26 @@ const User = () => {
                 <button
                   key={idx}
                   onClick={() => goToPage(n)}
-                  className={`px-2 py-1 rounded ${
-                    currentPage === n
-                      ? " text-[#6B6C7E]"
-                      : "hover:bg-gray-100"
-                  }`}
+                  className={`px-2 py-1 rounded ${currentPage === n ? "text-[#6B6C7E] font-semibold" : "hover:bg-gray-100"
+                    }`}
                 >
                   {n}
                 </button>
               )
             )}
+
             <button
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`px-2 py-1 rounded hover:bg-gray-100 ${
-                currentPage === totalPages
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
-              }`}
+              className={`px-2 py-1 rounded hover:bg-gray-100 ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+                }`}
             >
               <RiArrowRightSLine size={16} />
             </button>
           </div>
         </div>
       </div>
+
 
       {/* Action Dropdown */}
       {actionMenu.open && (

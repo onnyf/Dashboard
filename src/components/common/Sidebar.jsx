@@ -5,7 +5,7 @@ import { TbArrowRightToArc } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
-import { FiMenu } from "react-icons/fi";
+
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
@@ -47,15 +47,16 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const nextStep = () => setStep((s) => Math.min(s + 1, 3));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
- const handleSubmit = (e) => {
-  e.preventDefault(); // ⛔ Prevent form from submitting
+  const handleSubmit = (e) => {
+    e.preventDefault(); // ⛔ Prevent form from submitting
 
-  if (step < 3) {x1
-    setStep(step + 1); // move to the next step
-  } else {
-    handleAddProperty(); // submit data
-  }
-};
+    if (step < 3) {
+      x1
+      setStep(step + 1); // move to the next step
+    } else {
+      handleAddProperty(); // submit data
+    }
+  };
 
 
 
@@ -73,7 +74,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <>
       {/* Sidebar content */}
-      <div className={`fixed top-0 left-0  min-h-screen bg-[#003A2B] text-white px-5 py-6 z-50 shadow-md overflow-y-auto transform transition-transform duration-300 md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <div className={`fixed top-0 left-0  min-h-screen bg-[#003A2B] text-white px-5 py-6 z-50 shadow-md overflow-y-auto transform transition-transform duration-300 lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex items-center justify-between mb-10">
           <img src="/Group.svg" alt="Caerus" className="h-6" />
           <button className="md:hidden" onClick={toggleSidebar}>
@@ -107,10 +108,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
       </div>
 
-      {/* Mobile toggle */}
-      <button className="fixed top-4 left-4 z-50 p-2 bg-[#00644C] text-white rounded-md shadow-md md:hidden" onClick={toggleSidebar}>
-        <FiMenu size={22} />
-      </button>
 
       {/* Selection Modal */}
       {showModal && (
@@ -353,9 +350,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
                     <div className="border border-dashed border-[#C4C4C4] h-[250px] rounded-xl bg-[#F9FAFB] px-6 py-10 text-center">
                       <div className="flex flex-col items-center space-y-4">
-                        
-                          <img src="/file upload states.svg" alt=""/>
-                        
+
+                        <img src="/file upload states.svg" alt="" />
+
 
                         <div>
                           <label htmlFor="file-upload" className="cursor-pointer text-sm text-[#00644C] font-semibold">

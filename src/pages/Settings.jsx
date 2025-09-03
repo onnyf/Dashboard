@@ -43,7 +43,6 @@ const Settings = () => {
     );
   };
 
-  // Example API call for invite
   const handleInvite = () => {
     if (!inviteEmail) {
       alert("Please enter an email!");
@@ -68,19 +67,18 @@ const Settings = () => {
   };
 
   return (
-    <div className="top-[68px] w-full md:w-[940px] bg-[#EEF2F1] p-4 md:p-6 rounded-lg overflow-y-auto min-h-screen ml-60">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-6">Settings</h1>
+    <div className="w-full max-w-5xl bg-[#EEF2F1] p-4 md:p-6 rounded min-h-screen lg:absolute left-[230px]">
+      <h1 className="text-2xl font-semibold text-[#4A4A4A] md:mb-14 ">Settings</h1>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 ">
         {/* Sidebar */}
-        <div className="w-full lg:w-[320px] h-fit rounded-2xl bg-white p-6 flex flex-col justify-between shadow-md ">
+        <div className="w-full lg:w-1/3 h-fit rounded-2xl bg-white p-6 flex flex-col justify-between shadow-md">
           <div className="space-y-4">
             <div
-              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition ${
-                activeTab === "security"
-                  ? "bg-[#E6F8F6] text-[#00644C]"
-                  : "hover:bg-gray-100"
-              }`}
+              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition ${activeTab === "security"
+                ? "bg-[#E6F8F6] text-[#00644C]"
+                : "hover:bg-gray-100"
+                }`}
               onClick={() => setActiveTab("security")}
             >
               <PiKeyThin className="text-lg" />
@@ -91,11 +89,10 @@ const Settings = () => {
             </div>
 
             <div
-              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition ${
-                activeTab === "admin"
-                  ? "bg-[#E6F8F6] text-[#00644C]"
-                  : "hover:bg-gray-100"
-              }`}
+              className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition ${activeTab === "admin"
+                ? "bg-[#E6F8F6] text-[#00644C]"
+                : "hover:bg-gray-100"
+                }`}
               onClick={() => setActiveTab("admin")}
             >
               <HiOutlineUser className="text-lg" />
@@ -116,7 +113,7 @@ const Settings = () => {
         </div>
 
         {/* Main Content */}
-        <div className="w-full lg:w-[700px] rounded-2xl bg-white p-6 shadow-md">
+        <div className="w-full lg:w-[600px]  rounded-2xl bg-white p-6 shadow-md">
           {activeTab === "security" ? (
             // Security tab
             <div className="flex flex-col gap-6">
@@ -188,7 +185,8 @@ const Settings = () => {
           ) : (
             // Admin management tab
             <div className="flex flex-col gap-4">
-              <div className="flex justify-between items-center mb-2">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-3">
                 <h2 className="text-lg text-[#000000] font-semibold">
                   Admin Management
                 </h2>
@@ -209,41 +207,45 @@ const Settings = () => {
               </div>
 
               {/* Admin list */}
-              <div className="grid grid-cols-4 text-sm font-medium text-[#4A4A4A] bg-[#FAFBFB] rounded-md px-3 py-2">
-                <span>Name</span>
-                <span>Role</span>
-                <span>Date Added</span>
-                <span>Status</span>
-              </div>
-
-              {[
-                { name: "Caerus", role: "Superadmin", date: "29-01-2024", status: "Active" },
-                { name: "Kingsley", role: "Member", date: "29-01-2024", status: "Active" },
-                { name: "Victor", role: "Member", date: "29-01-2024", status: "Active" },
-                { name: "Chioma", role: "Member", date: "29-01-2024", status: "Inactive" },
-              ].map((admin, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-4 items-center px-3 py-2 text-sm  last:border-none"
-                >
-                  <span>{admin.name}</span>
-                  <span>{admin.role}</span>
-                  <span>{admin.date}</span>
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`px-3 py-1 text-xs rounded-full ${
-                        admin.status === "Active"
-                          ? "bg-[#ECFFEC] text-[#008000]"
-                          : "bg-[#FAFAFA] text-[#606060]"
-                      }`}
-                    >
-                      {admin.status}
-                    </span>
-                    <BsThreeDotsVertical className="text-gray-400 cursor-pointer" />
-                  </div>
+              <div className="w-full">
+                {/* Table Header */}
+                <div className="hidden md:grid grid-cols-4 text-sm font-medium text-[#4A4A4A] bg-[#FAFBFB] rounded-md px-3 py-2">
+                  <span>Name</span>
+                  <span>Role</span>
+                  <span>Date Added</span>
+                  <span>Status</span>
                 </div>
-              ))}
+
+                {/* Admin Rows */}
+                {[
+                  { name: "Caerus", role: "Superadmin", date: "29-01-2024", status: "Active" },
+                  { name: "Kingsley", role: "Member", date: "29-01-2024", status: "Active" },
+                  { name: "Victor", role: "Member", date: "29-01-2024", status: "Active" },
+                  { name: "Chioma", role: "Member", date: "29-01-2024", status: "Inactive" },
+                ].map((admin, index) => (
+                  <div
+                    key={index}
+                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 items-center px-3 py-3 text-sm gap-2"
+                  >
+                    <span className="font-medium">{admin.name}</span>
+                    <span>{admin.role}</span>
+                    <span className="text-gray-600">{admin.date}</span>
+                    <div className="flex items-center justify-between md:justify-start gap-2">
+                      <span
+                        className={`px-3 py-1 text-xs rounded-full ${admin.status === "Active"
+                            ? "bg-[#ECFFEC] text-[#008000]"
+                            : "bg-[#FAFAFA] text-[#606060]"
+                          }`}
+                      >
+                        {admin.status}
+                      </span>
+                      <BsThreeDotsVertical className="text-gray-400 cursor-pointer" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
+
           )}
         </div>
       </div>
@@ -252,8 +254,7 @@ const Settings = () => {
       {showRoleModal && (
         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
           <div
-            className="bg-white shadow-lg overflow-y-auto rounded-2xl"
-            style={{ width: "360px", height: "550px" }}
+            className="bg-white shadow-lg overflow-y-auto rounded-2xl w-[90%] max-w-sm h-[550px]"
           >
             {/* Header */}
             <div className="w-full h-[70px] bg-[#FAFAFA] px-4 flex items-center justify-between rounded-t-2xl border-b">
@@ -305,8 +306,8 @@ const Settings = () => {
       {/* Invite Admin Modal */}
       {showInviteModal && (
         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center">
-          <div className="bg-white w-[400px] rounded-2xl shadow-lg p-6">
-            <div className="flex justify-between items-center mb-4 border-b pb-2">
+          <div className="bg-white w-[90%] max-w-md rounded-2xl shadow-lg p-6">
+            <div className="flex justify-between items-center mb-4  pb-2">
               <h2 className="text-lg text-[#000000] font-semibold">
                 Invite Admin
               </h2>

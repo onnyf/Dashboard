@@ -20,15 +20,19 @@ const data = [
 
 const RevenueChart = () => {
   return (
-    <div className="w-full max-w-2xl">
+    <div className="w-full">
       {/* Chart Box */}
-      <div className=" rounded-xl p-4 w-full">
-        <div className="w-full h-72">
+      <div className="rounded-xl p-4 w-full">
+        <div className="w-full h-60 sm:h-72 lg:h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} barGap={4}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="name" />
-              <YAxis domain={[0, 10]} ticks={[0, 2, 4, 6, 8, 10]} />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} interval={0} />
+              <YAxis
+                domain={[0, 10]}
+                ticks={[0, 2, 4, 6, 8, 10]}
+                tick={{ fontSize: 12 }}
+              />
               <Tooltip />
               <Bar
                 dataKey="investment"
@@ -54,18 +58,6 @@ const RevenueChart = () => {
               </defs>
             </BarChart>
           </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Custom Legend outside */}
-      <div className="flex justify-center gap-6 mt-4 text-sm">
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 rounded-full bg-gradient-to-b from-[#a78bfa] to-[#d8d4fc]" />
-          <span>Investment</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 rounded-full bg-gradient-to-b from-[#555] to-[#bbb]" />
-          <span>Expenses (Disbursement)</span>
         </div>
       </div>
     </div>

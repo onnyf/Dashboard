@@ -202,11 +202,10 @@ const Investment = () => {
             onClick={() =>
               typeof page === "number" && setCurrentPage(page)
             }
-            className={`text-sm ${
-              currentPage === page
-                ? "text-[#00644C] font-semibold border border-[#00644C] rounded px-2 py-1"
-                : "text-gray-600"
-            } ${page === "..." ? "cursor-default" : "cursor-pointer"}`}
+            className={`text-sm ${currentPage === page
+              ? "text-[#00644C] font-semibold border border-[#00644C] rounded px-2 py-1"
+              : "text-gray-600"
+              } ${page === "..." ? "cursor-default" : "cursor-pointer"}`}
           >
             {page}
           </span>
@@ -216,9 +215,9 @@ const Investment = () => {
   };
 
   return (
-    <div className="w-full xl:pl-[240px] px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
+    <div className="w-full xl:pl-[240px] px-4 sm:px-6 lg:px-8 py-6 sm:py-16 space-y-6 bg-[#EEF2F1] min-h-screen">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-[#EEF2F1] p-4 rounded-lg ">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-[#EEF2F1] px-4 rounded-lg ">
         <h2 className="text-lg md:text-xl font-semibold text-[#4A4A4A]">
           Investment
         </h2>
@@ -238,38 +237,36 @@ const Investment = () => {
         </div>
       </div>
 
+
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {stats.map((stat, i) => {
           const isActive = filter === stat.filter;
           return (
             <div
               key={i}
               onClick={() => setFilter(stat.filter)}
-              className={`cursor-pointer p-4 rounded-xl transition shadow-sm hover:shadow-md ${
-                isActive ? "bg-[#003F30] text-white" : "bg-white"
-              }`}
+              className={`cursor-pointer w-full max-w-[370px]  p-4 rounded-xl transition shadow-sm hover:shadow-md ${isActive ? "bg-[#003F30] text-white" : "bg-white"
+                }`}
             >
-              <p className="text-xs md:text-sm font-medium mb-1">
+              <p className="text-xs sm:text-sm font-medium mb-1">
                 {stat.title}
               </p>
-              <div className="text-xl md:text-2xl font-bold flex items-center justify-between">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold flex items-center justify-between">
                 {stat.value}
                 <span
-                  className={`text-xs font-semibold px-2 py-[2px] rounded-full flex items-center gap-1 ${
-                    isActive
-                      ? "bg-green-200 text-green-800"
-                      : "bg-green-100 text-green-700"
-                  }`}
+                  className={`text-xs font-semibold px-2 py-[2px] rounded-full flex items-center gap-1 ${isActive
+                    ? "bg-green-200 text-green-800"
+                    : "bg-green-100 text-green-700"
+                    }`}
                 >
                   <FaArrowUp className="text-xs" />
                   {stat.change}
                 </span>
               </div>
               <p
-                className={`text-[10px] md:text-xs mt-1 ${
-                  isActive ? "text-white/70" : "text-gray-400"
-                }`}
+                className={`text-[10px] sm:text-xs mt-1 ${isActive ? "text-white/70" : "text-gray-400"
+                  }`}
               >
                 {stat.subtext}
               </p>
@@ -278,62 +275,133 @@ const Investment = () => {
         })}
       </div>
 
+
       {/* Investment Table */}
-      <div className="bg-white rounded-xl shadow overflow-x-auto">
-        <table className="min-w-full text-xs md:text-sm">
-          <thead className="bg-gray-100 text-gray-600">
-            <tr className="text-left">
-              <th className="p-4">S/N</th>
-              <th className="p-4">Name</th>
-              <th className="p-4 flex items-center">
-                Type <IoFilter className="ml-1" />
-              </th>
-              <th className="p-4">No. of Investors</th>
-              <th className="p-4">Total Valuation</th>
-              <th className="p-4">Date Mod.</th>
-              <th className="p-4 flex items-center">
-                Status <IoFilter className="ml-1" />
-              </th>
-              <th className="p-4">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredInvestments.map((inv, index) => (
-              <tr
-                key={index}
-                className="hover:bg-gray-50  last:border-0"
-              >
-                <td className="p-4">{inv.id}</td>
-                <td className="p-4 flex items-center gap-2">
-                  <Link to={`/dashboard/investment/${inv.id}`}>
-                    <img
-                      src={inv.image}
-                      alt={inv.name}
-                      className="w-10 h-10 rounded object-cover cursor-pointer"
-                    />
-                  </Link>
-                  {inv.name}
-                </td>
-                <td className="p-4">
-                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
-                    {inv.type}
-                  </span>
-                </td>
-                <td className="p-4">{inv.investors}</td>
-                <td className="p-4 font-medium">{inv.valuation}</td>
-                <td className="p-4">{inv.date}</td>
-                <td className="p-4">
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full font-medium ${
-                      inv.status === "Ongoing"
+      <div className="bg-white rounded-xl shadow">
+        {/* Table for md+ */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="min-w-full text-xs md:text-sm">
+            <thead className="bg-gray-100 text-gray-600">
+              <tr className="text-left">
+                <th className="p-4">S/N</th>
+                <th className="p-4">Name</th>
+                <th className="p-4 flex items-center">
+                  Type <IoFilter className="ml-1" />
+                </th>
+                <th className="p-4">No. of Investors</th>
+                <th className="p-4">Total Valuation</th>
+                <th className="p-4">Date Mod.</th>
+                <th className="p-4 flex items-center">
+                  Status <IoFilter className="ml-1" />
+                </th>
+                <th className="p-4">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredInvestments.map((inv, index) => (
+                <tr key={index} className="hover:bg-gray-50 last:border-0">
+                  <td className="p-4">{inv.id}</td>
+                  <td className="p-4 flex items-center gap-2">
+                    <Link to={`/dashboard/investment/${inv.id}`}>
+                      <img
+                        src={inv.image}
+                        alt={inv.name}
+                        className="w-10 h-10 rounded object-cover cursor-pointer"
+                      />
+                    </Link>
+                    {inv.name}
+                  </td>
+                  <td className="p-4">
+                    <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+                      {inv.type}
+                    </span>
+                  </td>
+                  <td className="p-4">{inv.investors}</td>
+                  <td className="p-4 font-medium">{inv.valuation}</td>
+                  <td className="p-4">{inv.date}</td>
+                  <td className="p-4">
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full font-medium ${inv.status === "Ongoing"
                         ? "bg-[#FFF9DB] text-yellow-600"
                         : "bg-[#ECFFEC] text-green-600"
+                        }`}
+                    >
+                      {inv.status}
+                    </span>
+                  </td>
+                  <td className="p-4 relative">
+                    <FiMoreVertical
+                      className="text-gray-600 cursor-pointer"
+                      onClick={() =>
+                        setDropdownIndex(dropdownIndex === index ? null : index)
+                      }
+                    />
+                    {dropdownIndex === index && (
+                      <ActionDropdown
+                        onAction={(action) => handleAction(action, inv)}
+                      />
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Card layout for sm screens */}
+        <div className="block md:hidden space-y-4 bg-[#EEF2F1]">
+          {filteredInvestments.map((inv, index) => (
+            <div
+              key={index}
+              className="p-4 flex flex-col gap-2 bg-white shadow rounded-lg max-w-sm mx-auto"
+            >
+              {/* Image + Name */}
+              <div className="flex items-center gap-3">
+                <Link to={`/dashboard/investment/${inv.id}`}>
+                  <img
+                    src={inv.image}
+                    alt={inv.name}
+                    className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded object-cover"
+                  />
+                </Link>
+                <div>
+                  <p className="font-semibold text-gray-800 text-sm md:text-base lg:text-lg">
+                    {inv.name}
+                  </p>
+                  <p className="text-xs md:text-sm text-gray-500">{inv.type}</p>
+                </div>
+              </div>
+
+
+              {/* Investors */}
+              <div className="flex justify-between text-xs text-gray-600 mt-2">
+                <span>Investors:</span>
+                <span className="font-medium">{inv.investors}</span>
+              </div>
+
+              {/* Valuation */}
+              <div className="flex justify-between text-xs text-gray-600">
+                <span>Valuation:</span>
+                <span className="font-medium">{inv.valuation}</span>
+              </div>
+
+              {/* Date */}
+              <div className="flex justify-between text-xs text-gray-600">
+                <span>Date:</span>
+                <span>{inv.date}</span>
+              </div>
+
+              {/* Status + Actions */}
+              <div className="flex justify-between items-center mt-2">
+                <span
+                  className={`text-xs px-2 py-1 rounded-full font-medium ${inv.status === "Ongoing"
+                    ? "bg-[#FFF9DB] text-yellow-600"
+                    : "bg-[#ECFFEC] text-green-600"
                     }`}
-                  >
-                    {inv.status}
-                  </span>
-                </td>
-                <td className="p-4 relative">
+                >
+                  {inv.status}
+                </span>
+                <div className="relative">
                   <FiMoreVertical
                     className="text-gray-600 cursor-pointer"
                     onClick={() =>
@@ -345,48 +413,59 @@ const Investment = () => {
                       onAction={(action) => handleAction(action, inv)}
                     />
                   )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+
 
       {/* Pagination */}
       <div className="flex flex-col md:flex-row justify-between items-center mt-4 text-xs md:text-sm gap-3">
+        {/* Entries Dropdown */}
         <div className="flex items-center gap-1 text-[#272833]">
           <span className="font-semibold">10 Entries</span>
           <RiArrowDownSFill className="w-4 h-4 md:w-6 md:h-6" />
         </div>
-        <div className="flex items-center gap-4 text-[#6B6C7E] mr-70">
-          <span className="mr-40">Showing 1 to 10 of 95 entries</span>
+
+        {/* Pagination Info + Controls */}
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-[#6B6C7E] text-center sm:text-left">
+          {/* Info */}
+          <span className="text-xs md:text-sm">
+            Showing 1 to 10 of 95 entries
+          </span>
+
+          {/* Controls */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`p-1 rounded ${
-                currentPage === 1
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-gray-200"
-              }`}
+              className={`p-1 rounded ${currentPage === 1
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-200"
+                }`}
             >
               <RiArrowLeftSLine size={18} />
             </button>
+
             {renderPageNumbers()}
+
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`p-1 rounded ${
-                currentPage === totalPages
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-gray-200"
-              }`}
+              className={`p-1 rounded ${currentPage === totalPages
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-200"
+                }`}
             >
               <RiArrowRightSLine size={18} />
             </button>
           </div>
         </div>
       </div>
+
 
       {/* Modal */}
       {showUserModal && selectedUser && (

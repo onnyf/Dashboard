@@ -30,19 +30,19 @@ const Login = () => {
   };
 
   return (
-    <div className=" min-h-screen flex flex-col items-center justify-center bg-white">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
       {/* Logo at the top */}
       <div className="mb-6">
         <img src="/Group (1).png" alt="Caerus Logo" className="h-10 mb-6" />
       </div>
 
       {/* Login Card */}
-      <div className="bg-white w-[500px] h-[456px] p-[40px] rounded-[16px] border border-gray-200 shadow-md flex flex-col gap-[40px]">
+      <div className="bg-white w-full max-w-[500px] p-6 sm:p-10 rounded-2xl border border-gray-200 shadow-md flex flex-col gap-8">
         <div>
-          <h2 className="text-center text-2xl font-bold text-[#606060] mb-1">
+          <h2 className="text-center text-xl sm:text-2xl font-bold text-[#606060] mb-1">
             Welcome back!
           </h2>
-          <p className="text-center text-[#606060] text-sm">
+          <p className="text-center text-[#606060] text-sm sm:text-base">
             Kindly fill in your details to login to your account
           </p>
         </div>
@@ -56,7 +56,7 @@ const Login = () => {
             <input
               type="email"
               placeholder="abc@gmail.com"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg text-[#D2D2D2] focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg text-[#333] placeholder-[#D2D2D2] focus:outline-none"
               required
             />
           </div>
@@ -67,8 +67,8 @@ const Login = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="********"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg text-[#D2D2D2] focus:outline-none  pr-10"
+                placeholder=""
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg text-[#333] placeholder-[#D2D2D2] focus:outline-none pr-10"
                 required
               />
               <div

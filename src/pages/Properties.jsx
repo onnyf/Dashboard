@@ -78,11 +78,10 @@ const Properties = () => {
         {pages.map((page, index) => (
           <span
             key={index}
-            className={`text-sm ${
-              currentPage === page
+            className={`text-sm ${currentPage === page
                 ? "text-[#00644C] font-semibold"
                 : "text-gray-700"
-            } ${page === "..." ? "cursor-default" : "cursor-pointer"}`}
+              } ${page === "..." ? "cursor-default" : "cursor-pointer"}`}
             onClick={() => typeof page === "number" && setCurrentPage(page)}
           >
             {page}
@@ -96,7 +95,7 @@ const Properties = () => {
     filter === "all" ? images : images.filter((img) => img.status === filter);
 
   return (
-    <div className="w-full xl:pl-[260px] px-4 py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
+    <div className="w-full xl:pl-[260px] px-4 py-16 lg:py-6 space-y-6 bg-[#EEF2F1] min-h-screen">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="text-lg sm:text-xl font-semibold text-[#4A4A4A]">
@@ -120,7 +119,7 @@ const Properties = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => {
           const isActive = filter === stat.filter;
           const cardBg = isActive ? "bg-[#003F30]" : "bg-white";
@@ -131,7 +130,7 @@ const Properties = () => {
             <div
               key={index}
               onClick={() => handleStatClick(stat.filter)}
-              className={`cursor-pointer p-5 rounded-2xl shadow-sm border border-gray-200 transition duration-200 hover:shadow-md ${cardBg} ${cardText}`}
+              className={`cursor-pointer w-full max-w-[370px] p-5 rounded-2xl shadow-sm border border-gray-200 transition duration-200 hover:shadow-md ${cardBg} ${cardText}`}
             >
               <div className="text-sm font-medium mb-1">{stat.title}</div>
               <div className="text-2xl sm:text-3xl font-bold flex items-center justify-between">
@@ -148,7 +147,8 @@ const Properties = () => {
       </div>
 
       {/* Table Section */}
-      <div className="bg-white rounded-xl shadow-sm overflow-x-auto mt-4">
+      {/* Table Section - Desktop & Tablet */}
+      <div className="hidden md:block bg-white rounded-xl shadow-sm overflow-x-auto mt-4">
         <table className="min-w-full text-sm">
           <thead className="bg-[#FAFBFB] text-[#4A4A4A]">
             <tr>
@@ -182,8 +182,8 @@ const Properties = () => {
                     {index % 2 === 0
                       ? "Apartment"
                       : index % 3 === 0
-                      ? "Flat"
-                      : "Bungalow"}
+                        ? "Flat"
+                        : "Bungalow"}
                   </span>
                 </td>
                 <td className="p-4">₦8,000,000.00</td>
@@ -191,13 +191,12 @@ const Properties = () => {
                 <td className="p-4">08-01-2023</td>
                 <td className="p-4">
                   <span
-                    className={`text-xs px-2 py-1 rounded-full font-medium ${
-                      img.status === "available"
+                    className={`text-xs px-2 py-1 rounded-full font-medium ${img.status === "available"
                         ? "bg-[#ECFFEC] text-[#008000]"
                         : img.status === "rented"
-                        ? "bg-[#F8F8F8] text-[#4A4A4A]"
-                        : "bg-[#FFF5E5] text-[#FF8C00]"
-                    }`}
+                          ? "bg-[#F8F8F8] text-[#4A4A4A]"
+                          : "bg-[#FFF5E5] text-[#FF8C00]"
+                      }`}
                   >
                     {img.status.charAt(0).toUpperCase() + img.status.slice(1)}
                   </span>
@@ -211,39 +210,113 @@ const Properties = () => {
         </table>
       </div>
 
+      {/* Mobile Card View */}
+      <div className="block md:hidden space-y-4 bg-[#EEF2F1] mt-4">
+        {filteredImages.map((img, index) => (
+          <div
+            key={img.id}
+            className="p-4 flex flex-col gap-2 bg-white shadow rounded-lg"
+            onClick={() => navigate(`/dashboard/properties/${img.id}`)}
+          >
+            {/* Image + Name */}
+            <div className="flex items-center gap-3">
+              <img
+                src={img.src}
+                alt={img.name}
+                className="w-12 h-12 rounded object-cover"
+              />
+              <div>
+                <p className="font-semibold text-gray-800">{img.name}</p>
+                <p className="text-xs text-gray-500">
+                  {index % 2 === 0
+                    ? "Apartment"
+                    : index % 3 === 0
+                      ? "Flat"
+                      : "Bungalow"}
+                </p>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="flex justify-between text-xs text-gray-600 mt-2">
+              <span>Price:</span>
+              <span className="font-medium">₦8,000,000.00</span>
+            </div>
+
+            {/* Owner */}
+            <div className="flex justify-between text-xs text-gray-600">
+              <span>Owner:</span>
+              <span className="font-medium">
+                {index < 4 ? "Moses Victor" : "---"}
+              </span>
+            </div>
+
+            {/* Date */}
+            <div className="flex justify-between text-xs text-gray-600">
+              <span>Date:</span>
+              <span>08-01-2023</span>
+            </div>
+
+            {/* Status + Actions */}
+            <div className="flex justify-between items-center mt-2">
+              <span
+                className={`text-xs px-2 py-1 rounded-full font-medium ${img.status === "available"
+                    ? "bg-[#ECFFEC] text-[#008000]"
+                    : img.status === "rented"
+                      ? "bg-[#F8F8F8] text-[#4A4A4A]"
+                      : "bg-[#FFF5E5] text-[#FF8C00]"
+                  }`}
+              >
+                {img.status.charAt(0).toUpperCase() + img.status.slice(1)}
+              </span>
+
+              <FiMoreVertical className="text-gray-600 cursor-pointer" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+
+
       {/* Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-4 p-4 text-sm text-gray-500">
-        <div className="flex items-center gap-1 text-[#272833] font-semibold">
-          <span>10 Entries</span>
-          <RiArrowDownSFill className="text-lg" />
+      <div className="flex flex-col md:flex-row justify-between items-center mt-4 text-xs md:text-sm gap-3">
+        {/* Entries Dropdown */}
+        <div className="flex items-center gap-1 text-[#272833]">
+          <span className="font-semibold">10 Entries</span>
+          <RiArrowDownSFill className="w-4 h-4 md:w-6 md:h-6" />
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs sm:text-sm">
-            Showing 1 to 10 of 95 entries.
+
+        {/* Pagination Info + Controls */}
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-[#6B6C7E] text-center sm:text-left">
+          {/* Info */}
+          <span className="text-xs md:text-sm">
+            Showing 1 to 10 of 95 entries
           </span>
+
+          {/* Controls */}
           <div className="flex items-center gap-2">
             <button
-              onClick={handlePrevious}
+              onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`p-2 ${
-                currentPage === 1
-                  ? "cursor-not-allowed opacity-50"
-                  : "hover:bg-gray-100"
-              }`}
+              className={`p-1 rounded ${currentPage === 1
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-200"
+                }`}
             >
-              <RiArrowLeftSLine size={20} />
+              <RiArrowLeftSLine size={18} />
             </button>
+
             {renderPageNumbers()}
+
             <button
-              onClick={handleNext}
+              onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`p-2 ${
-                currentPage === totalPages
-                  ? "cursor-not-allowed opacity-50"
-                  : "hover:bg-gray-100"
-              }`}
+              className={`p-1 rounded ${currentPage === totalPages
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-gray-200"
+                }`}
             >
-              <RiArrowRightSLine size={20} />
+              <RiArrowRightSLine size={18} />
             </button>
           </div>
         </div>
