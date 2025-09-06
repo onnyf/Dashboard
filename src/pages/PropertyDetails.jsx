@@ -3,29 +3,27 @@ import { useParams, useNavigate } from "react-router-dom";
 
 // Owner details component
 const OwnerDetails = () => (
-  <div className="w-full h-auto pt-6 px-4 md:px-8 lg:px-12">
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-8 text-sm mb-8 md:mb-12">
-        <div>
-          <p className="mb-2 py-2 md:py-4">
-            <span className="text-[#8E8E8E] block">Owner's Name</span>
-            Kingsley Alhaji
-          </p>
-          <p className="mb-2 py-2 md:py-4">
-            <span className="text-[#8E8E8E] block">Email address</span>
-            alhajis@gmail.com
-          </p>
-        </div>
-        <div>
-          <p className="mb-2 py-2 md:py-4">
-            <span className="text-[#8E8E8E] block">Phone number</span>
-            0909839839
-          </p>
-          <p className="mb-2 py-2 md:py-4">
-            <span className="text-[#8E8E8E] block">Date sold</span>
-            29-01-2024
-          </p>
-        </div>
+  <div className="w-full h-auto pt-6 px-4 sm:px-6 md:px-8 lg:px-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-8 text-sm mb-8 md:mb-12">
+      <div>
+        <p className="mb-2 py-2 md:py-4">
+          <span className="text-[#8E8E8E] block">Owner's Name</span>
+          Kingsley Alhaji
+        </p>
+        <p className="mb-2 py-2 md:py-4">
+          <span className="text-[#8E8E8E] block">Email address</span>
+          alhajis@gmail.com
+        </p>
+      </div>
+      <div>
+        <p className="mb-2 py-2 md:py-4">
+          <span className="text-[#8E8E8E] block">Phone number</span>
+          0909839839
+        </p>
+        <p className="mb-2 py-2 md:py-4">
+          <span className="text-[#8E8E8E] block">Date sold</span>
+          29-01-2024
+        </p>
       </div>
     </div>
   </div>
@@ -82,15 +80,15 @@ const PropertyDetails = () => {
   }
 
   return (
-    <div className="w-full max-w-[1000px] mx-auto h-auto pt-6 md:pt-8 px-4 md:px-8 lg:px-12 bg-[#EEF2F1] flex flex-col gap-6 md:gap-8 ml-[230px]">
+    <div className="w-full max-w-[1000px] lg:relative left-[119px] mx-auto h-auto pt-6 md:pt-8 px-4 sm:px-6 md:px-8 lg:px-12 bg-[#EEF2F1] flex flex-col gap-6 md:gap-8">
       {/* Property Title & Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-lg md:text-xl font-semibold">{property.name}</h2>
+        <h2 className="text-lg sm:text-xl md:text-2xl font-semibold">{property.name}</h2>
 
-        <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-3 w-full sm:w-auto">
           <button
             onClick={handleEdit}
-            className="flex items-center gap-2 px-3 md:px-4 py-2 bg-white rounded-full shadow-sm text-xs md:text-sm font-medium hover:bg-gray-100 border border-gray-200 text-[#00644C] justify-center"
+            className="flex items-center gap-2 px-3 md:px-4 py-2 bg-white rounded-full shadow-sm text-xs sm:text-sm font-medium hover:bg-gray-100 border border-gray-200 text-[#00644C] justify-center"
           >
             <img
               src={activeTab === "property" ? "/edit.svg" : "/export.svg"}
@@ -102,7 +100,7 @@ const PropertyDetails = () => {
 
           <button
             onClick={handleRemove}
-            className="px-3 md:px-4 py-2 bg-[#FF00001A] text-[#B30000] rounded-full text-xs md:text-sm font-medium hover:bg-red-100"
+            className="px-3 md:px-4 py-2 bg-[#FF00001A] text-[#B30000] rounded-full text-xs sm:text-sm font-medium hover:bg-red-100"
           >
             Remove Property
           </button>
@@ -114,14 +112,14 @@ const PropertyDetails = () => {
         <img
           src={property.image}
           alt={property.name}
-          className="w-full h-[180px] md:h-[239px] object-cover"
+          className="w-full h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px] object-cover"
         />
-        <div className="bg-white p-4 md:p-6">
+        <div className="bg-white p-4 sm:p-5 md:p-6">
           {/* Tabs */}
-          <div className="flex flex-wrap gap-3 mb-6">
+          <div className="flex flex-wrap gap-2 sm:gap-3 mb-6">
             <button
               onClick={() => setActiveTab("property")}
-              className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium ${
+              className={`px-3 sm:px-4 md:px-5 py-2 rounded-full text-sm font-medium ${
                 activeTab === "property"
                   ? "bg-[#E5FAF9] text-[#009773]"
                   : "bg-[#E8E8E8] text-[#606060] hover:bg-gray-200"
@@ -131,7 +129,7 @@ const PropertyDetails = () => {
             </button>
             <button
               onClick={() => setActiveTab("owner")}
-              className={`px-4 md:px-5 py-2 rounded-full text-sm font-medium ${
+              className={`px-3 sm:px-4 md:px-5 py-2 rounded-full text-sm font-medium ${
                 activeTab === "owner"
                   ? "bg-[#E5FAF9] text-[#009773]"
                   : "bg-[#E8E8E8] text-[#606060] hover:bg-gray-200"
